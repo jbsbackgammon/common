@@ -9,11 +9,19 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 ## 初回設置
 
 1. GitHubの `jbsbackgammon` に **public** リポジトリ `common` を作成します（初回時点では未作成）。
-2. このZIPを展開し、中のファイル・フォルダをリポジトリ **ルート** にそのままアップロードします。フォルダ `data` も含めてください。
-3. GitHubリポジトリの **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: main → / (root) → Save** を設定します。
-4. 公開後 https://jbsbackgammon.github.io/common/ を開きます。
+2. `commonv01.zip` の内容を展開し、ファイル・フォルダをリポジトリ **ルート** にそのままアップロードします。フォルダ `data` も含めてください。
+3. `commonv02.zip` の内容をリポジトリ **ルート** に追加・上書きします。`.github/workflows/deploy.yml` の階層を保ってください（ZIPには変更ファイルのみ収録）。
+4. GitHubリポジトリの **Settings → Pages → Build and deployment → Source: GitHub Actions** を選択してください。**Deploy from a branch は選択しません。**
+5. `main` ブランチへのPushで `.github/workflows/deploy.yml` が自動実行され、公開後 https://jbsbackgammon.github.io/common/ で閲覧できます。**Actions → Deploy GitHub Pages → Run workflow** から手動実行も可能です。
 
-静的ファイルを `main` にアップロードするだけでPagesが更新されます。独自のGitHub Actionsワークフローは不要です（`ubuntu-latest` やNode.jsの非推奨アノテーションも発生させません）。
+### GitHub Actions（v02以降）
+
+- `main` へのPush、および手動実行（`workflow_dispatch`）に対応。ブランド管理画面から `data/brand.json` を保存した場合も、自動で再デプロイされます。
+- OSを `ubuntu-24.04` に固定し、`ubuntu-latest` → Ubuntu 26.04 移行アノテーションの対象にならないようにしています。
+- `actions/checkout@v6`、`actions/configure-pages@v6`、`actions/upload-pages-artifact@v5`、`actions/deploy-pages@v5` を使用（Node.js 24対応世代）。
+- 公開前に `data/brand.json` のJSON構文チェックを行い、公開物を `_site/` に組み立てます。npmやビルドは不要です。
+- GitHub Actionsが動くために別途PATは不要です。管理画面からGitHubへ直接**保存**する際だけ、既存どおりFine-grained PATが必要です。
+- ZIPをGitHubのWeb画面からアップロードする際は**必ず展開してから** `.github/workflows/deploy.yml` を配置してください。ワークフローファイルはGitHubの管理権限等によりアップロードが制限される場合があります。
 
 ## 管理画面の機能
 
