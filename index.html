@@ -6,13 +6,14 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#ffffff">
   <title>ブランド管理</title>
-  <link rel="stylesheet" href="./styles.css?v=1">
+  <link rel="stylesheet" href="./styles.css?v=3">
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner">
       <h1>ブランド管理</h1>
       <div class="header-actions">
+        <span id="editStatus" class="edit-status" role="status" aria-live="polite">読み込み中</span>
         <button type="button" id="importButton" class="button-outline">JSON取込</button>
         <input type="file" id="importFile" accept=".json,application/json" hidden>
         <button type="button" id="exportButton" class="button-outline">JSON出力</button>
@@ -22,10 +23,6 @@
   </header>
 
   <main class="container">
-    <div class="intro">
-      <p>各JBSツールで共用する大会カラー・大会名・英語表記・文字色判定を管理します。</p>
-      <span id="editStatus" class="edit-status">読み込み中</span>
-    </div>
     <div id="notice" role="status" aria-live="polite" class="notice" hidden></div>
 
     <section class="panel">
@@ -35,11 +32,10 @@
       </div>
       <div class="table-scroll">
         <table class="master-table">
-          <thead><tr><th>順番</th><th>大会名</th><th>英語表記</th><th>分類</th><th>メインカラー</th><th>表示イメージ</th><th>操作</th></tr></thead>
+          <thead><tr><th>順番</th><th>大会名</th><th>英語表記</th><th>分類</th><th>メインカラー</th><th>サブカラー</th><th>表示イメージ</th><th>操作</th></tr></thead>
           <tbody id="tournamentRows"></tbody>
         </table>
       </div>
-      <p class="help">表示順の数字が小さい大会から表示します。同じ数字は指定できません。IDは連携先の互換性を守るため、作成後は変更しません。</p>
     </section>
 
     <section class="panel contrast-panel">
@@ -49,7 +45,6 @@
         <div class="control"><label for="darkTextCode">明るい背景の文字色</label><div class="color-group"><input id="darkTextPicker" type="color" aria-label="明るい背景の文字色を選択"><input id="darkTextCode" type="text" maxlength="7" spellcheck="false"></div></div>
         <div class="control"><label for="lightTextCode">暗い背景の文字色</label><div class="color-group"><input id="lightTextPicker" type="color" aria-label="暗い背景の文字色を選択"><input id="lightTextCode" type="text" maxlength="7" spellcheck="false"></div></div>
       </div>
-      <p class="help">sRGB相対輝度がしきい値を上回る場合は「明るい背景の文字色」を使用します。初期値は <code>0.179 / #000000 / #FFFFFF</code> です。</p>
     </section>
 
     <section class="panel guide-panel">
@@ -64,7 +59,6 @@
     console.log(tournament.nameEn, color, textColor);
   });
 &lt;/script&gt;</code></pre>
-      <p class="help">実際のデータは <a href="./data/brand.json" target="_blank" rel="noopener">data/brand.json</a> に格納されます。管理画面で編集しただけでは公開内容は変わりません。「GitHubに保存」で反映するか、JSON出力したファイルをGitHubの同じパスに上書きしてください。</p>
     </section>
   </main>
 
@@ -83,7 +77,7 @@
     </form>
   </dialog>
 
-  <script src="./brand.js?v=1"></script>
-  <script src="./app.js?v=1"></script>
+  <script src="./brand.js?v=3"></script>
+  <script src="./app.js?v=3"></script>
 </body>
 </html>

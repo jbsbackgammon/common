@@ -8,11 +8,9 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 ## 初回設置
 
-1. GitHubの `jbsbackgammon` に **public** リポジトリ `common` を作成します（初回時点では未作成）。
-2. `commonv01.zip` の内容を展開し、ファイル・フォルダをリポジトリ **ルート** にそのままアップロードします。フォルダ `data` も含めてください。
-3. `commonv02.zip` の内容をリポジトリ **ルート** に追加・上書きします。`.github/workflows/deploy.yml` の階層を保ってください（ZIPには変更ファイルのみ収録）。
-4. GitHubリポジトリの **Settings → Pages → Build and deployment → Source: GitHub Actions** を選択してください。**Deploy from a branch は選択しません。**
-5. `main` ブランチへのPushで `.github/workflows/deploy.yml` が自動実行され、公開後 https://jbsbackgammon.github.io/common/ で閲覧できます。**Actions → Deploy GitHub Pages → Run workflow** から手動実行も可能です。
+1. `commonv03.zip` は **差分** です。既存の `common` のルートに内容を追加・上書きしてください（`data/brand.json` を含む）。初回設置は全ファイル一式から行います。
+2. GitHubリポジトリの **Settings → Pages → Build and deployment → Source: GitHub Actions** を選択してください。**Deploy from a branch は選択しません。**
+3. `main` ブランチへのPushで `.github/workflows/deploy.yml` が自動実行され、公開後 https://jbsbackgammon.github.io/common/ で閲覧できます。**Actions → Deploy GitHub Pages → Run workflow** から手動実行も可能です。
 
 ### GitHub Actions（v02以降）
 
@@ -25,9 +23,9 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 ## 管理画面の機能
 
-- 大会マスタ: ID（変更不可）、表示順、大会名、英語表記、分類、メインカラーを変更
-- 大会の追加と削除
-- メインカラーに基づく文字色のプレビュー
+- 大会マスタ: ID（変更不可）、大会名、英語表記、分類、メインカラー、サブカラーを変更
+- 大会の追加と削除、ドラッグによる並び替え（キーボードの上下矢印キーも対応）。保存順は1,2,3…に連番化
+- メインカラーに基づく文字色のプレビュー。メインカラー変更でサブカラーを自動生成（白を32%混合）、その後に個別変更可能
 - 文字色判定の相対輝度しきい値と白/黒の文字色を管理
 - JSON取込・JSON出力
 - GitHub APIによる **`data/brand.json` 直接保存**
@@ -56,6 +54,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
       const master = JBSBrand.getTournament('王位戦');
       const mainColor = master.color;           // "#0D6B2F"
       const english = master.nameEn;            // "OUI"
+      const subColor = master.subColor;        // メイン色に白を32%混ぜた初期色
       const textColor = JBSBrand.getTextColor(mainColor); // "#FFFFFF"
       console.log({ mainColor, english, textColor });
     } catch (error) {
@@ -78,6 +77,8 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | `JBSBrand.getTournaments()` | `order` 昇順の大会一覧（コピー） |
 | `JBSBrand.getTournament(nameOrId)` | ID、日本語名、英語名のいずれかで大会を取得（見つからない場合は `null`） |
 | `JBSBrand.getColor(nameOrId, fallback)` | メインカラー。未登録の場合は `fallback`（省略時 `null`） |
+| `JBSBrand.getSubColor(nameOrId, fallback)` | サブカラー。未登録の場合は `fallback`（省略時 `null`） |
+| `JBSBrand.makeSubColor(mainColor)` | メインカラーに白を32%混ぜたサブカラー初期値 |
 | `JBSBrand.getTextColor(hex, fallback)` | 現在の共通ルールで前景色を判定。HEX不正時は `fallback` |
 | `JBSBrand.getContrast()` | 文字色判定ルールのコピー |
 | `JBSBrand.getConfig()` | 共通設定全体のコピー |
@@ -89,9 +90,9 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 | 既存ツール | 共通化する値 | ツール内で維持する値 |
 | --- | --- | --- |
-| thumbnail | `SERIES`、`OPEN_SERIES` のカラー、文字色判定 | サブカラー自動生成、影、画像処理、レイアウト |
-| tournament | `TOURNAMENT_MASTERS` の名前とカラー、判定できる文字色 | `TITLE_COLORS`（5大タイトルの装飾）、PDF・PNG描画、トーナメントロジック |
-| overlay | `titleThemePresets`、`titleEnglishPresets`、共通文字色判定 | ボードプリセット、パネルカラー、選手配色、描画・配置 |
+| thumbnail | `SERIES`、`OPEN_SERIES` のカラー・サブカラー、文字色判定 | 影、画像処理、レイアウト |
+| tournament | `TOURNAMENT_MASTERS` の名前・メイン/サブカラー、判定できる文字色 | `TITLE_COLORS`（5大タイトルの装飾）、PDF・PNG描画、トーナメントロジック |
+| overlay | `titleThemePresets`、`titleEnglishPresets`、メイン/サブカラー、共通文字色判定 | ボードプリセット、パネルカラー、選手配色、描画・配置 |
 
 各ツールの修正は**本ZIPには含みません**。このリポジトリを先に公開し、各ツールの参照先を切り替える形になります。
 
@@ -107,21 +108,22 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
       "nameEn": "OUI",
       "category": "title",
       "color": "#0D6B2F",
-      "order": 40
+      "subColor": "#5A9A72",
+      "order": 4
     }
   ],
   "contrast": {
-    "threshold": 0.179,
+    "threshold": 0.26,
     "darkText": "#000000",
     "lightText": "#FFFFFF"
   }
 }
 ```
 
-`category` は `title` / `open` / `other`。`id` は固有で英小文字・数字・ハイフンのみ。大会名と表示順も重複不可。`color` は `#RRGGBB`（`#RGB`も入力可）、`order` は1以上の整数です。JSONが唯一の正本で、JS内に別の大会カラー表をコピーしていません。
+`category` は `title` / `open` / `other`。`id` は固有で英小文字・数字・ハイフンのみ。大会名も重複不可。`color` / `subColor` は `#RRGGBB`（`#RGB`も入力可）、`order` は1からの連番です。旧JSON（`subColor` がない形式）も取込可能で、取り込み時にメインカラーから補完します。JSONが唯一の正本で、JS内に別の大会カラー表をコピーしていません。
 
 ## データ出典（2026-10-19時点）
 
 - カラーと日本語名: 既存の [thumbnail](https://github.com/jbsbackgammon/thumbnail/blob/main/index.html)、[tournament](https://github.com/jbsbackgammon/tournament/blob/main/src/model.js)、[overlay](https://github.com/jbsbackgammon/overlay/blob/main/overlay.js) の大会マスタに合わせています。
 - 英語表記: `overlay.js` の `titleEnglishPresets` をそのまま採用しています。例: 棋聖戦 = `INVITATIONAL DOUBLES`。名称の対外表記を変更する場合は本管理画面から更新できます。
-- 文字色判定: 既存ツールと同じ sRGB相対輝度（ガンマ補正）と `luminance > 0.179` の条件を使用します。
+- 文字色判定: sRGB相対輝度（ガンマ補正）で判定。しきい値は `0.26` に変更し、東京オープン `#009F40` は白文字とします（大阪オープンは黒文字）。既存の `thumbnail` や `overlay` は、参照先を本commonへ切り替えるまでは従来の独立したしきい値を使用します。

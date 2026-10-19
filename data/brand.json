@@ -7,7 +7,8 @@
       "nameEn": "JAPAN OPEN",
       "category": "title",
       "color": "#3C3C3C",
-      "order": 10
+      "order": 1,
+      "subColor": "#7A7A7A"
     },
     {
       "id": "bansei",
@@ -15,7 +16,8 @@
       "nameEn": "BANSEI",
       "category": "title",
       "color": "#6B0D2F",
-      "order": 20
+      "order": 2,
+      "subColor": "#9A5A72"
     },
     {
       "id": "meijin",
@@ -23,7 +25,8 @@
       "nameEn": "MEIJIN",
       "category": "title",
       "color": "#6B670D",
-      "order": 30
+      "order": 3,
+      "subColor": "#9A985A"
     },
     {
       "id": "oui",
@@ -31,7 +34,8 @@
       "nameEn": "OUI",
       "category": "title",
       "color": "#0D6B2F",
-      "order": 40
+      "order": 4,
+      "subColor": "#5A9A72"
     },
     {
       "id": "saiou",
@@ -39,7 +43,8 @@
       "nameEn": "SAIO",
       "category": "title",
       "color": "#0D236B",
-      "order": 50
+      "order": 5,
+      "subColor": "#5A699A"
     },
     {
       "id": "kisei",
@@ -47,7 +52,8 @@
       "nameEn": "INVITATIONAL DOUBLES",
       "category": "title",
       "color": "#6B230D",
-      "order": 60
+      "order": 6,
+      "subColor": "#9A695A"
     },
     {
       "id": "queen",
@@ -55,7 +61,8 @@
       "nameEn": "WOMEN'S CHAMPIONSHIP",
       "category": "title",
       "color": "#6B0D5B",
-      "order": 70
+      "order": 7,
+      "subColor": "#9A5A8F"
     },
     {
       "id": "shin-ei",
@@ -63,7 +70,8 @@
       "nameEn": "YOUTH CHAMPIONSHIP",
       "category": "title",
       "color": "#0D676B",
-      "order": 80
+      "order": 8,
+      "subColor": "#5A989A"
     },
     {
       "id": "tokyo-open",
@@ -71,7 +79,8 @@
       "nameEn": "TOKYO OPEN",
       "category": "open",
       "color": "#009F40",
-      "order": 90
+      "order": 9,
+      "subColor": "#52BE7D"
     },
     {
       "id": "osaka-open",
@@ -79,7 +88,8 @@
       "nameEn": "OSAKA OPEN",
       "category": "open",
       "color": "#F8B62B",
-      "order": 100
+      "order": 10,
+      "subColor": "#FACD6F"
     },
     {
       "id": "nagoya-open",
@@ -87,11 +97,12 @@
       "nameEn": "NAGOYA OPEN",
       "category": "open",
       "color": "#0C284D",
-      "order": 110
+      "order": 11,
+      "subColor": "#5A6D86"
     }
   ],
   "contrast": {
-    "threshold": 0.179,
+    "threshold": 0.26,
     "darkText": "#000000",
     "lightText": "#FFFFFF"
   }

@@ -1,4 +1,4 @@
-/* JBS common brand data client — v1, classic script; no dependencies.
+/* JBS common brand data client — v3, classic script; no dependencies.
  * <script src="https://jbsbackgammon.github.io/common/brand.js"></script>
  * await JBSBrand.load();
  */
@@ -22,6 +22,14 @@
     return null;
   }
 
+  // Same 32%-toward-white mixing used by the thumbnail tool.
+  function makeSubColor(mainColor) {
+    const hex = normalizeColor(mainColor);
+    if (!hex) return null;
+    const toHex = value => Math.round(value + (255 - value) * 0.32).toString(16).padStart(2, '0').toUpperCase();
+    return '#' + [1, 3, 5].map(i => toHex(parseInt(hex.slice(i, i + 2), 16))).join('');
+  }
+
   function validate(input) {
     if (!input || input.schemaVersion !== 1 || !Array.isArray(input.tournaments)) {
       throw new Error('ブランド設定の形式が正しくありません（schemaVersion: 1 が必要です）。');
@@ -35,18 +43,21 @@
       const name = typeof entry?.name === 'string' ? entry.name.trim() : '';
       const nameEn = typeof entry?.nameEn === 'string' ? entry.nameEn.trim() : '';
       const color = normalizeColor(entry?.color);
+      // v01/v02 JSON without subColor remains importable.
+      const subColor = entry?.subColor == null ? makeSubColor(color) : normalizeColor(entry.subColor);
       const category = entry?.category;
       const order = entry?.order;
       if (!ID.test(id) || id.length > 60) throw new Error(`${i + 1}行目のIDが不正です。英小文字・数字・ハイフンを使用してください。`);
       if (!name || name.length > 100 || !nameEn || nameEn.length > 150) throw new Error(`${i + 1}行目の大会名・英語表記を入力してください。`);
-      if (!color || !HEX.test(color)) throw new Error(`${name}のカラーコードが不正です。`);
+      if (!color || !HEX.test(color)) throw new Error(`${name}のメインカラーが不正です。`);
+      if (!subColor || !HEX.test(subColor)) throw new Error(`${name}のサブカラーが不正です。`);
       if (!CATEGORIES.has(category)) throw new Error(`${name}の分類が不正です。`);
       if (!Number.isSafeInteger(order) || order < 1 || order > 999999) throw new Error(`${name}の表示順が不正です。`);
       if (seenIds.has(id)) throw new Error(`ID「${id}」が重複しています。`);
       if (seenNames.has(name)) throw new Error(`大会名「${name}」が重複しています。`);
       if (seenOrders.has(order)) throw new Error(`表示順「${order}」が重複しています。`);
       seenIds.add(id); seenNames.add(name); seenOrders.add(order);
-      return { id, name, nameEn, category, color, order };
+      return { id, name, nameEn, category, color, subColor, order };
     }).sort((a, b) => a.order - b.order);
 
     const contrast = input.contrast;
@@ -87,6 +98,7 @@
     return found ? { ...found } : null;
   }
   function getColor(query, fallback = null) { return getTournament(query)?.color || fallback; }
+  function getSubColor(query, fallback = null) { return getTournament(query)?.subColor || fallback; }
 
   function luminance(color) {
     const hex = normalizeColor(color);
@@ -98,14 +110,14 @@
   function getTextColor(background, fallback = null) {
     const lum = luminance(background);
     if (lum === null) return fallback;
-    const c = current?.contrast || { threshold: 0.179, darkText: '#000000', lightText: '#FFFFFF' };
+    const c = current?.contrast || { threshold: 0.26, darkText: '#000000', lightText: '#FFFFFF' };
     return lum > c.threshold ? c.darkText : c.lightText;
   }
   function getContrast() { return current ? { ...current.contrast } : null; }
 
   // A read-only public API. Editors use validate() without changing the loaded data.
   global.JBSBrand = Object.freeze({
-    version: 1, dataUrl, load, getConfig, getTournaments, getTournament,
-    getColor, getTextColor, getContrast, luminance, normalizeColor, validate
+    version: 3, dataUrl, load, getConfig, getTournaments, getTournament,
+    getColor, getSubColor, makeSubColor, getTextColor, getContrast, luminance, normalizeColor, validate
   });
 })(window);

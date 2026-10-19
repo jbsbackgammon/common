@@ -50,7 +50,7 @@
     const input = row.querySelector('.' + className);
     input.value = String(entry[property]);
     input.addEventListener('input', () => {
-      entry[property] = property === 'order' ? (input.value === '' ? '' : Number(input.value)) : input.value;
+      entry[property] = input.value;
       markDirty();
       if (property === 'name') updateSamples();
     });
@@ -77,6 +77,63 @@
     });
   }
 
+  // The UI always numbers rows 1..N. These order values are persisted to JSON.
+  function renumber() {
+    working.tournaments.forEach((entry, index) => { entry.order = index + 1; });
+  }
+
+  function moveTournament(from, to) {
+    if (!Number.isInteger(from) || !Number.isInteger(to) || from === to
+        || from < 0 || to < 0 || from >= working.tournaments.length || to >= working.tournaments.length) return false;
+    const [entry] = working.tournaments.splice(from, 1);
+    working.tournaments.splice(to, 0, entry);
+    renumber();
+    markDirty();
+    renderRows();
+    const target = $('tournamentRows').children[to]?.querySelector('.drag-handle');
+    target?.focus({ preventScroll: true });
+    return true;
+  }
+
+  let dragging = null;
+  function clearDrag() {
+    if (!dragging) return;
+    const el = dragging.handle;
+    try { if (el.hasPointerCapture(dragging.pointerId)) el.releasePointerCapture(dragging.pointerId); } catch { /* Released automatically. */ }
+    $('tournamentRows').querySelectorAll('.dragging, .drop-target').forEach(el => el.classList.remove('dragging', 'drop-target'));
+    dragging = null;
+  }
+  function bindDrag(handle, row, index) {
+    handle.addEventListener('pointerdown', event => {
+      if (event.button !== 0 || busy) return;
+      event.preventDefault();
+      handle.setPointerCapture(event.pointerId);
+      dragging = { pointerId: event.pointerId, handle, from: index, to: index };
+      row.classList.add('dragging');
+    });
+    handle.addEventListener('pointermove', event => {
+      if (!dragging || dragging.pointerId !== event.pointerId || dragging.handle !== handle) return;
+      const other = document.elementFromPoint(event.clientX, event.clientY)?.closest('#tournamentRows tr');
+      const target = other ? Number(other.dataset.index) : dragging.to;
+      if (!Number.isInteger(target) || target < 0 || target >= working.tournaments.length) return;
+      dragging.to = target;
+      $('tournamentRows').querySelectorAll('.drop-target').forEach(el => el.classList.remove('drop-target'));
+      $('tournamentRows').children[target]?.classList.add('drop-target');
+    });
+    handle.addEventListener('pointerup', event => {
+      if (!dragging || dragging.pointerId !== event.pointerId || dragging.handle !== handle) return;
+      const {from, to} = dragging;
+      clearDrag();
+      moveTournament(from, to);
+    });
+    handle.addEventListener('pointercancel', clearDrag);
+    handle.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+      event.preventDefault();
+      moveTournament(index, index + (event.key === 'ArrowDown' ? 1 : -1));
+    });
+  }
+
   function renderRows() {
     const tbody = $('tournamentRows');
     tbody.replaceChildren();
@@ -85,27 +142,39 @@
       row.dataset.index = String(index);
       // The template contains no user-provided HTML; values are assigned via DOM properties.
       row.innerHTML = `
-        <td><input class="input-order" type="number" min="1" max="999999" step="1" aria-label="表示順"></td>
-        <td><input class="name-input" type="text" maxlength="100" aria-label="大会名"><div class="id-note"></div></td>
+        <td class="order-cell"><button type="button" class="drag-handle" aria-label="${index + 1}番目：ドラッグして順番を変更。上下矢印キーでも移動できます" title="ドラッグで並び替え（↑↓キーも使用可能）"><span aria-hidden="true">⠿</span></button><span class="order-number">${index + 1}</span></td>
+        <td><input class="name-input" type="text" maxlength="100" aria-label="大会名"></td>
         <td><input class="en-input" type="text" maxlength="150" aria-label="英語表記"></td>
         <td><select class="category-input" aria-label="分類"><option value="title">タイトル戦</option><option value="open">オープン</option><option value="other">その他</option></select></td>
-        <td><div class="color-controls"><input class="color-picker" type="color" aria-label="色を選択"><input class="color-code" type="text" maxlength="7" spellcheck="false" aria-label="カラーコード"></div></td>
+        <td><div class="color-controls"><input class="color-picker" type="color" aria-label="メインカラーを選択"><input class="color-code" type="text" maxlength="7" spellcheck="false" aria-label="メインカラーコード"></div></td>
+        <td><div class="color-controls"><input class="sub-color-picker" type="color" aria-label="サブカラーを選択"><input class="sub-color-code" type="text" maxlength="7" spellcheck="false" aria-label="サブカラーコード"></div></td>
         <td><div class="sample"></div></td>
         <td><button type="button" class="mini-button delete-button" aria-label="大会を削除">削除</button></td>`;
-      bindTextInput(row, 'input-order', entry, 'order');
+      bindDrag(row.querySelector('.drag-handle'), row, index);
       bindTextInput(row, 'name-input', entry, 'name');
       bindTextInput(row, 'en-input', entry, 'nameEn');
-      row.querySelector('.id-note').textContent = entry.id;
       const categorySelect = row.querySelector('.category-input');
       categorySelect.value = entry.category;
       categorySelect.addEventListener('change', () => { entry.category = categorySelect.value; markDirty(); });
       const code = row.querySelector('.color-code');
       code.value = entry.color;
-      makeColorGroup(row.querySelector('.color-picker'), code, value => { entry.color = value; });
+      makeColorGroup(row.querySelector('.color-picker'), code, value => {
+        entry.color = value;
+        const normalized = color(value);
+        if (normalized) {
+          entry.subColor = JBSBrand.makeSubColor(normalized);
+          row.querySelector('.sub-color-picker').value = entry.subColor;
+          row.querySelector('.sub-color-code').value = entry.subColor;
+        }
+      });
+      const subCode = row.querySelector('.sub-color-code');
+      subCode.value = entry.subColor;
+      makeColorGroup(row.querySelector('.sub-color-picker'), subCode, value => { entry.subColor = value; });
       row.querySelector('.delete-button').addEventListener('click', () => {
         if (working.tournaments.length === 1) { notify('大会をすべて削除することはできません。', true); return; }
         if (!confirm(`「${entry.name}」を削除しますか？ この大会IDを参照するツールにも影響します。`)) return;
         working.tournaments.splice(index, 1);
+        renumber();
         markDirty();
         renderRows();
       });
@@ -129,8 +198,7 @@
     const ids = new Set(working.tournaments.map(e => e.id));
     let index = 1;
     while (ids.has(`custom-${index}`)) index++;
-    const nextOrder = Math.max(0, ...working.tournaments.map(e => Number(e.order) || 0)) + 10;
-    working.tournaments.push({ id: `custom-${index}`, name: '', nameEn: '', category: 'other', color: '#3C3C3C', order: nextOrder });
+    working.tournaments.push({ id: `custom-${index}`, name: '', nameEn: '', category: 'other', color: '#3C3C3C', subColor: JBSBrand.makeSubColor('#3C3C3C'), order: working.tournaments.length + 1 });
     markDirty();
     renderRows();
     $('tournamentRows').lastElementChild.querySelector('.name-input').focus();
@@ -154,6 +222,7 @@
   }
   function exportJson() {
     try {
+      renumber();
       const data = validateWorking();
       const blob = new Blob([JSON.stringify(data, null, 2) + '\n'], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -173,6 +242,7 @@
       const next = JBSBrand.validate(parsed);
       if (dirty && !confirm('未保存の変更が失われます。JSONを取り込みますか？')) return;
       working = next;
+      renumber();
       render();
       $('addButton').disabled = false;
       $('saveButton').disabled = false;
@@ -209,7 +279,7 @@
     message.textContent = '';
     if (!token) { message.textContent = 'PATを入力してください。'; return; }
     let next;
-    try { next = validateWorking(); }
+    try { renumber(); next = validateWorking(); }
     catch (error) { message.textContent = error.message; return; }
 
     busy = true;
@@ -262,7 +332,7 @@
       makeColorGroup(picker, field, value => { working.contrast[key] = value; });
     });
     $('saveButton').addEventListener('click', () => {
-      try { validateWorking(); }
+      try { renumber(); validateWorking(); }
       catch (error) { notify(error.message, true); return; }
       $('dialogNotice').textContent = '';
       $('saveDialog').showModal();
@@ -279,11 +349,12 @@
     try {
       baseline = await JBSBrand.load();
       working = clone(baseline);
+      renumber();
       render();
-      setDirty(false);
+      setDirty(canon(working) !== canon(baseline));
     } catch (error) {
       // Import remains usable even if offline or Pages are not yet configured.
-      working = { schemaVersion: 1, tournaments: [], contrast: { threshold: 0.179, darkText: '#000000', lightText: '#FFFFFF' } };
+      working = { schemaVersion: 1, tournaments: [], contrast: { threshold: 0.26, darkText: '#000000', lightText: '#FFFFFF' } };
       $('editStatus').textContent = '読み込みエラー';
       notify(`公開設定を取得できませんでした：${error.message}。サイトの公開後に再読み込みするか、JSONを取り込んでください。`, true);
       $('addButton').disabled = true;
