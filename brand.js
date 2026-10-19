@@ -1,4 +1,4 @@
-/* JBS common brand data client — v4, classic script; no dependencies.
+/* JBS common brand data client — v5, classic script; no dependencies.
  * <script src="https://jbsbackgammon.github.io/common/brand.js"></script>
  * await JBSBrand.load();
  */
@@ -12,11 +12,12 @@
   const ID = /^[a-z][a-z0-9-]*$/;
   const CATEGORIES = new Set(['title', 'exchange', 'open', 'other']);
   const EDITIONS_2026 = Object.freeze({
-    'japan-championship': 'JBS 第54回', bansei: 'JBS 第32期', meijin: 'JBS 第32期',
-    oui: 'JBS 第33期', saiou: 'JBS 第7期', kisei: 'JBS 第5回',
+    'japan-championship': 'JBS 第54回', bansei: 'JBS 第33期', meijin: 'JBS 第32期',
+    oui: 'JBS 第33期', saiou: 'JBS 第8期', kisei: 'JBS 第5回',
     queen: 'JBS 第3回', 'shin-ei': 'JBS 第15回'
   });
   const EXCHANGE_IDS = new Set(['kisei', 'queen', 'shin-ei']);
+  const JULY_ROLLOVER_IDS = new Set(['bansei', 'saiou']);
   let current = null;
   let loading = null;
 
@@ -36,17 +37,43 @@
     return '#' + [1, 3, 5].map(i => toHex(parseInt(hex.slice(i, i + 2), 16))).join('');
   }
 
-  // The 2026 base is preserved in the JSON. For later years, only the
-  // edition number immediately following 「第」 is incremented.
-  function editionForYear(entry, year = new Date().getFullYear()) {
-    if (!entry || !Number.isSafeInteger(year) || year < 1900 || year > 9999) return '';
+  // All edition rollover boundaries are calculated in JST, even when a
+  // linked page is opened abroad. Only bansei/saiou change on July 1.
+  function jstParts(value = new Date()) {
+    if (!(value instanceof Date) || !Number.isFinite(value.getTime())) {
+      throw new Error('日付が正しくありません。');
+    }
+    const jst = new Date(value.getTime() + 9 * 60 * 60 * 1000);
+    return { year: jst.getUTCFullYear(), month: jst.getUTCMonth() + 1, day: jst.getUTCDate() };
+  }
+
+  function editionCycleYear(entry, date = new Date()) {
+    const { year, month, day } = jstParts(date);
+    const updateMonth = entry?.editionUpdateMonth ?? (JULY_ROLLOVER_IDS.has(entry?.id) ? 7 : 1);
+    const updateDay = entry?.editionUpdateDay ?? 1;
+    return month > updateMonth || (month === updateMonth && day >= updateDay) ? year : year - 1;
+  }
+
+  // editionBaseYear is the season's rollover year: the first date when
+  // editionBase is in effect, not necessarily the calendar year of a match.
+  function editionForDate(entry, date = new Date()) {
+    if (!entry) return '';
     const base = typeof entry.editionBase === 'string' ? entry.editionBase : '';
     const baseYear = entry.editionBaseYear;
-    if (!base || !Number.isSafeInteger(baseYear) || year === baseYear) return base;
+    if (!base || !Number.isSafeInteger(baseYear)) return base;
+    const change = editionCycleYear(entry, date) - baseYear;
     return base.replace(/第([0-9]+)(回|期)/, (full, number, unit) => {
-      const next = Number(number) + (year - baseYear);
+      const next = Number(number) + change;
       return Number.isSafeInteger(next) && next >= 1 ? `第${next}${unit}` : full;
     });
+  }
+
+  // For explicit year-only callers return the value after that year's
+  // rollover. No year provided means the current instant (not year-end).
+  function editionForYear(entry, year) {
+    if (year === undefined) return editionForDate(entry);
+    if (!Number.isSafeInteger(year) || year < 1900 || year > 9999) return '';
+    return editionForDate(entry, new Date(Date.UTC(year, 11, 31, 12)));
   }
 
   function validate(input) {
@@ -70,8 +97,18 @@
       const legacy = entry?.editionBase === undefined && entry?.editionBaseYear === undefined;
       const category = legacy && entry?.category === 'title' && EXCHANGE_IDS.has(id)
         ? 'exchange' : entry?.category;
-      const editionBase = legacy ? (EDITIONS_2026[id] || '') : entry?.editionBase;
+      const isJuly = JULY_ROLLOVER_IDS.has(id);
+      const previousRollover = entry?.editionUpdateMonth === undefined && entry?.editionUpdateDay === undefined;
+      // v04 used January 1 for every title. Migrate its unedited default
+      // numbers to July 2026's first 33rd/8th editions. Keep custom values.
+      const wasV04Default = !legacy && previousRollover && entry.editionBaseYear === 2026
+        && ((id === 'bansei' && entry.editionBase === 'JBS 第32期')
+          || (id === 'saiou' && entry.editionBase === 'JBS 第7期'));
+      const editionBase = legacy ? (EDITIONS_2026[id] || '')
+        : wasV04Default ? (EDITIONS_2026[id] || '') : entry?.editionBase;
       const editionBaseYear = legacy ? 2026 : entry?.editionBaseYear;
+      const editionUpdateMonth = entry?.editionUpdateMonth ?? (isJuly ? 7 : 1);
+      const editionUpdateDay = entry?.editionUpdateDay ?? 1;
       const order = entry?.order;
       if (!ID.test(id) || id.length > 60) throw new Error(`${i + 1}行目のIDが不正です。英小文字・数字・ハイフンを使用してください。`);
       if (!name || name.length > 100 || !nameEn || nameEn.length > 150) throw new Error(`${i + 1}行目の大会名・英語表記を入力してください。`);
@@ -80,12 +117,21 @@
       if (!CATEGORIES.has(category)) throw new Error(`${name}の分類が不正です。`);
       if (typeof editionBase !== 'string' || editionBase.length > 100) throw new Error(`${name}の回次は100文字以内で入力してください。`);
       if (!Number.isSafeInteger(editionBaseYear) || editionBaseYear < 1900 || editionBaseYear > 9999) throw new Error(`${name}の基準年が不正です。`);
+      // Keep the initial rollover policy fixed for the eight named events;
+      // custom entries can also use an explicitly configured rollover month.
+      if (!Number.isInteger(editionUpdateMonth) || editionUpdateMonth < 1 || editionUpdateMonth > 12
+          || !Number.isInteger(editionUpdateDay) || editionUpdateDay !== 1) {
+        throw new Error(`${name}の回次更新日が不正です。`);
+      }
+      if ((isJuly && editionUpdateMonth !== 7) || (!isJuly && editionUpdateMonth !== 1 && !id.startsWith('custom-'))) {
+        throw new Error(`${name}の回次更新月が不正です。`);
+      }
       if (!Number.isSafeInteger(order) || order < 1 || order > 999999) throw new Error(`${name}の表示順が不正です。`);
       if (seenIds.has(id)) throw new Error(`ID「${id}」が重複しています。`);
       if (seenNames.has(name)) throw new Error(`大会名「${name}」が重複しています。`);
       if (seenOrders.has(order)) throw new Error(`表示順「${order}」が重複しています。`);
       seenIds.add(id); seenNames.add(name); seenOrders.add(order);
-      return { id, name, nameEn, editionBaseYear, editionBase, category, color, subColor, order };
+      return { id, name, nameEn, editionBaseYear, editionBase, editionUpdateMonth, editionUpdateDay, category, color, subColor, order };
     }).sort((a, b) => a.order - b.order);
 
     const contrast = input.contrast;
@@ -117,7 +163,7 @@
     finally { if (loading === promise) loading = null; }
   }
 
-  function withEdition(entry, year = new Date().getFullYear()) { return { ...entry, edition: editionForYear(entry, year) }; }
+  function withEdition(entry) { return { ...entry, edition: editionForDate(entry) }; }
   function getConfig() { return current ? clone(current) : null; }
   function getTournaments() { return current ? current.tournaments.map(e => withEdition(e)) : []; }
   function getTournament(query) {
@@ -126,7 +172,7 @@
     const found = current.tournaments.find(e => [e.id, e.name, e.nameEn].some(s => s.toLocaleLowerCase() === key));
     return found ? withEdition(found) : null;
   }
-  function getEdition(query, year = new Date().getFullYear()) {
+  function getEdition(query, year) {
     if (!current || typeof query !== 'string') return null;
     const key = query.trim().toLocaleLowerCase();
     const entry = current.tournaments.find(e => [e.id, e.name, e.nameEn].some(s => s.toLocaleLowerCase() === key));
@@ -152,7 +198,7 @@
 
   // A read-only public API. Editors use validate() without changing the loaded data.
   global.JBSBrand = Object.freeze({
-    version: 4, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear,
+    version: 5, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
     getColor, getSubColor, makeSubColor, getTextColor, getContrast, luminance, normalizeColor, validate
   });
 })(window);

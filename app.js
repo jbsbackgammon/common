@@ -9,7 +9,7 @@
   let baseline = null;
   let dirty = false;
   let busy = false;
-  let renderedYear = null;
+  let renderedCycleKey = null;
 
   function notify(message, error = false) {
     const el = $('notice');
@@ -135,9 +135,17 @@
     });
   }
 
+  function cycleKey(date = new Date()) {
+    const japan = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+    const year = japan.getUTCFullYear();
+    const julyStarted = japan.getUTCMonth() >= 6;
+    return `${year}-${julyStarted ? 'late' : 'early'}`;
+  }
+
   function renderRows() {
-    renderedYear = new Date().getFullYear();
-    $('editionHeader').textContent = `${renderedYear}年`;
+    const now = new Date();
+    renderedCycleKey = cycleKey(now);
+    $('editionHeader').textContent = '回次等';
     const tbody = $('tournamentRows');
     tbody.replaceChildren();
     working.tournaments.forEach((entry, index) => {
@@ -148,7 +156,7 @@
         <td class="order-cell"><button type="button" class="drag-handle" aria-label="${index + 1}番目：ドラッグして順番を変更。上下矢印キーでも移動できます" title="ドラッグで並び替え（↑↓キーも使用可能）"><span aria-hidden="true">⠿</span></button><span class="order-number">${index + 1}</span></td>
         <td><input class="name-input" type="text" maxlength="100" aria-label="大会名"></td>
         <td><input class="en-input" type="text" maxlength="150" aria-label="英語表記"></td>
-        <td><input class="edition-input" type="text" maxlength="100" aria-label="${renderedYear}年の回次"></td>
+        <td><input class="edition-input" type="text" maxlength="100" aria-label="回次等"></td>
         <td><select class="category-input" aria-label="分類"><option value="title">五大タイトル</option><option value="exchange">交流タイトル</option><option value="open">オープン</option><option value="other">その他</option></select></td>
         <td><div class="color-controls"><input class="color-picker" type="color" aria-label="メインカラーを選択"><input class="color-code" type="text" maxlength="7" spellcheck="false" aria-label="メインカラーコード"></div></td>
         <td><div class="color-controls"><input class="sub-color-picker" type="color" aria-label="サブカラーを選択"><input class="sub-color-code" type="text" maxlength="7" spellcheck="false" aria-label="サブカラーコード"></div></td>
@@ -158,11 +166,11 @@
       bindTextInput(row, 'name-input', entry, 'name');
       bindTextInput(row, 'en-input', entry, 'nameEn');
       const editionInput = row.querySelector('.edition-input');
-      editionInput.value = JBSBrand.editionForYear(entry, renderedYear);
+      editionInput.value = JBSBrand.editionForDate(entry, now);
       editionInput.addEventListener('input', () => {
-        // The entered string describes the year currently shown in the header.
+        // Editing re-anchors the base at the current JST rollover season.
         entry.editionBase = editionInput.value;
-        entry.editionBaseYear = renderedYear;
+        entry.editionBaseYear = JBSBrand.editionCycleYear(entry, new Date());
         markDirty();
       });
       const categorySelect = row.querySelector('.category-input');
@@ -205,9 +213,9 @@
     });
   }
   function render() { renderRows(); renderContrast(); }
-  // Pages left open over New Year's Day update on focus/visibility return.
+  // Update open tabs when the annual boundary (Jan 1 / July 1 JST) passes.
   function checkYear() {
-    if (!working || new Date().getFullYear() === renderedYear) return;
+    if (!working || cycleKey() === renderedCycleKey) return;
     renderRows();
   }
 
@@ -215,7 +223,7 @@
     const ids = new Set(working.tournaments.map(e => e.id));
     let index = 1;
     while (ids.has(`custom-${index}`)) index++;
-    working.tournaments.push({ id: `custom-${index}`, name: '', nameEn: '', editionBase: '', editionBaseYear: new Date().getFullYear(), category: 'other', color: '#3C3C3C', subColor: JBSBrand.makeSubColor('#3C3C3C'), order: working.tournaments.length + 1 });
+    working.tournaments.push({ id: `custom-${index}`, name: '', nameEn: '', editionBase: '', editionBaseYear: JBSBrand.editionCycleYear({ editionUpdateMonth: 1 }, new Date()), editionUpdateMonth: 1, editionUpdateDay: 1, category: 'other', color: '#3C3C3C', subColor: JBSBrand.makeSubColor('#3C3C3C'), order: working.tournaments.length + 1 });
     markDirty();
     renderRows();
     $('tournamentRows').lastElementChild.querySelector('.name-input').focus();
@@ -337,6 +345,8 @@
 
   function bindEvents() {
     window.addEventListener('focus', checkYear);
+    // Check even when the management page stays open across midnight JST.
+    window.setInterval(checkYear, 60 * 1000);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) checkYear(); });
     $('addButton').addEventListener('click', addTournament);
     $('exportButton').addEventListener('click', exportJson);

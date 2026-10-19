@@ -8,7 +8,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 ## 初回設置
 
-1. `commonv04.zip` は **差分** です。既存の `common` のルートに内容を追加・上書きしてください（`data/brand.json` を含む）。初回設置は全ファイル一式から行います。
+1. `commonv05.zip` は **差分** です。既存の `common` のルートに内容を追加・上書きしてください（`data/brand.json` を含む）。初回設置は全ファイル一式から行います。
 2. GitHubリポジトリの **Settings → Pages → Build and deployment → Source: GitHub Actions** を選択してください。**Deploy from a branch は選択しません。**
 3. `main` ブランチへのPushで `.github/workflows/deploy.yml` が自動実行され、公開後 https://jbsbackgammon.github.io/common/ で閲覧できます。**Actions → Deploy GitHub Pages → Run workflow** から手動実行も可能です。
 
@@ -27,7 +27,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 - 大会の追加と削除、ドラッグによる並び替え（キーボードの上下矢印キーも対応）。保存順は1,2,3…に連番化
 - 表示イメージのセル全体をメインカラーで塗りつぶすプレビュー。メインカラー変更でサブカラーを自動生成（白を32%混合）、その後に個別変更可能
 - 分類は五大タイトル (`title`)、交流タイトル (`exchange`)、オープン (`open`)、その他 (`other`)
-- 年ごとの回次は「基準年＋基準表示」方式。2026年の初期値から、2027年以降は「第○回」「第○期」の数字を経過年数だけ加算（ページを開き直すか再フォーカスで更新）
+- 回次は年次で自動加算。盤聖戦・賽王戦のみ毎年7月1日（日本時間）、その他は毎年1月1日（日本時間）に更新（ページに戻った際も更新）
 - 文字色判定の相対輝度しきい値と白/黒の文字色を管理
 - JSON取込・JSON出力
 - GitHub APIによる **`data/brand.json` 直接保存**
@@ -79,8 +79,10 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | `await JBSBrand.load({force:true})` | JSONの再取得（再読み込み用） |
 | `JBSBrand.getTournaments()` | `order` 昇順の大会一覧（コピー） |
 | `JBSBrand.getTournament(nameOrId)` | ID、日本語名、英語名のいずれかで大会を取得（見つからない場合は `null`） |
-| `JBSBrand.getEdition(nameOrId, year?)` | 指定年の回次（年省略時は閲覧端末の現在年）。未登録なら `null` |
-| `JBSBrand.editionForYear(entry, year?)` | 大会データから指定年の回次を計算（未入力なら空文字） |
+| `JBSBrand.getEdition(nameOrId, year?)` | 現在日時の回次。年指定ならその年の更新日後の回次。未登録なら `null` |
+| `JBSBrand.editionForYear(entry, year?)` | 指定年の更新日後の回次（省略時は現在日時）。未入力なら空文字 |
+| `JBSBrand.editionForDate(entry, date?)` | 指定日時（Dateオブジェクト）の実際の回次を日本時間で計算 |
+| `JBSBrand.editionCycleYear(entry, date?)` | 指定日時が属する回次更新年度を取得（7月更新にも対応） |
 | `JBSBrand.getColor(nameOrId, fallback)` | メインカラー。未登録の場合は `fallback`（省略時 `null`） |
 | `JBSBrand.getSubColor(nameOrId, fallback)` | サブカラー。未登録の場合は `fallback`（省略時 `null`） |
 | `JBSBrand.makeSubColor(mainColor)` | メインカラーに白を32%混ぜたサブカラー初期値 |
@@ -114,6 +116,8 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
       "category": "title",
       "editionBaseYear": 2026,
       "editionBase": "JBS 第33期",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1,
       "color": "#0D6B2F",
       "subColor": "#5A9A72",
       "order": 4
@@ -137,7 +141,16 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 ### 年度回次の初期値と移行について（v04）
 
-- 2026年: 日本選手権 JBS 第54回 / 盤聖戦 第32期 / 名人戦 第32期 / 王位戦 第33期 / 賽王戦 第7期 / 棋聖戦 第5回 / 女王戦 第3回 / 新鋭戦 第15回（いずれも `JBS ` を冠する）。オープン3大会は未入力。
-- 2027年: それぞれ自動的に+1。JSONを年末ごとに更新する必要はありません。
-- 入力欄の値を変更したときは、現在表示中の年を新しい基準年として保存するため、翌年以降も加算が続きます。`第○回` / `第○期` が含まれないテキストは年をまたいでも変更しません。
+- 2026年（10月時点）: 日本選手権 JBS 第54回 / 盤聖戦 第33期 / 名人戦 第32期 / 王位戦 第33期 / 賽王戦 第8期 / 棋聖戦 第5回 / 女王戦 第3回 / 新鋭戦 第15回（いずれも `JBS ` を冠する）。オープン3大会は未入力。
+- 2027年: 盤聖戦・賽王戦は2027年7月1日（日本時間）にそれぞれ第34期・第9期へ切替。そのほかは2027年1月1日に+1。年替わりのJSON更新は不要です。
+- 入力欄の値を変更したときは、その日時に有効な回次更新年度を基準として保存するため、以降の更新日に加算が続きます。`第○回` / `第○期` が含まれないテキストは年をまたいでも変更しません。
 - 旧JSONでは棋聖戦・女王戦・新鋭戦が `title` として扱われていました。回次の新フィールドがない旧JSONから取り込む場合に限り、3大会を `exchange` に自動移行します。その他の既存項目は維持します。
+
+### v05 UI調整と回次の更新日
+
+- 大会一覧の列名を「回次等」に固定（回次の入力内容はアクセス年に応じ自動計算したものを表示）。
+- メインカラー・サブカラー・明るい背景の文字色・暗い背景の文字色、4種類のカラーピッカーを外枠の内側いっぱいまで塗りつぶし、内側の余白・スウォッチの枠線を削除。
+
+- **盤聖戦・賽王戦** は7月1日（日本時間）に更新。2026年1月1日〜6月30日はそれぞれ「JBS 第32期」「JBS 第7期」、**2026年7月1日から**「JBS 第33期」「JBS 第8期」です。2027年7月1日からは「JBS 第34期」「JBS 第9期」になります。
+- ほかの大会は毎年1月1日（日本時間）に更新。`editionUpdateMonth` / `editionUpdateDay` を共通JSONに保存します（通常 `1/1`、盤聖戦・賽王戦のみ `7/1`）。
+- v04の旧JSONで基準回次が「盤聖戦 JBS 第32期」「賽王戦 JBS 第7期」の場合は、読み込み時に新しい7月更新ルールへ自動移行します。

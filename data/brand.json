@@ -10,7 +10,9 @@
       "order": 1,
       "subColor": "#7A7A7A",
       "editionBaseYear": 2026,
-      "editionBase": "JBS 第54回"
+      "editionBase": "JBS 第54回",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     },
     {
       "id": "bansei",
@@ -21,7 +23,9 @@
       "order": 2,
       "subColor": "#9A5A72",
       "editionBaseYear": 2026,
-      "editionBase": "JBS 第32期"
+      "editionBase": "JBS 第33期",
+      "editionUpdateMonth": 7,
+      "editionUpdateDay": 1
     },
     {
       "id": "meijin",
@@ -32,7 +36,9 @@
       "order": 3,
       "subColor": "#9A985A",
       "editionBaseYear": 2026,
-      "editionBase": "JBS 第32期"
+      "editionBase": "JBS 第32期",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     },
     {
       "id": "oui",
@@ -43,7 +49,9 @@
       "order": 4,
       "subColor": "#5A9A72",
       "editionBaseYear": 2026,
-      "editionBase": "JBS 第33期"
+      "editionBase": "JBS 第33期",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     },
     {
       "id": "saiou",
@@ -54,7 +62,9 @@
       "order": 5,
       "subColor": "#5A699A",
       "editionBaseYear": 2026,
-      "editionBase": "JBS 第7期"
+      "editionBase": "JBS 第8期",
+      "editionUpdateMonth": 7,
+      "editionUpdateDay": 1
     },
     {
       "id": "kisei",
@@ -65,7 +75,9 @@
       "order": 6,
       "subColor": "#9A695A",
       "editionBaseYear": 2026,
-      "editionBase": "JBS 第5回"
+      "editionBase": "JBS 第5回",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     },
     {
       "id": "queen",
@@ -76,7 +88,9 @@
       "order": 7,
       "subColor": "#9A5A8F",
       "editionBaseYear": 2026,
-      "editionBase": "JBS 第3回"
+      "editionBase": "JBS 第3回",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     },
     {
       "id": "shin-ei",
@@ -87,7 +101,9 @@
       "order": 8,
       "subColor": "#5A989A",
       "editionBaseYear": 2026,
-      "editionBase": "JBS 第15回"
+      "editionBase": "JBS 第15回",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     },
     {
       "id": "tokyo-open",
@@ -98,7 +114,9 @@
       "order": 9,
       "subColor": "#52BE7D",
       "editionBaseYear": 2026,
-      "editionBase": ""
+      "editionBase": "",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     },
     {
       "id": "osaka-open",
@@ -109,7 +127,9 @@
       "order": 10,
       "subColor": "#FACD6F",
       "editionBaseYear": 2026,
-      "editionBase": ""
+      "editionBase": "",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     },
     {
       "id": "nagoya-open",
@@ -120,7 +140,9 @@
       "order": 11,
       "subColor": "#5A6D86",
       "editionBaseYear": 2026,
-      "editionBase": ""
+      "editionBase": "",
+      "editionUpdateMonth": 1,
+      "editionUpdateDay": 1
     }
   ],
   "contrast": {

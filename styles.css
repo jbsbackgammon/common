@@ -39,7 +39,25 @@ h2 { margin:0; font-size:17px; font-weight:700; }
 .master-table .category-input { min-width:120px; }
 .master-table .edition-input { min-width:138px; }
 .master-table .color-controls { display:flex; align-items:center; gap:6px; min-width:145px; }
-.master-table .color-picker,.master-table .sub-color-picker,.color-group input[type=color] { padding:2px; width:38px; min-width:38px; flex:0 0 38px; }
+/* Fill the entire color control: the native swatch must not have its own inset frame. */
+.master-table .color-picker,.master-table .sub-color-picker,.color-group input[type=color] {
+  width:38px;
+  min-width:38px;
+  flex:0 0 38px;
+  height:36px;
+  padding:0;
+  margin:0;
+  border:1px solid #cbd0d9;
+  border-radius:4px;
+  background:transparent;
+  overflow:hidden;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+}
+.master-table input[type=color]::-webkit-color-swatch-wrapper,.color-group input[type=color]::-webkit-color-swatch-wrapper { padding:0; }
+.master-table input[type=color]::-webkit-color-swatch,.color-group input[type=color]::-webkit-color-swatch { border:0; border-radius:0; }
+.master-table input[type=color]::-moz-color-swatch,.color-group input[type=color]::-moz-color-swatch { border:0; border-radius:0; }
 .master-table .color-code,.master-table .sub-color-code { width:99px; text-transform:uppercase; }
 .master-table .sample-cell { min-width:132px; text-align:center; font-size:12px; font-weight:700; line-height:1.3; overflow-wrap:anywhere; }
 .master-table .delete-cell { text-align:center; }
