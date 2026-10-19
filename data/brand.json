@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "tournaments": [
+    { "id": "japan-championship", "name": "日本選手権", "nameEn": "JAPAN OPEN", "category": "title", "color": "#3C3C3C", "order": 10 },
+    { "id": "bansei", "name": "盤聖戦", "nameEn": "BANSEI", "category": "title", "color": "#6B0D2F", "order": 20 },
+    { "id": "meijin", "name": "名人戦", "nameEn": "MEIJIN", "category": "title", "color": "#6B670D", "order": 30 },
+    { "id": "oui", "name": "王位戦", "nameEn": "OUI", "category": "title", "color": "#0D6B2F", "order": 40 },
+    { "id": "saiou", "name": "賽王戦", "nameEn": "SAIO", "category": "title", "color": "#0D236B", "order": 50 },
+    { "id": "kisei", "name": "棋聖戦", "nameEn": "INVITATIONAL DOUBLES", "category": "title", "color": "#6B230D", "order": 60 },
+    { "id": "queen", "name": "女王戦", "nameEn": "WOMEN'S CHAMPIONSHIP", "category": "title", "color": "#6B0D5B", "order": 70 },
+    { "id": "shin-ei", "name": "新鋭戦", "nameEn": "YOUTH CHAMPIONSHIP", "category": "title", "color": "#0D676B", "order": 80 },
+    { "id": "tokyo-open", "name": "東京オープン", "nameEn": "TOKYO OPEN", "category": "open", "color": "#009F40", "order": 90 },
+    { "id": "osaka-open", "name": "大阪オープン", "nameEn": "OSAKA OPEN", "category": "open", "color": "#F8B62B", "order": 100 },
+    { "id": "nagoya-open", "name": "名古屋オープン", "nameEn": "NAGOYA OPEN", "category": "open", "color": "#0C284D", "order": 110 }
+  ],
+  "contrast": {
+    "threshold": 0.179,
+    "darkText": "#000000",
+    "lightText": "#FFFFFF"
+  }
+}

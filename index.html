@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#ffffff">
+  <title>ブランド管理</title>
+  <link rel="stylesheet" href="./styles.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>ブランド管理</h1>
+      <div class="header-actions">
+        <button type="button" id="importButton" class="button-outline">JSON取込</button>
+        <input type="file" id="importFile" accept=".json,application/json" hidden>
+        <button type="button" id="exportButton" class="button-outline">JSON出力</button>
+        <button type="button" id="saveButton" class="button-primary">GitHubに保存</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="intro">
+      <p>各JBSツールで共用する大会カラー・大会名・英語表記・文字色判定を管理します。</p>
+      <span id="editStatus" class="edit-status">読み込み中</span>
+    </div>
+    <div id="notice" role="status" aria-live="polite" class="notice" hidden></div>
+
+    <section class="panel">
+      <div class="section-head">
+        <h2>大会マスタ</h2>
+        <button type="button" id="addButton" class="button-outline">大会追加</button>
+      </div>
+      <div class="table-scroll">
+        <table class="master-table">
+          <thead><tr><th>順番</th><th>大会名</th><th>英語表記</th><th>分類</th><th>メインカラー</th><th>表示イメージ</th><th>操作</th></tr></thead>
+          <tbody id="tournamentRows"></tbody>
+        </table>
+      </div>
+      <p class="help">表示順の数字が小さい大会から表示します。同じ数字は指定できません。IDは連携先の互換性を守るため、作成後は変更しません。</p>
+    </section>
+
+    <section class="panel contrast-panel">
+      <div class="section-head"><h2>文字色の自動判定</h2></div>
+      <div class="contrast-grid">
+        <div class="control"><label for="threshold">輝度のしきい値</label><input id="threshold" type="number" min="0" max="1" step="0.001" inputmode="decimal"></div>
+        <div class="control"><label for="darkTextCode">明るい背景の文字色</label><div class="color-group"><input id="darkTextPicker" type="color" aria-label="明るい背景の文字色を選択"><input id="darkTextCode" type="text" maxlength="7" spellcheck="false"></div></div>
+        <div class="control"><label for="lightTextCode">暗い背景の文字色</label><div class="color-group"><input id="lightTextPicker" type="color" aria-label="暗い背景の文字色を選択"><input id="lightTextCode" type="text" maxlength="7" spellcheck="false"></div></div>
+      </div>
+      <p class="help">sRGB相対輝度がしきい値を上回る場合は「明るい背景の文字色」を使用します。初期値は <code>0.179 / #000000 / #FFFFFF</code> です。</p>
+    </section>
+
+    <section class="panel guide-panel">
+      <h2>他ツールでの参照</h2>
+      <p><code>https://jbsbackgammon.github.io/common/brand.js</code> を読み込み、<code>JBSBrand.load()</code> の完了後に大会情報を取得できます。</p>
+      <pre><code>&lt;script src="https://jbsbackgammon.github.io/common/brand.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  JBSBrand.load().then(() =&gt; {
+    const tournament = JBSBrand.getTournament('王位戦');
+    const color = tournament.color;
+    const textColor = JBSBrand.getTextColor(color);
+    console.log(tournament.nameEn, color, textColor);
+  });
+&lt;/script&gt;</code></pre>
+      <p class="help">実際のデータは <a href="./data/brand.json" target="_blank" rel="noopener">data/brand.json</a> に格納されます。管理画面で編集しただけでは公開内容は変わりません。「GitHubに保存」で反映するか、JSON出力したファイルをGitHubの同じパスに上書きしてください。</p>
+    </section>
+  </main>
+
+  <dialog id="saveDialog" aria-labelledby="saveDialogTitle">
+    <form method="dialog" id="saveForm">
+      <h2 id="saveDialogTitle">GitHubへ保存</h2>
+      <p>保存先：<strong>jbsbackgammon/common</strong> の <code>data/brand.json</code></p>
+      <label for="pat">Fine-grained PAT（Contents: Read and write）</label>
+      <input id="pat" name="pat" type="password" autocomplete="off" spellcheck="false" required placeholder="github_pat_...">
+      <p class="help">トークンはこの保存時だけ使用し、ブラウザには保存しません。権限は common リポジトリだけに限定してください。</p>
+      <div class="dialog-actions">
+        <button type="button" id="cancelSave" class="button-outline">キャンセル</button>
+        <button type="submit" id="confirmSave" class="button-primary">保存する</button>
+      </div>
+      <p id="dialogNotice" class="dialog-message" role="alert"></p>
+    </form>
+  </dialog>
+
+  <script src="./brand.js?v=1"></script>
+  <script src="./app.js?v=1"></script>
+</body>
+</html>
