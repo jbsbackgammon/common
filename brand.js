@@ -1,4 +1,4 @@
-/* JBS common brand data client — v5, classic script; no dependencies.
+/* JBS common brand data client — v6, classic script; no dependencies.
  * <script src="https://jbsbackgammon.github.io/common/brand.js"></script>
  * await JBSBrand.load();
  */
@@ -14,7 +14,9 @@
   const EDITIONS_2026 = Object.freeze({
     'japan-championship': 'JBS 第54回', bansei: 'JBS 第33期', meijin: 'JBS 第32期',
     oui: 'JBS 第33期', saiou: 'JBS 第8期', kisei: 'JBS 第5回',
-    queen: 'JBS 第3回', 'shin-ei': 'JBS 第15回'
+    queen: 'JBS 第3回', 'shin-ei': 'JBS 第15回',
+    'tokyo-open': 'JBS 第2回', 'osaka-open': 'JBS 第27回',
+    'nagoya-open': 'JBS 第5回'
   });
   const EXCHANGE_IDS = new Set(['kisei', 'queen', 'shin-ei']);
   const JULY_ROLLOVER_IDS = new Set(['bansei', 'saiou']);
@@ -198,7 +200,7 @@
 
   // A read-only public API. Editors use validate() without changing the loaded data.
   global.JBSBrand = Object.freeze({
-    version: 5, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
+    version: 6, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
     getColor, getSubColor, makeSubColor, getTextColor, getContrast, luminance, normalizeColor, validate
   });
 })(window);
