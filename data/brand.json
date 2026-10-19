@@ -8,7 +8,9 @@
       "category": "title",
       "color": "#3C3C3C",
       "order": 1,
-      "subColor": "#7A7A7A"
+      "subColor": "#7A7A7A",
+      "editionBaseYear": 2026,
+      "editionBase": "JBS 第54回"
     },
     {
       "id": "bansei",
@@ -17,7 +19,9 @@
       "category": "title",
       "color": "#6B0D2F",
       "order": 2,
-      "subColor": "#9A5A72"
+      "subColor": "#9A5A72",
+      "editionBaseYear": 2026,
+      "editionBase": "JBS 第32期"
     },
     {
       "id": "meijin",
@@ -26,7 +30,9 @@
       "category": "title",
       "color": "#6B670D",
       "order": 3,
-      "subColor": "#9A985A"
+      "subColor": "#9A985A",
+      "editionBaseYear": 2026,
+      "editionBase": "JBS 第32期"
     },
     {
       "id": "oui",
@@ -35,7 +41,9 @@
       "category": "title",
       "color": "#0D6B2F",
       "order": 4,
-      "subColor": "#5A9A72"
+      "subColor": "#5A9A72",
+      "editionBaseYear": 2026,
+      "editionBase": "JBS 第33期"
     },
     {
       "id": "saiou",
@@ -44,34 +52,42 @@
       "category": "title",
       "color": "#0D236B",
       "order": 5,
-      "subColor": "#5A699A"
+      "subColor": "#5A699A",
+      "editionBaseYear": 2026,
+      "editionBase": "JBS 第7期"
     },
     {
       "id": "kisei",
       "name": "棋聖戦",
       "nameEn": "INVITATIONAL DOUBLES",
-      "category": "title",
+      "category": "exchange",
       "color": "#6B230D",
       "order": 6,
-      "subColor": "#9A695A"
+      "subColor": "#9A695A",
+      "editionBaseYear": 2026,
+      "editionBase": "JBS 第5回"
     },
     {
       "id": "queen",
       "name": "女王戦",
       "nameEn": "WOMEN'S CHAMPIONSHIP",
-      "category": "title",
+      "category": "exchange",
       "color": "#6B0D5B",
       "order": 7,
-      "subColor": "#9A5A8F"
+      "subColor": "#9A5A8F",
+      "editionBaseYear": 2026,
+      "editionBase": "JBS 第3回"
     },
     {
       "id": "shin-ei",
       "name": "新鋭戦",
       "nameEn": "YOUTH CHAMPIONSHIP",
-      "category": "title",
+      "category": "exchange",
       "color": "#0D676B",
       "order": 8,
-      "subColor": "#5A989A"
+      "subColor": "#5A989A",
+      "editionBaseYear": 2026,
+      "editionBase": "JBS 第15回"
     },
     {
       "id": "tokyo-open",
@@ -80,7 +96,9 @@
       "category": "open",
       "color": "#009F40",
       "order": 9,
-      "subColor": "#52BE7D"
+      "subColor": "#52BE7D",
+      "editionBaseYear": 2026,
+      "editionBase": ""
     },
     {
       "id": "osaka-open",
@@ -89,7 +107,9 @@
       "category": "open",
       "color": "#F8B62B",
       "order": 10,
-      "subColor": "#FACD6F"
+      "subColor": "#FACD6F",
+      "editionBaseYear": 2026,
+      "editionBase": ""
     },
     {
       "id": "nagoya-open",
@@ -98,7 +118,9 @@
       "category": "open",
       "color": "#0C284D",
       "order": 11,
-      "subColor": "#5A6D86"
+      "subColor": "#5A6D86",
+      "editionBaseYear": 2026,
+      "editionBase": ""
     }
   ],
   "contrast": {
