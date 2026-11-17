@@ -167,9 +167,9 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
 
-## 共通UIデザインシステム（v15）
+## 共通UIデザインシステム（v16）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=15`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=16`
 - カラー：色相215°・彩度25%。明度20/40/60/80/90/95/100%の7色（`--color-20` 等）のみを直接参照。用途別カラー変数は持たない
 - **命名：分類を先頭に記載**。例：`--height-input`、`--width-preset-select`、`--shadow-primary`、`--font-size-14`、`--font-weight-action`
 - **縦区切り線の高さは入力欄と同じ36px**。`--height-divider` のような専用変数は設けず、`--height-input` を直接参照する
@@ -187,15 +187,17 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | width | `--width-preset-select`、`--width-border`、`--width-focus-ring` |
 | size・角丸 | `--size-checkbox`、`--size-swatch`、`--radius` |
 | space | `--space-4`、`--space-8`、`--space-12`、`--space-16`、`--space-24` |
-| opacity | `--opacity-disabled`、`--opacity-inactive` |
-| shadow | `--shadow-primary`、`--shadow-dialog` |
+| opacity | `--opacity-muted` |
+| shadow | `--shadow-primary` |
 
 ### 編集画面向けの追加トークン（v14）
 
 - `--size-checkbox: 20px`：チェックボックスの縦横
 - `--width-focus-ring: 3px`：入力フォーカスリングと写真選択ボタンのフォーカス輪郭線を3pxに統一
-- `--opacity-disabled: .4`、`--opacity-inactive: .5`：非活性表示
+- `--opacity-muted: .5`：無効・非アクティブ状態の不透明度を共通化
 - ラベルの文字間隔拡張・主ボタンのホバー明度補正・写真変更表示の短時間アニメーションは不要として廃止
+
+影も `--shadow-primary` の1種類に統一し、主ボタン・ダイアログ・編集画面プレビューで共有する。
 
 共通デザイン値は `ui.css` の変数を直接参照。ツール固有のグリッド列幅・編集ダイアログ最大サイズなどは、`overlay/styles.css` の編集画面専用変数に集約して重複指定を防ぐ。CSS仕様上、メディアクエリ内のブレイクポイント値は `var()` を使えないため、そこだけは例外とする。配信盤面の描画スタイルは対象外。
 
@@ -206,7 +208,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 ### 使用方法
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=15">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=16">
 <aside class="jbs-ui">
   <div class="field"><label for="name">名前</label><input id="name"></div>
   <div class="field"><label for="round">試合名</label><div class="preset-input"><select aria-label="候補"><option>選択</option></select><input id="round"></div></div>
