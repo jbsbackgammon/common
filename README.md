@@ -167,9 +167,9 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
 
-## 共通UIデザインシステム（v29）
+## 共通UIデザインシステム（v30）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=29`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=30`
 - 編集UIでは `class="jbsui"` を持つ要素の内側に共通クラスを配置。配信盤面・大会テーマ・各ツール固有のレイアウトは共通化しない
 - 変数の定義順は color → font → height → width → size（角丸含む）→ space → opacity → shadow
 - 名前は分類を先頭にする。例：`--height-input`、`--width-preset-select`、`--font-size-14`、`--shadow`
@@ -205,7 +205,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 - プルダウンの展開一覧（`option`）は白背景・基本文字色。閉じたプルダウンの背景やhover状態は変更しない
 - `jbsui-field`、`jbsui-select`、`jbsui-preset-input`：入力・プルダウンの共通外観と操作状態
 - `jbsui-color-control`、`jbsui-color-swatch`、`jbsui-hex-input`：カラー入力とプレビュー
-- `jbsui-button`、`jbsui-button--primary`、`jbsui-check`、`jbsui-divider`：操作要素
+- `jbsui-button`、`jbsui-button--primary`、`jbsui-check`、`jbsui-divider`：操作要素。通常ボタン・主要ボタンともに文字サイズ14pxで統一
 - `jbsui-dialog`、`jbsui-dialog-head`、`jbsui-dialog-close`：ダイアログ
 - `--shadow` はダイアログとoverlayの編集プレビューで使用。主要ボタンに影は付けない
 
@@ -214,7 +214,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 ### 使用例
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=29">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=30">
 <aside class="jbsui">
   <div class="jbsui-field">
     <label for="name">名前</label><input id="name">
