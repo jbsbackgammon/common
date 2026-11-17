@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v13.
+ * JBS operations UI design system v14.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -26,7 +26,6 @@
   --font-size-24: 24px;
   --font-weight-normal: 400;
   --font-weight-action: 800;
-  --font-spacing-label: .03em;
 
   /* Component geometry */
   --height-input: 36px;
@@ -40,7 +39,6 @@
   --radius: 6px;
   --width-border: 1px;
   --width-focus-ring: 3px;
-  --width-focus-outline: 2px;
 
   /* Canonical editor spacing uses only 4/8/12/16/24px. */
   --space-4: 4px;
@@ -52,8 +50,6 @@
   /* Reusable interaction states */
   --opacity-disabled: .4;
   --opacity-inactive: .5;
-  --brightness-hover: 1.08;
-  --duration-short: 150ms;
 
   /* Shadows, derived from the base colors */
   --shadow-primary: 0 5px 12px color-mix(in srgb, var(--color-20) 16%, transparent);
@@ -76,7 +72,6 @@
   color: var(--color-40);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
-  letter-spacing: var(--font-spacing-label);
 }
 .jbs-ui .field input,
 .jbs-ui .field select {
@@ -117,7 +112,6 @@
 }
 .jbs-ui .jbs-ui-button--primary:hover {
   background: var(--color-20);
-  filter: brightness(var(--brightness-hover));
 }
 .jbs-ui .jbs-ui-divider {
   width: var(--width-border);
