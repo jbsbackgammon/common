@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v23.
+ * JBS operations UI design system v24.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -89,8 +89,10 @@
 .jbsui .jbsui-field select:not(:disabled):hover { background-color: var(--color-95); }
 .jbsui .jbsui-field input:focus,
 .jbsui .jbsui-field select:focus { border-color: var(--color-60); }
-.jbsui :is(button, input, select):focus-visible,
-.jbsui-dialog :is(button, input, select):focus-visible {
+/* :focus-visible alone also matches clicked text inputs in some browsers.
+   Keep the outer ring exclusively for keyboard navigation (Tab). */
+html[data-jbsui-keyboard-focus] .jbsui :is(button, input, select):focus-visible,
+html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-visible {
   outline: var(--width-focus-ring) solid var(--color-60);
   outline-offset: var(--width-focus-ring);
 }
