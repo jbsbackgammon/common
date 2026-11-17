@@ -1,30 +1,38 @@
 /*
- * JBS operations UI design system v3.
+ * JBS operations UI design system v4.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
 :root {
-  /* Surfaces */
-  --jbs-ui-page-bg: #EEF0F4;
-  --jbs-ui-surface: #FFFFFF;
-  --jbs-ui-button-bg: #F7F8FA;
-  --jbs-ui-hover-bg: #E9EDF3;
-  --jbs-ui-photo-bg: #F1F2F4;
+  /* Exactly seven neutral UI tones; hue 215deg, saturation 25%.
+     Brightness values are HSL lightness percentages, not perceptual L*. */
+  --jbs-ui-tone-20: hsl(215 25% 20%);
+  --jbs-ui-tone-40: hsl(215 25% 40%);
+  --jbs-ui-tone-60: hsl(215 25% 60%);
+  --jbs-ui-tone-80: hsl(215 25% 80%);
+  --jbs-ui-tone-90: hsl(215 25% 90%);
+  --jbs-ui-tone-95: hsl(215 25% 95%);
+  --jbs-ui-tone-100: hsl(215 25% 100%);
 
-  /* Text */
-  --jbs-ui-text: #27364D;
-  --jbs-ui-label: #3E5069;
-  --jbs-ui-disabled-text: #8993A3;
-  --jbs-ui-on-primary: #FFFFFF;
+  /* Semantic aliases: one of the seven tones per UI role. */
+  --jbs-ui-page-bg: var(--jbs-ui-tone-95);
+  --jbs-ui-surface: var(--jbs-ui-tone-100);
+  --jbs-ui-button-bg: var(--jbs-ui-tone-95);
+  --jbs-ui-hover-bg: var(--jbs-ui-tone-90);
+  --jbs-ui-photo-bg: var(--jbs-ui-tone-95);
 
-  /* Lines and interaction states */
-  --jbs-ui-border: #CBD3DE;
-  --jbs-ui-divider: #AEB5C0;
-  --jbs-ui-hairline: #D9DEE6;
-  --jbs-ui-focus: #7D8FA8;
-  --jbs-ui-focus-ring: rgba(75, 97, 126, .1);
-  --jbs-ui-disabled-bg: #F4F5F8;
-  --jbs-ui-disabled-border: #E2E5EA;
+  --jbs-ui-text: var(--jbs-ui-tone-20);
+  --jbs-ui-label: var(--jbs-ui-tone-40);
+  --jbs-ui-disabled-text: var(--jbs-ui-tone-60);
+  --jbs-ui-on-primary: var(--jbs-ui-tone-100);
+
+  --jbs-ui-border: var(--jbs-ui-tone-80);
+  --jbs-ui-divider: var(--jbs-ui-tone-80);
+  --jbs-ui-hairline: var(--jbs-ui-tone-90);
+  --jbs-ui-focus: var(--jbs-ui-tone-60);
+  --jbs-ui-focus-ring: hsl(215 25% 60% / 10%);
+  --jbs-ui-disabled-bg: var(--jbs-ui-tone-95);
+  --jbs-ui-disabled-border: var(--jbs-ui-tone-90);
 
   /* Typography */
   --jbs-ui-font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
@@ -61,9 +69,9 @@
   --jbs-ui-gap-color-row: 14px;
 
   /* Shadows and modal surfaces */
-  --jbs-ui-primary-shadow: 0 5px 12px rgba(0, 0, 0, .16);
-  --jbs-ui-dialog-shadow: 0 24px 80px rgba(22, 34, 50, .32);
-  --jbs-ui-backdrop: rgba(20, 29, 41, .48);
+  --jbs-ui-primary-shadow: 0 5px 12px hsl(215 25% 20% / 16%);
+  --jbs-ui-dialog-shadow: 0 24px 80px hsl(215 25% 20% / 32%);
+  --jbs-ui-backdrop: hsl(215 25% 20% / 48%);
 }
 
 /* Reusable opt-in elements. No global element resets or site-wide rules. */
@@ -113,13 +121,13 @@
 .jbs-ui .jbs-ui-button:hover { background: var(--jbs-ui-hover-bg); }
 .jbs-ui .jbs-ui-button--primary {
   border: 0;
-  background: var(--button-theme, #383838);
+  background: var(--button-theme, var(--jbs-ui-tone-20));
   color: var(--jbs-ui-on-primary);
   font-size: var(--jbs-ui-font-16);
   box-shadow: var(--jbs-ui-primary-shadow);
 }
 .jbs-ui .jbs-ui-button--primary:hover {
-  background: var(--button-theme, #383838);
+  background: var(--button-theme, var(--jbs-ui-tone-20));
   filter: brightness(1.08);
 }
 .jbs-ui .jbs-ui-divider {
