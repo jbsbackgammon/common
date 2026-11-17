@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v7.
+ * JBS operations UI design system v8.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -52,7 +52,7 @@
   --jbs-ui-preset-select-width: 90px;
   --jbs-ui-divider-height: 26px;
   /* One radius for all rectangular JBS editor controls, panels and dialogs. */
-  --jbs-ui-radius: 4px;
+  --jbs-ui-radius: 6px;
   --jbs-ui-border-width: 1px;
 
   /* Canonical editor spacing uses only 4/8/12/16/24px. */

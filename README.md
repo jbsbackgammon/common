@@ -167,9 +167,9 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
 
-## 共通UIデザインシステム（v7）
+## 共通UIデザインシステム（v8）
 
-- CSS正本：`https://jbsbackgammon.github.io/common/ui.css?v=7`
+- CSS正本：`https://jbsbackgammon.github.io/common/ui.css?v=8`
 - 対象：JBS運営ツールの**編集・操作UI**。大会テーマ色は従来どおり `brand.js` / `data/brand.json` で管理する。
 - 色・フォント・罫線・高さ・角丸・余白は `--jbs-ui-*` のCSS変数を正本とする。
 - 基本色は **色相215°・彩度25%・HSL明度7段階** のみ。色を直接記述せず `--jbs-ui-tone-{20|40|60|80|90|95|100}` を正本として参照する。
@@ -184,8 +184,8 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | 95% | `--jbs-ui-tone-95` | `#EFF2F5` | ページ・ボタン・非活性背景 |
 | 100% | `--jbs-ui-tone-100` | `#FFFFFF` | 入力・編集面・主ボタン文字 |
 
-- 文字はNoto Sans JPを優先し、**12/14/16/20/24pxの5種類**、ウェイトは**400/800の2種類**。ラベルは13px→14px、700→800。入力欄36px、ボタン36px、色・写真プレビュー36×36px。角丸はすべて4px。区切り線26px、選択欄90px。
-- **すべての矩形UI部品の角丸は `--jbs-ui-radius: 4px` に統一**。入力欄・プルダウン・色/写真プレビュー・操作ボタン・カード/パネル・ダイアログは共通の値を直接参照する。完全な円形や放送画面固有の装飾は対象外。ブランド管理画面独自の `styles.css` は別管理。
+- 文字はNoto Sans JPを優先し、**12/14/16/20/24pxの5種類**、ウェイトは**400/800の2種類**。ラベルは13px→14px、700→800。入力欄36px、ボタン36px、色・写真プレビュー36×36px。角丸はすべて6px。区切り線26px、選択欄90px。
+- **すべての矩形UI部品の角丸は `--jbs-ui-radius: 6px` に統一**。入力欄・プルダウン・色/写真プレビュー・操作ボタン・カード/パネル・ダイアログは共通の値を直接参照する。完全な円形や放送画面固有の装飾は対象外。ブランド管理画面独自の `styles.css` は別管理。
 - 間隔は **4/8/12/16/24px** の5段階（`--jbs-ui-space-*`）。旧6px→8px、旧9px→8px、旧14px→16px。位置座標・幅・高さ・罫線の太さはこの間隔ルールと分けて管理する。
 - `.jbs-ui` を編集エリアの親に付与すると、配下の `.field`、`.jbs-ui-button`（`.jbs-ui-button--primary`）、`.jbs-ui-divider`、`.jbs-ui-check` が共通スタイルになる。**このクラスを付けないツールには影響しない**。
 - `.preset-input` を `.field` の中で使うと、左90pxの「選択」プルダウンと右側の入力欄を結合して表示。枠・角丸・背景・余白も `common/ui.css` が定義する。
@@ -194,7 +194,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 ### 利用方法
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=7">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=8">
 <aside class="jbs-ui">
   <div class="field"><label for="name">名前</label><input id="name"></div>
   <div class="field"><label for="round">試合名</label><div class="preset-input"><select aria-label="候補"><option>選択</option></select><input id="round"></div></div>
