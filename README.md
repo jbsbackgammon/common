@@ -4,7 +4,8 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 - 管理画面: https://jbsbackgammon.github.io/common/
 - 共通設定（正本）: https://jbsbackgammon.github.io/common/data/brand.json
-- ブラウザ共通ライブラリ: https://jbsbackgammon.github.io/common/brand.js
+- ブラウザ共通ライブラリ（大会情報）: https://jbsbackgammon.github.io/common/brand.js
+- ブラウザ共通ライブラリ（保存・出力命名）: https://jbsbackgammon.github.io/common/naming.js
 
 ## 初回設置
 
@@ -166,6 +167,45 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | 名古屋オープン | JBS 第5回 | JBS 第6回 | 毎年1月1日（JST） |
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
+
+## 保存設定・出力ファイルの共通命名規則（v1）
+
+すべてのJBS運営ツールで同じ区切り方を使うための**正本**は `naming.js` です。各ツールで区切り文字やフォーマット処理を再実装せず、同ファイルを参照します。HTMLから通常のscriptタグで読み込める依存関係のない共通関数です。
+
+```html
+<script src="https://jbsbackgammon.github.io/common/naming.js?v=1"></script>
+```
+
+| 用途 | 共通API | 出力形式 |
+| --- | --- | --- |
+| 設定呼出一覧 | `JBSNaming.formatSavedLabel(details)` | `YYYY-MM-DD HH:mm:ss・回次等_大会名_試合名_上選手-下選手` |
+| JSON出力 | `JBSNaming.makeFileName({prefix, ...details})` | `ツール名_回次等_大会名_試合名_上選手-下選手.json` |
+| その他ファイル出力 | `JBSNaming.makeFileName({prefix, extension, ...details})` | 拡張子を `png` 等に切り替え可能 |
+| イベント表示名 | `JBSNaming.formatEventName(details)` | `回次等_大会名_試合名_上選手-下選手` |
+
+```js
+const details = {
+  edition: "JBS 第15回",
+  title: "新鋭戦",
+  round: "決勝",
+  topName: "Benjamin Friesen",
+  bottomName: "Jay Bidal"
+};
+JBSNaming.makeFileName({ prefix: "配信盤面", ...details });
+// 配信盤面_JBS 第15回_新鋭戦_決勝_Benjamin Friesen-Jay Bidal.json
+
+JBSNaming.formatSavedLabel({
+  savedAt: new Date(), ...details
+});
+// 2026-11-17 14:49:00・JBS 第15回_新鋭戦_決勝_Benjamin Friesen-Jay Bidal
+```
+
+- 区切りは日時と設定の間だけ「`・`」、大会の各要素間は「`_`」、上・下選手間は「`-`」
+- 日時は閲覧ブラウザのローカル時間・秒まで。欠落した大会項目や未入力の選手名には余分な区切りを入れない
+- ファイル名ではOSで使用できない `/ \\ : * ? " < > |` と制御文字を `-` に置換。表示一覧は元の文字列を維持する
+- 各ツールは `prefix` だけを変更する。例：`配信盤面`、`トーナメント`
+- 今後の運営ツールも、このAPIを使って同じ規則で一覧表示・JSON/画像出力を行う
+- GitHub Actionsでは `node scripts/check-naming.cjs` により命名ルールの互換性を検証する
 
 ## 共通UIデザインシステム（v31）
 
