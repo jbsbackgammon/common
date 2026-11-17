@@ -1,15 +1,14 @@
 /*
- * JBS operations UI design system v27.
+ * JBS operations UI design system v28.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
 :root {
   /* Color */
-  --color-20: hsl(215 25% 20%);
-  --color-40: hsl(215 25% 40%);
+  --color-25: hsl(215 25% 25%);
+  --color-45: hsl(215 25% 45%);
   --color-60: hsl(215 25% 60%);
-  --color-80: hsl(215 25% 80%);
-  --color-90: hsl(215 25% 90%);
+  --color-85: hsl(215 25% 85%);
   --color-95: hsl(215 25% 95%);
   --color-100: hsl(215 25% 100%);
 
@@ -50,7 +49,7 @@
   --alpha-dialog-backdrop: 50%;
 
   /* Shadow */
-  --shadow: 0 6px 12px color-mix(in srgb, var(--color-20) 20%, transparent);
+  --shadow: 0 6px 12px color-mix(in srgb, var(--color-25) 20%, transparent);
 }
 
 /* Reusable opt-in elements. No global element resets or site-wide rules. */
@@ -58,7 +57,7 @@
   font-family: var(--font-family);
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-normal);
-  color: var(--color-20);
+  color: var(--color-25);
 }
 .jbsui .jbsui-field {
   display: grid;
@@ -66,7 +65,7 @@
   margin: 0;
 }
 .jbsui .jbsui-field label {
-  color: var(--color-40);
+  color: var(--color-45);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
 }
@@ -78,10 +77,10 @@
   width: 100%;
   height: var(--height-input);
   box-sizing: border-box;
-  border: var(--width-border) solid var(--color-80);
+  border: var(--width-border) solid var(--color-85);
   border-radius: var(--radius);
   background: var(--color-100);
-  color: var(--color-20);
+  color: var(--color-25);
   font-size: var(--font-size-16);
   padding: var(--space-4) var(--space-12);
   outline: none;
@@ -107,7 +106,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
 .jbsui .jbsui-field select:disabled,
 .jbsui .jbsui-select:disabled {
   background-color: var(--color-95);
-  border-color: var(--color-90);
+  border-color: var(--color-85);
   color: var(--color-60);
   cursor: not-allowed;
 }
@@ -125,7 +124,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   width: var(--size-swatch);
   height: var(--size-swatch);
   padding: 0;
-  border-color: var(--color-80);
+  border-color: var(--color-85);
   border-radius: var(--radius);
   overflow: hidden;
   background: transparent;
@@ -142,7 +141,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   width: var(--size-swatch);
   height: var(--height-input);
   overflow: hidden;
-  border: var(--width-border) solid var(--color-80);
+  border: var(--width-border) solid var(--color-85);
   border-radius: var(--radius);
   background: var(--color-swatch-background, var(--color-100));
 }
@@ -167,18 +166,18 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border: 0;
   border-radius: var(--radius);
   background: var(--color-100);
-  color: var(--color-20);
+  color: var(--color-25);
   box-shadow: var(--shadow);
 }
 .jbsui-dialog::backdrop {
-  background: color-mix(in srgb, var(--color-20) var(--alpha-dialog-backdrop), transparent);
+  background: color-mix(in srgb, var(--color-25) var(--alpha-dialog-backdrop), transparent);
 }
 .jbsui-dialog-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-16) var(--space-24);
-  border-bottom: var(--width-border) solid var(--color-90);
+  border-bottom: var(--width-border) solid var(--color-95);
 }
 .jbsui-dialog-head h2 {
   margin: 0;
@@ -191,33 +190,33 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border: 0;
   border-radius: 50%;
   background: var(--color-95);
-  color: var(--color-20);
+  color: var(--color-25);
   font-size: var(--font-size-24);
   line-height: 1;
   cursor: pointer;
 }
-.jbsui-dialog-close:not(:disabled):hover { background: var(--color-90); }
+.jbsui-dialog-close:not(:disabled):hover { background: var(--color-85); }
 
 .jbsui .jbsui-button {
   min-height: var(--height-button);
   padding: 0 var(--space-16);
-  border: var(--width-border) solid var(--color-80);
+  border: var(--width-border) solid var(--color-85);
   border-radius: var(--radius);
   background: var(--color-95);
-  color: var(--color-20);
+  color: var(--color-25);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
   cursor: pointer;
 }
-.jbsui .jbsui-button:not(:disabled):hover { background: var(--color-90); }
+.jbsui .jbsui-button:not(:disabled):hover { background: var(--color-85); }
 .jbsui .jbsui-button--primary {
   border: 0;
-  background: var(--color-20);
+  background: var(--color-25);
   color: var(--color-100);
   font-size: var(--font-size-16);
 }
 .jbsui .jbsui-button--primary:not(:disabled):hover {
-  background: color-mix(in srgb, var(--color-20) 85%, var(--color-100));
+  background: color-mix(in srgb, var(--color-25) 85%, var(--color-100));
 }
 .jbsui .jbsui-button:disabled,
 .jbsui-dialog-close:disabled {
@@ -229,7 +228,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   height: var(--height-input);
   flex: 0 0 var(--width-border);
   align-self: center;
-  background: var(--color-80);
+  background: var(--color-85);
 }
 .jbsui .jbsui-check {
   display: inline-flex;
@@ -237,7 +236,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   gap: var(--space-8);
   min-height: var(--height-button);
   padding: 0;
-  color: var(--color-40);
+  color: var(--color-45);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
   cursor: pointer;
@@ -246,7 +245,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   width: var(--size-checkbox);
   height: var(--size-checkbox);
   margin: 0;
-  accent-color: var(--color-20);
+  accent-color: var(--color-25);
 }
 .jbsui .jbsui-check:has(input:disabled) {
   opacity: var(--opacity);
@@ -267,7 +266,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border-radius: var(--radius) 0 0 var(--radius);
   border-right: 0;
   background: var(--color-95);
-  color: var(--color-20);
+  color: var(--color-25);
   font-weight: var(--font-weight-action);
   padding-left: var(--space-8);
   padding-right: var(--space-4);
@@ -278,7 +277,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   box-shadow: inset calc(-1 * var(--width-border)) 0 0 var(--color-60);
 }
 .jbsui .jbsui-preset-input select:not(:disabled):hover {
-  background: var(--color-90);
+  background: var(--color-85);
 }
 .jbsui .jbsui-preset-input input {
   min-width: 0;
