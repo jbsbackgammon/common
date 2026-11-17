@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v21.
+ * JBS operations UI design system v22.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -29,7 +29,7 @@
   --height-label: 18px;
 
   /* Width */
-  --width-preset-select: 90px;
+  --width-preset-select: 80px;
   --width-border: 1px;
   --width-focus-ring: 3px;
 
@@ -232,7 +232,7 @@
 }
 .jbsui .jbsui-check:has(input:disabled) { opacity: var(--opacity); }
 
-/* Combined selector + editable value. A 90px selector keeps 選択 and the
+/* Combined selector + editable value. An 80px selector keeps 選択 and the
    native dropdown arrow readable at the standard 14px action font size. */
 .jbsui .jbsui-preset-input {
   display: grid;
@@ -250,6 +250,9 @@
   padding-left: var(--space-8);
   padding-right: var(--space-4);
   cursor: pointer;
+}
+.jbsui .jbsui-preset-input select:not(:disabled):hover {
+  background: var(--color-90);
 }
 .jbsui .jbsui-preset-input input {
   min-width: 0;
