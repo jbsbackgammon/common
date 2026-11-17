@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v11.
+ * JBS operations UI design system v12.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -26,17 +26,21 @@
   --font-size-24: 24px;
   --font-weight-normal: 400;
   --font-weight-action: 800;
+  --font-spacing-label: .03em;
 
   /* Component geometry */
   --height-input: 36px;
   --height-button: 36px;
   --height-label: 18px;
+  --size-checkbox: 20px;
   --size-swatch: 36px;
   --width-preset-select: 90px;
 
   /* One radius for all rectangular JBS editor controls, panels and dialogs. */
   --radius: 6px;
   --width-border: 1px;
+  --width-focus-ring: 3px;
+  --width-focus-outline: 2px;
 
   /* Canonical editor spacing uses only 4/8/12/16/24px. */
   --space-4: 4px;
@@ -44,6 +48,12 @@
   --space-12: 12px;
   --space-16: 16px;
   --space-24: 24px;
+
+  /* Reusable interaction states */
+  --opacity-disabled: .4;
+  --opacity-inactive: .5;
+  --brightness-hover: 1.08;
+  --duration-short: 150ms;
 
   /* Shadows, derived from the base colors */
   --shadow-primary: 0 5px 12px color-mix(in srgb, var(--color-20) 16%, transparent);
@@ -66,7 +76,7 @@
   color: var(--color-40);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
-  letter-spacing: .03em;
+  letter-spacing: var(--font-spacing-label);
 }
 .jbs-ui .field input,
 .jbs-ui .field select {
@@ -84,7 +94,7 @@
 .jbs-ui .field input:focus,
 .jbs-ui .field select:focus {
   border-color: var(--color-60);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-60) 10%, transparent);
+  box-shadow: 0 0 0 var(--width-focus-ring) color-mix(in srgb, var(--color-60) 10%, transparent);
 }
 .jbs-ui .jbs-ui-button {
   min-height: var(--height-button);
@@ -107,7 +117,7 @@
 }
 .jbs-ui .jbs-ui-button--primary:hover {
   background: var(--color-20);
-  filter: brightness(1.08);
+  filter: brightness(var(--brightness-hover));
 }
 .jbs-ui .jbs-ui-divider {
   width: var(--width-border);
@@ -128,12 +138,12 @@
   cursor: pointer;
 }
 .jbs-ui .jbs-ui-check input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
+  width: var(--size-checkbox);
+  height: var(--size-checkbox);
   margin: 0;
   accent-color: var(--color-20);
 }
-.jbs-ui .jbs-ui-check:has(input:disabled) { opacity: .4; }
+.jbs-ui .jbs-ui-check:has(input:disabled) { opacity: var(--opacity-disabled); }
 
 /* Combined selector + editable value. A 90px selector keeps 選択 and the
    native dropdown arrow readable at the standard 16px font size. */
