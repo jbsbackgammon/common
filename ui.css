@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v16.
+ * JBS operations UI design system v17.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -46,10 +46,10 @@
   --space-24: 24px;
 
   /* Opacity */
-  --opacity-muted: .5;
+  --opacity: .5;
 
   /* Shadow */
-  --shadow-primary: 0 5px 12px color-mix(in srgb, var(--color-20) 16%, transparent);
+  --shadow: 0 5px 12px color-mix(in srgb, var(--color-20) 16%, transparent);
 }
 
 /* Reusable opt-in elements. No global element resets or site-wide rules. */
@@ -104,7 +104,7 @@
   background: var(--color-20);
   color: var(--color-100);
   font-size: var(--font-size-16);
-  box-shadow: var(--shadow-primary);
+  box-shadow: var(--shadow);
 }
 .jbs-ui .jbs-ui-button--primary:hover {
   background: var(--color-20);
@@ -133,7 +133,7 @@
   margin: 0;
   accent-color: var(--color-20);
 }
-.jbs-ui .jbs-ui-check:has(input:disabled) { opacity: var(--opacity-muted); }
+.jbs-ui .jbs-ui-check:has(input:disabled) { opacity: var(--opacity); }
 
 /* Combined selector + editable value. A 90px selector keeps 選択 and the
    native dropdown arrow readable at the standard 14px action font size. */
