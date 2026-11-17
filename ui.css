@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v17.
+ * JBS operations UI design system v18.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -49,7 +49,7 @@
   --opacity: .5;
 
   /* Shadow */
-  --shadow: 0 5px 12px color-mix(in srgb, var(--color-20) 16%, transparent);
+  --shadow: 0 6px 12px color-mix(in srgb, var(--color-20) 20%, transparent);
 }
 
 /* Reusable opt-in elements. No global element resets or site-wide rules. */
