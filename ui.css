@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v26.
+ * JBS operations UI design system v27.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -47,7 +47,7 @@
 
   /* Opacity */
   --opacity: .5;
-  --alpha-dialog-backdrop: 48%;
+  --alpha-dialog-backdrop: 50%;
 
   /* Shadow */
   --shadow: 0 6px 12px color-mix(in srgb, var(--color-20) 20%, transparent);
