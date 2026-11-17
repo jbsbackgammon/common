@@ -167,26 +167,28 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
 
-## 共通UIデザインシステム（v14）
+## 共通UIデザインシステム（v15）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=14`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=15`
 - カラー：色相215°・彩度25%。明度20/40/60/80/90/95/100%の7色（`--color-20` 等）のみを直接参照。用途別カラー変数は持たない
 - **命名：分類を先頭に記載**。例：`--height-input`、`--width-preset-select`、`--shadow-primary`、`--font-size-14`、`--font-weight-action`
 - **縦区切り線の高さは入力欄と同じ36px**。`--height-divider` のような専用変数は設けず、`--height-input` を直接参照する
 - 角丸はすべて `--radius: 6px`。間隔は `--space-4/8/12/16/24`。入力欄・ボタン36px、色・写真プレビュー36×36px
 - フォント優先順：Noto Sans JP / Hiragino Kaku Gothic ProN / Yu Gothic / system-ui / sans-serif。文字サイズ12/14/16/20/24px、ウェイト400/800
+- 変数の定義順：color → font → height → width → size（角丸を含む）→ space → opacity → shadow。値と機能は変更なし
 - CSS変数名から `jbs` と `ui` は除外。既存HTMLの共通クラス（`.jbs-ui`、`.field`、`.jbs-ui-button` 等）は互換性のため維持する
 - 大会テーマカラーと回次は `brand.js` / `data/brand.json` で別管理。放送用盤面の配置・装飾はツール固有CSSに残す
 
 | 分類 | CSS変数 |
 | --- | --- |
 | カラー | `--color-20`、`--color-40`、`--color-60`、`--color-80`、`--color-90`、`--color-95`、`--color-100` |
-| フォント | `--font-family`、`--font-size-12`、`--font-size-14`、`--font-size-16`、`--font-size-20`、`--font-size-24`、`--font-weight-normal`、`--font-weight-action` |
-| 高さ | `--height-input:36px`、`--height-button:36px`、`--height-label:18px` |
-| 幅 | `--width-preset-select:90px`、`--width-border:1px` |
-| 正方形サイズ・角丸 | `--size-swatch:36px`、`--radius:6px` |
-| 間隔 | `--space-4`、`--space-8`、`--space-12`、`--space-16`、`--space-24` |
-| 影 | `--shadow-primary`、`--shadow-dialog` |
+| font | `--font-family`、`--font-size-12`、`--font-size-14`、`--font-size-16`、`--font-size-20`、`--font-size-24`、`--font-weight-normal`、`--font-weight-action` |
+| height | `--height-input`、`--height-button`、`--height-label` |
+| width | `--width-preset-select`、`--width-border`、`--width-focus-ring` |
+| size・角丸 | `--size-checkbox`、`--size-swatch`、`--radius` |
+| space | `--space-4`、`--space-8`、`--space-12`、`--space-16`、`--space-24` |
+| opacity | `--opacity-disabled`、`--opacity-inactive` |
+| shadow | `--shadow-primary`、`--shadow-dialog` |
 
 ### 編集画面向けの追加トークン（v14）
 
@@ -204,7 +206,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 ### 使用方法
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=14">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=15">
 <aside class="jbs-ui">
   <div class="field"><label for="name">名前</label><input id="name"></div>
   <div class="field"><label for="round">試合名</label><div class="preset-input"><select aria-label="候補"><option>選択</option></select><input id="round"></div></div>

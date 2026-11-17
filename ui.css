@@ -1,11 +1,10 @@
 /*
- * JBS operations UI design system v14.
+ * JBS operations UI design system v15.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
 :root {
-  /* Exactly seven neutral UI tones; hue 215deg, saturation 25%.
-     Brightness values are HSL lightness percentages, not perceptual L*. */
+  /* Color */
   --color-20: hsl(215 25% 20%);
   --color-40: hsl(215 25% 40%);
   --color-60: hsl(215 25% 60%);
@@ -14,10 +13,7 @@
   --color-95: hsl(215 25% 95%);
   --color-100: hsl(215 25% 100%);
 
-  /* Use the seven base colors directly; no role-specific color aliases. */
-
-
-  /* Typography */
+  /* Font */
   --font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
   --font-size-12: 12px;
   --font-size-14: 14px;
@@ -27,31 +23,33 @@
   --font-weight-normal: 400;
   --font-weight-action: 800;
 
-  /* Component geometry */
+  /* Height */
   --height-input: 36px;
   --height-button: 36px;
   --height-label: 18px;
-  --size-checkbox: 20px;
-  --size-swatch: 36px;
-  --width-preset-select: 90px;
 
-  /* One radius for all rectangular JBS editor controls, panels and dialogs. */
-  --radius: 6px;
+  /* Width */
+  --width-preset-select: 90px;
   --width-border: 1px;
   --width-focus-ring: 3px;
 
-  /* Canonical editor spacing uses only 4/8/12/16/24px. */
+  /* Size and radius */
+  --size-checkbox: 20px;
+  --size-swatch: 36px;
+  --radius: 6px;
+
+  /* Space */
   --space-4: 4px;
   --space-8: 8px;
   --space-12: 12px;
   --space-16: 16px;
   --space-24: 24px;
 
-  /* Reusable interaction states */
+  /* Opacity */
   --opacity-disabled: .4;
   --opacity-inactive: .5;
 
-  /* Shadows, derived from the base colors */
+  /* Shadow */
   --shadow-primary: 0 5px 12px color-mix(in srgb, var(--color-20) 16%, transparent);
   --shadow-dialog: 0 24px 80px color-mix(in srgb, var(--color-20) 32%, transparent);
 }
