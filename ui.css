@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v24.
+ * JBS operations UI design system v25.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -264,6 +264,11 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   font-weight: var(--font-weight-action);
   padding-left: var(--space-8);
   padding-right: var(--space-4);
+}
+.jbsui .jbsui-preset-input select:focus {
+  /* Keep the shared edge single-width while coloring its fourth side
+     on focus; an inset stroke avoids changing either control's size. */
+  box-shadow: inset calc(-1 * var(--width-border)) 0 0 var(--color-60);
 }
 .jbsui .jbsui-preset-input select:not(:disabled):hover {
   background: var(--color-90);
