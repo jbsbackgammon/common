@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v10.
+ * JBS operations UI design system v11.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -19,24 +19,24 @@
 
   /* Typography */
   --font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
-  --font-12: 12px;
-  --font-14: 14px;
-  --font-16: 16px;
-  --font-20: 20px;
-  --font-24: 24px;
-  --weight-normal: 400;
-  --weight-action: 800;
+  --font-size-12: 12px;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-20: 20px;
+  --font-size-24: 24px;
+  --font-weight-normal: 400;
+  --font-weight-action: 800;
 
   /* Component geometry */
-  --input-height: 36px;
-  --button-height: 36px;
-  --label-height: 18px;
-  --swatch-size: 36px;
-  --preset-select-width: 90px;
-  --divider-height: 26px;
+  --height-input: 36px;
+  --height-button: 36px;
+  --height-label: 18px;
+  --size-swatch: 36px;
+  --width-preset-select: 90px;
+
   /* One radius for all rectangular JBS editor controls, panels and dialogs. */
   --radius: 6px;
-  --border-width: 1px;
+  --width-border: 1px;
 
   /* Canonical editor spacing uses only 4/8/12/16/24px. */
   --space-4: 4px;
@@ -46,15 +46,15 @@
   --space-24: 24px;
 
   /* Shadows, derived from the base colors */
-  --primary-shadow: 0 5px 12px color-mix(in srgb, var(--color-20) 16%, transparent);
-  --dialog-shadow: 0 24px 80px color-mix(in srgb, var(--color-20) 32%, transparent);
+  --shadow-primary: 0 5px 12px color-mix(in srgb, var(--color-20) 16%, transparent);
+  --shadow-dialog: 0 24px 80px color-mix(in srgb, var(--color-20) 32%, transparent);
 }
 
 /* Reusable opt-in elements. No global element resets or site-wide rules. */
 .jbs-ui {
   font-family: var(--font-family);
-  font-size: var(--font-16);
-  font-weight: var(--weight-normal);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-normal);
   color: var(--color-20);
 }
 .jbs-ui .field {
@@ -64,20 +64,20 @@
 }
 .jbs-ui .field label {
   color: var(--color-40);
-  font-size: var(--font-14);
-  font-weight: var(--weight-action);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-action);
   letter-spacing: .03em;
 }
 .jbs-ui .field input,
 .jbs-ui .field select {
   width: 100%;
-  height: var(--input-height);
+  height: var(--height-input);
   box-sizing: border-box;
-  border: var(--border-width) solid var(--color-80);
+  border: var(--width-border) solid var(--color-80);
   border-radius: var(--radius);
   background: var(--color-100);
   color: var(--color-20);
-  font-size: var(--font-16);
+  font-size: var(--font-size-16);
   padding: var(--space-4) var(--space-12);
   outline: none;
 }
@@ -87,14 +87,14 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-60) 10%, transparent);
 }
 .jbs-ui .jbs-ui-button {
-  min-height: var(--button-height);
+  min-height: var(--height-button);
   padding: 0 var(--space-16);
-  border: var(--border-width) solid var(--color-80);
+  border: var(--width-border) solid var(--color-80);
   border-radius: var(--radius);
   background: var(--color-95);
   color: var(--color-20);
-  font-size: var(--font-14);
-  font-weight: var(--weight-action);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-action);
   cursor: pointer;
 }
 .jbs-ui .jbs-ui-button:hover { background: var(--color-90); }
@@ -102,17 +102,17 @@
   border: 0;
   background: var(--color-20);
   color: var(--color-100);
-  font-size: var(--font-16);
-  box-shadow: var(--primary-shadow);
+  font-size: var(--font-size-16);
+  box-shadow: var(--shadow-primary);
 }
 .jbs-ui .jbs-ui-button--primary:hover {
   background: var(--color-20);
   filter: brightness(1.08);
 }
 .jbs-ui .jbs-ui-divider {
-  width: var(--border-width);
-  height: var(--divider-height);
-  flex: 0 0 var(--border-width);
+  width: var(--width-border);
+  height: var(--height-input);
+  flex: 0 0 var(--width-border);
   align-self: center;
   background: var(--color-80);
 }
@@ -120,11 +120,11 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-8);
-  min-height: var(--button-height);
+  min-height: var(--height-button);
   padding: 0;
   color: var(--color-40);
-  font-size: var(--font-14);
-  font-weight: var(--weight-action);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-action);
   cursor: pointer;
 }
 .jbs-ui .jbs-ui-check input[type="checkbox"] {
@@ -139,7 +139,7 @@
    native dropdown arrow readable at the standard 16px font size. */
 .jbs-ui .preset-input {
   display: grid;
-  grid-template-columns: var(--preset-select-width) minmax(0, 1fr);
+  grid-template-columns: var(--width-preset-select) minmax(0, 1fr);
   min-width: 0;
 }
 .jbs-ui .preset-input select {
@@ -148,7 +148,7 @@
   border-right: 0;
   background: var(--color-95);
   color: var(--color-20);
-  font-weight: var(--weight-action);
+  font-weight: var(--font-weight-action);
   padding-left: var(--space-8);
   padding-right: var(--space-4);
   cursor: pointer;

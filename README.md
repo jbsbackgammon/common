@@ -167,43 +167,34 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
 
-## 共通UIデザインシステム（v10）
+## 共通UIデザインシステム（v11）
 
-共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=10`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=11`
+- カラー：色相215°・彩度25%。明度20/40/60/80/90/95/100%の7色（`--color-20` 等）のみを直接参照。用途別カラー変数は持たない
+- **命名：分類を先頭に記載**。例：`--height-input`、`--width-preset-select`、`--shadow-primary`、`--font-size-14`、`--font-weight-action`
+- **縦区切り線の高さは入力欄と同じ36px**。`--height-divider` のような専用変数は設けず、`--height-input` を直接参照する
+- 角丸はすべて `--radius: 6px`。間隔は `--space-4/8/12/16/24`。入力欄・ボタン36px、色・写真プレビュー36×36px
+- フォント優先順：Noto Sans JP / Hiragino Kaku Gothic ProN / Yu Gothic / system-ui / sans-serif。文字サイズ12/14/16/20/24px、ウェイト400/800
+- CSS変数名から `jbs` と `ui` は除外。既存HTMLの共通クラス（`.jbs-ui`、`.field`、`.jbs-ui-button` 等）は互換性のため維持する
+- 大会テーマカラーと回次は `brand.js` / `data/brand.json` で別管理。放送用盤面の配置・装飾はツール固有CSSに残す
 
-CSS変数は `jbs`・`ui` の接頭辞を廃止。**色の変数は基本7色のみ**とし、用途別カラーの別名は持たず、各ルールから最も明度の近い `--color-*` を直接参照する。色相215°・彩度25%。影・フォーカスリングなどの透過表現も基本色と `color-mix()` を使用する。
+| 分類 | CSS変数 |
+| --- | --- |
+| カラー | `--color-20`、`--color-40`、`--color-60`、`--color-80`、`--color-90`、`--color-95`、`--color-100` |
+| フォント | `--font-family`、`--font-size-12`、`--font-size-14`、`--font-size-16`、`--font-size-20`、`--font-size-24`、`--font-weight-normal`、`--font-weight-action` |
+| 高さ | `--height-input:36px`、`--height-button:36px`、`--height-label:18px` |
+| 幅 | `--width-preset-select:90px`、`--width-border:1px` |
+| 正方形サイズ・角丸 | `--size-swatch:36px`、`--radius:6px` |
+| 間隔 | `--space-4`、`--space-8`、`--space-12`、`--space-16`、`--space-24` |
+| 影 | `--shadow-primary`、`--shadow-dialog` |
 
-| 明度 | 変数 | HEX近似 | 用途例（直接参照） |
-| --- | --- | --- | --- |
-| 20% | `--color-20` | `#263140` | 基本文字、主ボタン、チェック色 |
-| 40% | `--color-40` | `#4D6280` | ラベル |
-| 60% | `--color-60` | `#8095B3` | 非活性文字、フォーカス |
-| 80% | `--color-80` | `#BFCAD9` | 枠線、区切り線 |
-| 90% | `--color-90` | `#DFE4EC` | 細罫線、ホバー、非活性枠 |
-| 95% | `--color-95` | `#EFF2F5` | ページ・通常ボタン・非活性背景 |
-| 100% | `--color-100` | `#FFFFFF` | 入力・編集面、白文字 |
-
-### その他の変数
-
-- フォント：`--font-family`、`--font-12`、`--font-14`、`--font-16`、`--font-20`、`--font-24`
-- ウェイト：`--weight-normal`（400）、`--weight-action`（800）
-- 寸法：`--input-height`（36px）、`--button-height`（36px）、`--label-height`（18px）、`--swatch-size`（36px）、`--preset-select-width`（90px）、`--divider-height`（26px）、`--radius`（6px）、`--border-width`（1px）
-- 間隔：`--space-4`、`--space-8`、`--space-12`、`--space-16`、`--space-24`
-- 影：`--primary-shadow`、`--dialog-shadow`（基本色20%を透過）
-
-共通HTMLクラス `.jbs-ui`、`.field`、`.jbs-ui-button`、`.jbs-ui-button--primary`、`.jbs-ui-divider`、`.jbs-ui-check`、`.preset-input` は**CSS変数ではないため変更しない**。
-
-大会テーマカラーと回次は従来どおり `brand.js` / `data/brand.json` で管理。放送用盤面の色は各ツール固有のCSSが管理する。
-
-### 利用方法
+### 使用方法
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=10">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=11">
 <aside class="jbs-ui">
   <div class="field"><label for="name">名前</label><input id="name"></div>
   <div class="field"><label for="round">試合名</label><div class="preset-input"><select aria-label="候補"><option>選択</option></select><input id="round"></div></div>
   <button class="jbs-ui-button" type="button">保存</button>
 </aside>
 ```
-
-導入済み：`overlay`。新たな運営ツールへの展開は各画面の検証後に実施する。
