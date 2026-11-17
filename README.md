@@ -167,51 +167,66 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
 
-## 共通UIデザインシステム（v18）
+## 共通UIデザインシステム（v28）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=18`
-- カラー：色相215°・彩度25%。明度20/40/60/80/90/95/100%の7色（`--color-20` 等）のみを直接参照。用途別カラー変数は持たない
-- **命名：分類を先頭に記載**。例：`--height-input`、`--width-preset-select`、`--shadow`、`--font-size-14`、`--font-weight-action`
-- **縦区切り線の高さは入力欄と同じ36px**。`--height-divider` のような専用変数は設けず、`--height-input` を直接参照する
-- 角丸はすべて `--radius: 6px`。間隔は `--space-4/8/12/16/24`。入力欄・ボタン36px、色・写真プレビュー36×36px
-- フォント優先順：Noto Sans JP / Hiragino Kaku Gothic ProN / Yu Gothic / system-ui / sans-serif。文字サイズ12/14/16/20/24px、ウェイト400/800
-- 変数の定義順：color → font → height → width → size（角丸を含む）→ space → opacity → shadow。値と機能は変更なし
-- CSS変数名から `jbs` と `ui` は除外。既存HTMLの共通クラス（`.jbs-ui`、`.field`、`.jbs-ui-button` 等）は互換性のため維持する
-- 大会テーマカラーと回次は `brand.js` / `data/brand.json` で別管理。放送用盤面の配置・装飾はツール固有CSSに残す
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=28`
+- 編集UIでは `class="jbsui"` を持つ要素の内側に共通クラスを配置。配信盤面・大会テーマ・各ツール固有のレイアウトは共通化しない
+- 変数の定義順は color → font → height → width → size（角丸含む）→ space → opacity → shadow
+- 名前は分類を先頭にする。例：`--height-input`、`--width-preset-select`、`--font-size-14`、`--shadow`
+
+### カラーパレット（6色）
+
+色相215°・彩度25%で統一し、明度のみ6段階に分ける。用途別の中間変数を重複定義せず、利用箇所から直接参照する。
+
+| 変数 | 値 | 用途 |
+| --- | --- | --- |
+| `--color-25` | `hsl(215 25% 25%)` | 基本文字・主要ボタン |
+| `--color-45` | `hsl(215 25% 45%)` | 補助文字・ラベル |
+| `--color-60` | `hsl(215 25% 60%)` | 操作中の枠線・キーボードフォーカス |
+| `--color-85` | `hsl(215 25% 85%)` | 通常の操作枠線・ボタンのホバー背景 |
+| `--color-95` | `hsl(215 25% 95%)` | 薄い背景・区切り線 |
+| `--color-100` | `hsl(215 25% 100%)` | 白背景 |
+
+旧 `--color-20`、`--color-40`、`--color-80`、`--color-90` は廃止。利用ツールは新しい変数に直接移行する。
+
+### 共通変数と部品
 
 | 分類 | CSS変数 |
 | --- | --- |
-| カラー | `--color-20`、`--color-40`、`--color-60`、`--color-80`、`--color-90`、`--color-95`、`--color-100` |
-| font | `--font-family`、`--font-size-12`、`--font-size-14`、`--font-size-16`、`--font-size-20`、`--font-size-24`、`--font-weight-normal`、`--font-weight-action` |
+| font | `--font-family`、`--font-size-12/14/16/20/24`、`--font-weight-normal/action` |
 | height | `--height-input`、`--height-button`、`--height-label` |
 | width | `--width-preset-select`、`--width-border`、`--width-focus-ring` |
 | size・角丸 | `--size-checkbox`、`--size-swatch`、`--radius` |
-| space | `--space-4`、`--space-8`、`--space-12`、`--space-16`、`--space-24` |
-| opacity | `--opacity` |
-| shadow | `--shadow` |
+| space | `--space-4/8/12/16/24` |
+| opacity | `--opacity`（0.5）、`--alpha-dialog-backdrop`（50%） |
+| shadow | `--shadow`（0 6px 12px、基本文字色を20%で混合） |
 
-### 編集画面向けの追加トークン（v14）
+- 入力欄・ボタンは高さ36px、通常枠線1px、角丸6px。選択プリセットの左側は80px
+- `jbsui-field`、`jbsui-select`、`jbsui-preset-input`：入力・プルダウンの共通外観と操作状態
+- `jbsui-color-control`、`jbsui-color-swatch`、`jbsui-hex-input`：カラー入力とプレビュー
+- `jbsui-button`、`jbsui-button--primary`、`jbsui-check`、`jbsui-divider`：操作要素
+- `jbsui-dialog`、`jbsui-dialog-head`、`jbsui-dialog-close`：ダイアログ
+- `--shadow` はダイアログとoverlayの編集プレビューで使用。主要ボタンに影は付けない
 
-- `--size-checkbox: 20px`：チェックボックスの縦横
-- `--width-focus-ring: 3px`：入力フォーカスリングと写真選択ボタンのフォーカス輪郭線を3pxに統一
-- `--opacity: .5`：無効・非アクティブ状態の不透明度を共通化
-- ラベルの文字間隔拡張・主ボタンのホバー明度補正・写真変更表示の短時間アニメーションは不要として廃止
+共通CSSではフォーカス外枠（3px）は `html[data-jbsui-keyboard-focus]` と `:focus-visible` の組み合わせで表示する。配信盤面作成ツール側のJavaScriptは、Tab操作時のみこの属性を付け、ポインター操作時に解除する。
 
-影は `--shadow: 0 6px 12px color-mix(in srgb, var(--color-20) 20%, transparent)` の1種類に統一し、主ボタン・ダイアログ・編集画面プレビューで共有する。
-
-共通デザイン値は `ui.css` の変数を直接参照。ツール固有のグリッド列幅・編集ダイアログ最大サイズなどは、`overlay/styles.css` の編集画面専用変数に集約して重複指定を防ぐ。CSS仕様上、メディアクエリ内のブレイクポイント値は `var()` を使えないため、そこだけは例外とする。配信盤面の描画スタイルは対象外。
-
-### 選択プルダウンの文字サイズ（v13・継続）
-
-結合入力欄（`.preset-input`）左側の「選択」プルダウンは、通常操作ボタンと同じ `--font-size-14` を直接参照する。右側のテキスト入力欄は従来どおり16px。共通部品の定義に集約し、採用ツール側で重複指定しない。
-
-### 使用方法
+### 使用例
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=18">
-<aside class="jbs-ui">
-  <div class="field"><label for="name">名前</label><input id="name"></div>
-  <div class="field"><label for="round">試合名</label><div class="preset-input"><select aria-label="候補"><option>選択</option></select><input id="round"></div></div>
-  <button class="jbs-ui-button" type="button">保存</button>
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=28">
+<aside class="jbsui">
+  <div class="jbsui-field">
+    <label for="name">名前</label><input id="name">
+  </div>
+  <div class="jbsui-field">
+    <label for="round">試合名</label>
+    <div class="jbsui-preset-input">
+      <select aria-label="候補"><option>選択</option></select>
+      <input id="round">
+    </div>
+  </div>
+  <button class="jbsui-button" type="button">保存</button>
 </aside>
 ```
+
+大会テーマカラーと回次は `brand.js` / `data/brand.json` で別管理する。編集画面固有の列幅や最大サイズはツール側CSSに残し、共通の値を再定義しない。
