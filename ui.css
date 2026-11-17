@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v9.
+ * JBS operations UI design system v10.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -18,7 +18,7 @@
 
 
   /* Typography */
-  --font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+  --font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
   --font-12: 12px;
   --font-14: 14px;
   --font-16: 16px;

@@ -167,9 +167,9 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
 
-## 共通UIデザインシステム（v9）
+## 共通UIデザインシステム（v10）
 
-共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=9`
+共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=10`
 
 CSS変数は `jbs`・`ui` の接頭辞を廃止。**色の変数は基本7色のみ**とし、用途別カラーの別名は持たず、各ルールから最も明度の近い `--color-*` を直接参照する。色相215°・彩度25%。影・フォーカスリングなどの透過表現も基本色と `color-mix()` を使用する。
 
@@ -198,7 +198,7 @@ CSS変数は `jbs`・`ui` の接頭辞を廃止。**色の変数は基本7色の
 ### 利用方法
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=9">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=10">
 <aside class="jbs-ui">
   <div class="field"><label for="name">名前</label><input id="name"></div>
   <div class="field"><label for="round">試合名</label><div class="preset-input"><select aria-label="候補"><option>選択</option></select><input id="round"></div></div>
