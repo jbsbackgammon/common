@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v28.
+ * JBS operations UI design system v29.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -87,6 +87,15 @@
 }
 /* Interactive states: disabled controls do not hover; keyboard focus is
    visible on inputs, buttons, selects and controls in dialogs. */
+/* Keep native dropdown choices white, even when the closed select has a
+   light-gray background or its hover background changes. */
+.jbsui .jbsui-field select,
+.jbsui .jbsui-select { color-scheme: light; }
+.jbsui .jbsui-field select option,
+.jbsui .jbsui-select option {
+  background-color: var(--color-100);
+  color: var(--color-25);
+}
 .jbsui .jbsui-field select:not(:disabled),
 .jbsui .jbsui-select:not(:disabled) { cursor: pointer; }
 .jbsui .jbsui-field select:not(:disabled):hover,
