@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v1.
+ * JBS operations UI design system v2.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -43,6 +43,7 @@
   --jbs-ui-button-height: 36px;
   --jbs-ui-label-height: 18px;
   --jbs-ui-swatch-size: 38px;
+  --jbs-ui-preset-select-width: 90px;
   --jbs-ui-divider-height: 26px;
   --jbs-ui-radius: 9px;
   --jbs-ui-radius-preview: 7px;
