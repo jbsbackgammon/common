@@ -27,10 +27,15 @@ jobs:
       - name: Validate brand data
         run: python3 -m json.tool data/brand.json > /dev/null
 
+      - name: Validate shared naming API
+        run: |
+          node --check naming.js
+          node scripts/check-naming.cjs
+
       - name: Prepare static website
         run: |
           mkdir -p _site/data
-          cp index.html styles.css ui.css app.js brand.js .nojekyll _site/
+          cp index.html styles.css ui.css app.js brand.js naming.js .nojekyll _site/
           cp data/brand.json _site/data/
 
       - name: Configure Pages
