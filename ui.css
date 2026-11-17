@@ -1,0 +1,148 @@
+/*
+ * JBS operations UI design system v1.
+ * Layout and tournament theme colors remain each tool's responsibility.
+ * Opt in by loading this file and adding class="jbs-ui" to the editor root.
+ */
+:root {
+  /* Surfaces */
+  --jbs-ui-page-bg: #EEF0F4;
+  --jbs-ui-surface: #FFFFFF;
+  --jbs-ui-button-bg: #F7F8FA;
+  --jbs-ui-hover-bg: #E9EDF3;
+  --jbs-ui-photo-bg: #F1F2F4;
+
+  /* Text */
+  --jbs-ui-text: #27364D;
+  --jbs-ui-label: #3E5069;
+  --jbs-ui-disabled-text: #8993A3;
+  --jbs-ui-on-primary: #FFFFFF;
+
+  /* Lines and interaction states */
+  --jbs-ui-border: #CBD3DE;
+  --jbs-ui-divider: #AEB5C0;
+  --jbs-ui-hairline: #D9DEE6;
+  --jbs-ui-focus: #7D8FA8;
+  --jbs-ui-focus-ring: rgba(75, 97, 126, .1);
+  --jbs-ui-disabled-bg: #F4F5F8;
+  --jbs-ui-disabled-border: #E2E5EA;
+
+  /* Typography */
+  --jbs-ui-font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+  --jbs-ui-font-12: 12px;
+  --jbs-ui-font-13: 13px;
+  --jbs-ui-font-14: 14px;
+  --jbs-ui-font-16: 16px;
+  --jbs-ui-font-20: 20px;
+  --jbs-ui-font-24: 24px;
+  --jbs-ui-weight-normal: 400;
+  --jbs-ui-weight-label: 700;
+  --jbs-ui-weight-action: 800;
+
+  /* Component geometry */
+  --jbs-ui-input-height: 38px;
+  --jbs-ui-button-height: 36px;
+  --jbs-ui-label-height: 18px;
+  --jbs-ui-swatch-size: 38px;
+  --jbs-ui-divider-height: 26px;
+  --jbs-ui-radius: 9px;
+  --jbs-ui-radius-preview: 7px;
+  --jbs-ui-radius-dialog: 16px;
+  --jbs-ui-border-width: 1px;
+
+  /* Spacing; preserve a few purposeful 6/9/14px optical gaps */
+  --jbs-ui-space-4: 4px;
+  --jbs-ui-space-8: 8px;
+  --jbs-ui-space-12: 12px;
+  --jbs-ui-space-16: 16px;
+  --jbs-ui-space-24: 24px;
+  --jbs-ui-gap-photo: 6px;
+  --jbs-ui-gap-swatch: 9px;
+  --jbs-ui-gap-color-row: 14px;
+
+  /* Shadows and modal surfaces */
+  --jbs-ui-primary-shadow: 0 5px 12px rgba(0, 0, 0, .16);
+  --jbs-ui-dialog-shadow: 0 24px 80px rgba(22, 34, 50, .32);
+  --jbs-ui-backdrop: rgba(20, 29, 41, .48);
+}
+
+/* Reusable opt-in elements. No global element resets or site-wide rules. */
+.jbs-ui {
+  font-family: var(--jbs-ui-font-family);
+  font-size: var(--jbs-ui-font-16);
+  color: var(--jbs-ui-text);
+}
+.jbs-ui .field {
+  display: grid;
+  gap: var(--jbs-ui-space-4);
+  margin: 0;
+}
+.jbs-ui .field label {
+  color: var(--jbs-ui-label);
+  font-size: var(--jbs-ui-font-13);
+  font-weight: var(--jbs-ui-weight-label);
+  letter-spacing: .03em;
+}
+.jbs-ui .field input,
+.jbs-ui .field select {
+  width: 100%;
+  border: var(--jbs-ui-border-width) solid var(--jbs-ui-border);
+  border-radius: var(--jbs-ui-radius);
+  background: var(--jbs-ui-surface);
+  color: var(--jbs-ui-text);
+  font-size: var(--jbs-ui-font-16);
+  padding: 7px 10px;
+  outline: none;
+}
+.jbs-ui .field input:focus,
+.jbs-ui .field select:focus {
+  border-color: var(--jbs-ui-focus);
+  box-shadow: 0 0 0 3px var(--jbs-ui-focus-ring);
+}
+.jbs-ui .jbs-ui-button {
+  min-height: var(--jbs-ui-button-height);
+  padding: 0 18px;
+  border: var(--jbs-ui-border-width) solid var(--jbs-ui-border);
+  border-radius: var(--jbs-ui-radius);
+  background: var(--jbs-ui-button-bg);
+  color: var(--jbs-ui-text);
+  font-size: var(--jbs-ui-font-14);
+  font-weight: var(--jbs-ui-weight-action);
+  cursor: pointer;
+}
+.jbs-ui .jbs-ui-button:hover { background: var(--jbs-ui-hover-bg); }
+.jbs-ui .jbs-ui-button--primary {
+  border: 0;
+  background: var(--button-theme, #383838);
+  color: var(--jbs-ui-on-primary);
+  font-size: var(--jbs-ui-font-16);
+  box-shadow: var(--jbs-ui-primary-shadow);
+}
+.jbs-ui .jbs-ui-button--primary:hover {
+  background: var(--button-theme, #383838);
+  filter: brightness(1.08);
+}
+.jbs-ui .jbs-ui-divider {
+  width: var(--jbs-ui-border-width);
+  height: var(--jbs-ui-divider-height);
+  flex: 0 0 var(--jbs-ui-border-width);
+  align-self: center;
+  background: var(--jbs-ui-divider);
+}
+.jbs-ui .jbs-ui-check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--jbs-ui-gap-swatch);
+  min-height: 34px;
+  padding: 0;
+  color: var(--jbs-ui-label);
+  font-size: var(--jbs-ui-font-14);
+  font-weight: var(--jbs-ui-weight-label);
+  cursor: pointer;
+}
+.jbs-ui .jbs-ui-check input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--jbs-ui-text);
+}
+.jbs-ui .jbs-ui-check:has(input:disabled) { opacity: .4; }

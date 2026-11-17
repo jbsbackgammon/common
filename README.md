@@ -166,3 +166,26 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | 名古屋オープン | JBS 第5回 | JBS 第6回 | 毎年1月1日（JST） |
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
+
+## 共通UIデザインシステム（v1）
+
+- CSS正本：`https://jbsbackgammon.github.io/common/ui.css?v=1`
+- 対象：JBS運営ツールの**編集・操作UI**。大会テーマ色は従来どおり `brand.js` / `data/brand.json` で管理する。
+- 色・フォント・罫線・高さ・角丸・余白は `--jbs-ui-*` のCSS変数を正本とする。
+- 基本色は白面 `#FFFFFF`、ページ背景 `#EEF0F4`、文字 `#27364D`、ラベル `#3E5069`、操作枠線 `#CBD3DE`、区切り線 `#AEB5C0`。
+- 類似指定を統合：入力文字 `#18283F` → 基本文字、入力枠線 `#D3D9E2` → 操作枠線、配信選択文字 `#52627A` → ラベル色。
+- 文字はNoto Sans JPを優先し、12/13/14/16/20/24px。操作欄38px、ボタン36px、角丸9px、色・写真プレビュー角丸7px、区切り線高さ26px。
+- `.jbs-ui` を編集エリアの親に付与すると、配下の `.field`、`.jbs-ui-button`（`.jbs-ui-button--primary`）、`.jbs-ui-divider`、`.jbs-ui-check` が共通スタイルになる。**このクラスを付けないツールには影響しない**。
+- レース盤面・画像出力・大会固有レイアウトは各ツール側に残す。共通CSSの変更は採用済みツールすべてに影響するので、変更時は事前に回帰確認する。
+
+### 利用方法
+
+```html
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=1">
+<aside class="jbs-ui">
+  <div class="field"><label for="name">名前</label><input id="name"></div>
+  <button class="jbs-ui-button" type="button">保存</button>
+</aside>
+```
+
+採用ツールはまず `overlay`。ほかのツールには個別の画面確認を経て導入する。

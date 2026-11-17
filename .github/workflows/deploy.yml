@@ -30,7 +30,7 @@ jobs:
       - name: Prepare static website
         run: |
           mkdir -p _site/data
-          cp index.html styles.css app.js brand.js .nojekyll _site/
+          cp index.html styles.css ui.css app.js brand.js .nojekyll _site/
           cp data/brand.json _site/data/
 
       - name: Configure Pages
