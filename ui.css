@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v5.
+ * JBS operations UI design system v6.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -51,9 +51,11 @@
   --jbs-ui-swatch-size: 36px;
   --jbs-ui-preset-select-width: 90px;
   --jbs-ui-divider-height: 26px;
-  --jbs-ui-radius: 9px;
-  --jbs-ui-radius-preview: 7px;
-  --jbs-ui-radius-dialog: 16px;
+  /* Source: common/styles.css (brand management editor). */
+  --jbs-ui-radius-control: 4px;  /* input, select, color/photo preview */
+  --jbs-ui-radius-button: 5px;   /* buttons, small actions */
+  --jbs-ui-radius-panel: 8px;    /* card/panel */
+  --jbs-ui-radius-dialog: 9px;   /* modal/dialog */
   --jbs-ui-border-width: 1px;
 
   /* Canonical editor spacing uses only 4/8/12/16/24px. */
@@ -93,7 +95,7 @@
   height: var(--jbs-ui-input-height);
   box-sizing: border-box;
   border: var(--jbs-ui-border-width) solid var(--jbs-ui-border);
-  border-radius: var(--jbs-ui-radius);
+  border-radius: var(--jbs-ui-radius-control);
   background: var(--jbs-ui-surface);
   color: var(--jbs-ui-text);
   font-size: var(--jbs-ui-font-16);
@@ -109,7 +111,7 @@
   min-height: var(--jbs-ui-button-height);
   padding: 0 var(--jbs-ui-space-16);
   border: var(--jbs-ui-border-width) solid var(--jbs-ui-border);
-  border-radius: var(--jbs-ui-radius);
+  border-radius: var(--jbs-ui-radius-button);
   background: var(--jbs-ui-button-bg);
   color: var(--jbs-ui-text);
   font-size: var(--jbs-ui-font-14);
@@ -163,7 +165,7 @@
 }
 .jbs-ui .preset-input select {
   min-width: 0;
-  border-radius: var(--jbs-ui-radius) 0 0 var(--jbs-ui-radius);
+  border-radius: var(--jbs-ui-radius-control) 0 0 var(--jbs-ui-radius-control);
   border-right: 0;
   background: var(--jbs-ui-button-bg);
   color: var(--jbs-ui-text);
@@ -174,5 +176,5 @@
 }
 .jbs-ui .preset-input input {
   min-width: 0;
-  border-radius: 0 var(--jbs-ui-radius) var(--jbs-ui-radius) 0;
+  border-radius: 0 var(--jbs-ui-radius-control) var(--jbs-ui-radius-control) 0;
 }
