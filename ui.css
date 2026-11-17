@@ -1,7 +1,7 @@
 /*
- * JBS operations UI design system v19.
+ * JBS operations UI design system v20.
  * Layout and tournament theme colors remain each tool's responsibility.
- * Opt in by loading this file and adding class="jbs-ui" to the editor root.
+ * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
 :root {
   /* Color */
@@ -54,24 +54,24 @@
 }
 
 /* Reusable opt-in elements. No global element resets or site-wide rules. */
-.jbs-ui {
+.jbsui {
   font-family: var(--font-family);
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-normal);
   color: var(--color-20);
 }
-.jbs-ui .field {
+.jbsui .jbsui-field {
   display: grid;
   gap: var(--space-4);
   margin: 0;
 }
-.jbs-ui .field label {
+.jbsui .jbsui-field label {
   color: var(--color-40);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
 }
-.jbs-ui .field input,
-.jbs-ui .field select {
+.jbsui .jbsui-field input,
+.jbsui .jbsui-field select {
   width: 100%;
   height: var(--height-input);
   box-sizing: border-box;
@@ -83,30 +83,30 @@
   padding: var(--space-4) var(--space-12);
   outline: none;
 }
-.jbs-ui .field input:focus,
-.jbs-ui .field select:focus {
+.jbsui .jbsui-field input:focus,
+.jbsui .jbsui-field select:focus {
   border-color: var(--color-60);
   box-shadow: 0 0 0 var(--width-focus-ring) color-mix(in srgb, var(--color-60) 10%, transparent);
 }
 /* Inactive fields retain their values but are visibly unavailable. */
-.jbs-ui .field input:disabled,
-.jbs-ui .field select:disabled {
+.jbsui .jbsui-field input:disabled,
+.jbsui .jbsui-field select:disabled {
   background-color: var(--color-95);
   border-color: var(--color-90);
   color: var(--color-60);
   cursor: not-allowed;
 }
-.jbs-ui .field.is-inactive label,
-.jbs-ui .is-inactive .field label { opacity: var(--opacity); }
-.jbs-ui .field.is-inactive .jbs-ui-color-swatch { opacity: var(--opacity); }
+.jbsui .jbsui-field.jbsui-inactive label,
+.jbsui .jbsui-inactive .jbsui-field label { opacity: var(--opacity); }
+.jbsui .jbsui-field.jbsui-inactive .jbsui-color-swatch { opacity: var(--opacity); }
 
 /* Reusable native color picker + HEX text field. */
-.jbs-ui .jbs-ui-color-control {
+.jbsui .jbsui-color-control {
   display: grid;
   grid-template-columns: var(--size-swatch) minmax(0, 1fr);
   gap: var(--space-8);
 }
-.jbs-ui .field input[type="color"] {
+.jbsui .jbsui-field input[type="color"] {
   width: var(--size-swatch);
   height: var(--size-swatch);
   padding: 0;
@@ -116,13 +116,13 @@
   background: transparent;
   cursor: pointer;
 }
-.jbs-ui .field input[type="color"]:disabled { cursor: not-allowed; }
-.jbs-ui .field input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-.jbs-ui .field input[type="color"]::-webkit-color-swatch {
+.jbsui .jbsui-field input[type="color"]:disabled { cursor: not-allowed; }
+.jbsui .jbsui-field input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.jbsui .jbsui-field input[type="color"]::-webkit-color-swatch {
   border: 0;
   border-radius: 0;
 }
-.jbs-ui .jbs-ui-color-swatch {
+.jbsui .jbsui-color-swatch {
   display: block;
   width: var(--size-swatch);
   height: var(--height-input);
@@ -131,14 +131,14 @@
   border-radius: var(--radius);
   background: var(--color-swatch-background, var(--color-100));
 }
-.jbs-ui .jbs-ui-color-swatch > input[type="color"] {
+.jbsui .jbsui-color-swatch > input[type="color"] {
   display: block;
   width: 100%;
   height: 100%;
   border: 0;
   border-radius: 0;
 }
-.jbs-ui .jbs-ui-hex-input {
+.jbsui .jbsui-hex-input {
   width: 100% !important;
   min-width: 0;
   max-width: none;
@@ -147,7 +147,7 @@
 }
 
 /* Shared HTML dialog shell; content and maximum dimensions are tool-specific. */
-.jbs-ui-dialog {
+.jbsui-dialog {
   padding: 0;
   border: 0;
   border-radius: var(--radius);
@@ -155,22 +155,22 @@
   color: var(--color-20);
   box-shadow: var(--shadow);
 }
-.jbs-ui-dialog::backdrop {
+.jbsui-dialog::backdrop {
   background: color-mix(in srgb, var(--color-20) var(--alpha-dialog-backdrop), transparent);
 }
-.jbs-ui-dialog-head {
+.jbsui-dialog-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-16) var(--space-24);
   border-bottom: var(--width-border) solid var(--color-90);
 }
-.jbs-ui-dialog-head h2 {
+.jbsui-dialog-head h2 {
   margin: 0;
   font-size: var(--font-size-20);
   font-weight: var(--font-weight-action);
 }
-.jbs-ui-dialog-close {
+.jbsui-dialog-close {
   width: var(--height-button);
   height: var(--height-button);
   border: 0;
@@ -182,7 +182,7 @@
   cursor: pointer;
 }
 
-.jbs-ui .jbs-ui-button {
+.jbsui .jbsui-button {
   min-height: var(--height-button);
   padding: 0 var(--space-16);
   border: var(--width-border) solid var(--color-80);
@@ -193,25 +193,25 @@
   font-weight: var(--font-weight-action);
   cursor: pointer;
 }
-.jbs-ui .jbs-ui-button:hover { background: var(--color-90); }
-.jbs-ui .jbs-ui-button--primary {
+.jbsui .jbsui-button:hover { background: var(--color-90); }
+.jbsui .jbsui-button--primary {
   border: 0;
   background: var(--color-20);
   color: var(--color-100);
   font-size: var(--font-size-16);
   box-shadow: var(--shadow);
 }
-.jbs-ui .jbs-ui-button--primary:hover {
+.jbsui .jbsui-button--primary:hover {
   background: var(--color-20);
 }
-.jbs-ui .jbs-ui-divider {
+.jbsui .jbsui-divider {
   width: var(--width-border);
   height: var(--height-input);
   flex: 0 0 var(--width-border);
   align-self: center;
   background: var(--color-80);
 }
-.jbs-ui .jbs-ui-check {
+.jbsui .jbsui-check {
   display: inline-flex;
   align-items: center;
   gap: var(--space-8);
@@ -222,22 +222,22 @@
   font-weight: var(--font-weight-action);
   cursor: pointer;
 }
-.jbs-ui .jbs-ui-check input[type="checkbox"] {
+.jbsui .jbsui-check input[type="checkbox"] {
   width: var(--size-checkbox);
   height: var(--size-checkbox);
   margin: 0;
   accent-color: var(--color-20);
 }
-.jbs-ui .jbs-ui-check:has(input:disabled) { opacity: var(--opacity); }
+.jbsui .jbsui-check:has(input:disabled) { opacity: var(--opacity); }
 
 /* Combined selector + editable value. A 90px selector keeps 選択 and the
    native dropdown arrow readable at the standard 14px action font size. */
-.jbs-ui .preset-input {
+.jbsui .jbsui-preset-input {
   display: grid;
   grid-template-columns: var(--width-preset-select) minmax(0, 1fr);
   min-width: 0;
 }
-.jbs-ui .preset-input select {
+.jbsui .jbsui-preset-input select {
   min-width: 0;
   font-size: var(--font-size-14);
   border-radius: var(--radius) 0 0 var(--radius);
@@ -249,7 +249,7 @@
   padding-right: var(--space-4);
   cursor: pointer;
 }
-.jbs-ui .preset-input input {
+.jbsui .jbsui-preset-input input {
   min-width: 0;
   border-radius: 0 var(--radius) var(--radius) 0;
 }
