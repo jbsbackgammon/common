@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v2.
+ * JBS operations UI design system v3.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -147,3 +147,26 @@
   accent-color: var(--jbs-ui-text);
 }
 .jbs-ui .jbs-ui-check:has(input:disabled) { opacity: .4; }
+
+/* Combined selector + editable value. A 90px selector keeps 選択 and the
+   native dropdown arrow readable at the standard 16px font size. */
+.jbs-ui .preset-input {
+  display: grid;
+  grid-template-columns: var(--jbs-ui-preset-select-width) minmax(0, 1fr);
+  min-width: 0;
+}
+.jbs-ui .preset-input select {
+  min-width: 0;
+  border-radius: var(--jbs-ui-radius) 0 0 var(--jbs-ui-radius);
+  border-right: 0;
+  background: var(--jbs-ui-button-bg);
+  color: var(--jbs-ui-text);
+  font-weight: var(--jbs-ui-weight-label);
+  padding-left: 8px;
+  padding-right: 4px;
+  cursor: pointer;
+}
+.jbs-ui .preset-input input {
+  min-width: 0;
+  border-radius: 0 var(--jbs-ui-radius) var(--jbs-ui-radius) 0;
+}

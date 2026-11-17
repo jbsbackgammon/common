@@ -167,23 +167,25 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 設定は `data/brand.json` に保存しています。`brand.js` の `EDITIONS_2026` にも旧形式JSON取込時の初期値として追加しました。すでに手動編集された回次は保持されます。
 
-## 共通UIデザインシステム（v2）
+## 共通UIデザインシステム（v3）
 
-- CSS正本：`https://jbsbackgammon.github.io/common/ui.css?v=2`
+- CSS正本：`https://jbsbackgammon.github.io/common/ui.css?v=3`
 - 対象：JBS運営ツールの**編集・操作UI**。大会テーマ色は従来どおり `brand.js` / `data/brand.json` で管理する。
 - 色・フォント・罫線・高さ・角丸・余白は `--jbs-ui-*` のCSS変数を正本とする。
 - 基本色は白面 `#FFFFFF`、ページ背景 `#EEF0F4`、文字 `#27364D`、ラベル `#3E5069`、操作枠線 `#CBD3DE`、区切り線 `#AEB5C0`。
 - 類似指定を統合：入力文字 `#18283F` → 基本文字、入力枠線 `#D3D9E2` → 操作枠線、配信選択文字 `#52627A` → ラベル色。
 - 文字はNoto Sans JPを優先し、12/13/14/16/20/24px。操作欄38px、ボタン36px、角丸9px、色・写真プレビュー角丸7px、区切り線高さ26px。選択付き入力欄のプルダウン幅90px（`--jbs-ui-preset-select-width`）。
 - `.jbs-ui` を編集エリアの親に付与すると、配下の `.field`、`.jbs-ui-button`（`.jbs-ui-button--primary`）、`.jbs-ui-divider`、`.jbs-ui-check` が共通スタイルになる。**このクラスを付けないツールには影響しない**。
+- `.preset-input` を `.field` の中で使うと、左90pxの「選択」プルダウンと右側の入力欄を結合して表示。枠・角丸・背景・余白も `common/ui.css` が定義する。
 - レース盤面・画像出力・大会固有レイアウトは各ツール側に残す。共通CSSの変更は採用済みツールすべてに影響するので、変更時は事前に回帰確認する。
 
 ### 利用方法
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=2">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=3">
 <aside class="jbs-ui">
   <div class="field"><label for="name">名前</label><input id="name"></div>
+  <div class="field"><label for="round">試合名</label><div class="preset-input"><select aria-label="候補"><option>選択</option></select><input id="round"></div></div>
   <button class="jbs-ui-button" type="button">保存</button>
 </aside>
 ```
