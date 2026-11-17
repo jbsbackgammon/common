@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v18.
+ * JBS operations UI design system v19.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbs-ui" to the editor root.
  */
@@ -47,6 +47,7 @@
 
   /* Opacity */
   --opacity: .5;
+  --alpha-dialog-backdrop: 48%;
 
   /* Shadow */
   --shadow: 0 6px 12px color-mix(in srgb, var(--color-20) 20%, transparent);
@@ -87,6 +88,100 @@
   border-color: var(--color-60);
   box-shadow: 0 0 0 var(--width-focus-ring) color-mix(in srgb, var(--color-60) 10%, transparent);
 }
+/* Inactive fields retain their values but are visibly unavailable. */
+.jbs-ui .field input:disabled,
+.jbs-ui .field select:disabled {
+  background-color: var(--color-95);
+  border-color: var(--color-90);
+  color: var(--color-60);
+  cursor: not-allowed;
+}
+.jbs-ui .field.is-inactive label,
+.jbs-ui .is-inactive .field label { opacity: var(--opacity); }
+.jbs-ui .field.is-inactive .jbs-ui-color-swatch { opacity: var(--opacity); }
+
+/* Reusable native color picker + HEX text field. */
+.jbs-ui .jbs-ui-color-control {
+  display: grid;
+  grid-template-columns: var(--size-swatch) minmax(0, 1fr);
+  gap: var(--space-8);
+}
+.jbs-ui .field input[type="color"] {
+  width: var(--size-swatch);
+  height: var(--size-swatch);
+  padding: 0;
+  border-color: var(--color-80);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: transparent;
+  cursor: pointer;
+}
+.jbs-ui .field input[type="color"]:disabled { cursor: not-allowed; }
+.jbs-ui .field input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.jbs-ui .field input[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: 0;
+}
+.jbs-ui .jbs-ui-color-swatch {
+  display: block;
+  width: var(--size-swatch);
+  height: var(--height-input);
+  overflow: hidden;
+  border: var(--width-border) solid var(--color-80);
+  border-radius: var(--radius);
+  background: var(--color-swatch-background, var(--color-100));
+}
+.jbs-ui .jbs-ui-color-swatch > input[type="color"] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+.jbs-ui .jbs-ui-hex-input {
+  width: 100% !important;
+  min-width: 0;
+  max-width: none;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shared HTML dialog shell; content and maximum dimensions are tool-specific. */
+.jbs-ui-dialog {
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--color-100);
+  color: var(--color-20);
+  box-shadow: var(--shadow);
+}
+.jbs-ui-dialog::backdrop {
+  background: color-mix(in srgb, var(--color-20) var(--alpha-dialog-backdrop), transparent);
+}
+.jbs-ui-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-16) var(--space-24);
+  border-bottom: var(--width-border) solid var(--color-90);
+}
+.jbs-ui-dialog-head h2 {
+  margin: 0;
+  font-size: var(--font-size-20);
+  font-weight: var(--font-weight-action);
+}
+.jbs-ui-dialog-close {
+  width: var(--height-button);
+  height: var(--height-button);
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-95);
+  color: var(--color-20);
+  font-size: var(--font-size-24);
+  line-height: 1;
+  cursor: pointer;
+}
+
 .jbs-ui .jbs-ui-button {
   min-height: var(--height-button);
   padding: 0 var(--space-16);
