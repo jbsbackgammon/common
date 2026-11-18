@@ -157,11 +157,11 @@
         <td><input class="name-input" type="text" maxlength="100" aria-label="大会名"></td>
         <td><input class="en-input" type="text" maxlength="150" aria-label="英語表記"></td>
         <td><input class="edition-input" type="text" maxlength="100" aria-label="回次等"></td>
-        <td><select class="category-input" aria-label="分類"><option value="title">五大タイトル</option><option value="exchange">交流タイトル</option><option value="open">オープン</option><option value="other">その他</option></select></td>
-        <td><div class="color-controls"><input class="color-picker" type="color" aria-label="メインカラーを選択"><input class="color-code" type="text" maxlength="7" spellcheck="false" aria-label="メインカラーコード"></div></td>
-        <td><div class="color-controls"><input class="sub-color-picker" type="color" aria-label="サブカラーを選択"><input class="sub-color-code" type="text" maxlength="7" spellcheck="false" aria-label="サブカラーコード"></div></td>
+        <td><select class="category-input jbsui-select" aria-label="分類"><option value="title">五大タイトル</option><option value="exchange">交流タイトル</option><option value="open">オープン</option><option value="other">その他</option></select></td>
+        <td><div class="color-controls"><span class="jbsui-color-swatch"><input class="color-picker" type="color" aria-label="メインカラーを選択"></span><input class="color-code jbsui-hex-input" type="text" maxlength="7" spellcheck="false" aria-label="メインカラーコード"></div></td>
+        <td><div class="color-controls"><span class="jbsui-color-swatch"><input class="sub-color-picker" type="color" aria-label="サブカラーを選択"></span><input class="sub-color-code jbsui-hex-input" type="text" maxlength="7" spellcheck="false" aria-label="サブカラーコード"></div></td>
         <td class="sample-cell"></td>
-        <td class="delete-cell"><button type="button" class="mini-button delete-button" aria-label="大会を削除">削除</button></td>`;
+        <td class="delete-cell"><button type="button" class="mini-button delete-button jbsui-button" aria-label="大会を削除">削除</button></td>`;
       bindDrag(row.querySelector('.drag-handle'), row, index);
       bindTextInput(row, 'name-input', entry, 'name');
       bindTextInput(row, 'en-input', entry, 'nameEn');
@@ -344,6 +344,13 @@
   }
 
   function bindEvents() {
+    // Shared ui.css shows the focus ring for keyboard navigation.
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Tab') document.documentElement.setAttribute('data-jbsui-keyboard-focus', '');
+    });
+    document.addEventListener('pointerdown', () => {
+      document.documentElement.removeAttribute('data-jbsui-keyboard-focus');
+    });
     window.addEventListener('focus', checkYear);
     // Check even when the management page stays open across midnight JST.
     window.setInterval(checkYear, 60 * 1000);
