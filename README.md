@@ -13,7 +13,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 - 大会情報の正本: `data/brand.json`。現在の大会情報とルールを固定し、ページから編集できない構成です。
 - 回次表示: 盤聖戦と賽王戦は毎年7月1日（日本時間）、その他の大会は毎年1月1日（日本時間）に自動で1加算します。
-- 共通CSS: `ui.css`（v36）。ブランド管理ページは `styles.css` を使用せず、共通CSSの汎用クラスだけで表示します。最下部では実ファイルからCSS変数の概要・変数名・定義値と、共通クラスの用途・クラス名・セレクターごとの定義値（hover・disabled・メディアクエリを含む）を表示します。
+- ツール共通CSS: `ui.css`（v36）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
 - 将来必要になった場合のメンテナンスはGitHubのファイル修正・コードレビューを通じて実施します。
 
 ### GitHub Pages
@@ -66,6 +66,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | `JBSBrand.getSubColor(nameOrId, fallback)` | サブカラー。未登録の場合は `fallback`（省略時 `null`） |
 | `JBSBrand.makeSubColor(mainColor)` | メインカラーに白を32%混ぜたサブカラー初期値 |
 | `JBSBrand.getTextColor(hex, fallback)` | 現在の共通ルールで前景色を判定。HEX不正時は `fallback` |
+| `JBSBrand.applyContrast(element, backgroundColor)` | 共通CSS `.jbsui-auto-contrast` を付与し、背景色・文字色のCSS変数を設定する。成功時 `true` |
 | `JBSBrand.getContrast()` | 文字色判定ルールのコピー |
 | `JBSBrand.getConfig()` | 共通設定全体のコピー |
 | `JBSBrand.validate(object)` | スキーマを検証して正規化した設定のコピーを返す |
@@ -232,6 +233,23 @@ JBSNaming.formatSavedLabel({
 - `--shadow` はダイアログとoverlayの編集プレビューで使用。主要ボタンに影は付けない
 
 共通CSSではフォーカス外枠（3px）は `html[data-jbsui-keyboard-focus]` と `:focus-visible` の組み合わせで表示する。配信盤面作成ツール側のJavaScriptは、Tab操作時のみこの属性を付け、ポインター操作時に解除する。
+
+### 文字色の自動判定（ツール共通CSS）
+
+背景色のsRGB相対輝度に基づく白文字・黒文字の判定は `brand.js` の `JBSBrand.getTextColor()` が担当します。CSS単体では任意の背景色の輝度判定を行わず、共通CSS `.jbsui-auto-contrast` が計算後の表示を担当します。しきい値 `0.26` と文字色は `data/brand.json` が正本です。
+
+```html
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css">
+<script src="https://jbsbackgammon.github.io/common/brand.js"></script>
+<div class="jbsui"><div id="banner">大会名</div></div>
+<script>
+  JBSBrand.load().then(() => {
+    JBSBrand.applyContrast(document.getElementById('banner'), '#009F40');
+  });
+</script>
+```
+
+`JBSBrand.applyContrast()` はCSSカスタムプロパティ `--jbsui-contrast-background` と `--jbsui-contrast-text` を設定し、`.jbsui-auto-contrast` を付与します。大会マスタ、既存API、カラー定義は変更しません。
 
 ### 使用例
 
