@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v42.
+ * JBS operations UI design system v43.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -213,6 +213,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
 .jbsui-dialog-close:not(:disabled):hover { background: var(--color-85); }
 
 .jbsui .jbsui-button {
+  box-sizing: border-box;
   min-height: var(--height-button);
   padding: 0 var(--space-16);
   border: var(--width-border) solid var(--color-85);
