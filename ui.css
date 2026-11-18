@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v39.
+ * JBS operations UI design system v40.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -292,6 +292,19 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
 }
 .jbsui .jbsui-preset-input input {
   min-width: 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+/* Selector + main editable value + adjacent detail value.
+   The detail field has no separate heading and is visually part of the same row. */
+.jbsui .jbsui-preset-input--detail {
+  grid-template-columns: var(--width-preset-select) minmax(0, 2fr) minmax(0, 1fr);
+}
+.jbsui .jbsui-preset-input--detail input:nth-of-type(1) {
+  border-radius: 0;
+}
+.jbsui .jbsui-preset-input--detail input:nth-of-type(2) {
+  border-left: 0;
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 
