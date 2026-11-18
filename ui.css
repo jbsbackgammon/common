@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v34.
+ * JBS operations UI design system v35.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -686,4 +686,14 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-8);
   }
+}
+
+
+/* Auto-contrast visual: brand.js computes sRGB luminance from data/brand.json.
+   CSS only displays the resulting background/text colors; it does not
+   attempt to evaluate luminance. */
+.jbsui.jbsui-auto-contrast,
+.jbsui .jbsui-auto-contrast {
+  background-color: var(--jbsui-contrast-background, var(--color-100));
+  color: var(--jbsui-contrast-text, var(--color-25));
 }
