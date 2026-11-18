@@ -22,20 +22,6 @@
       </div>
     </section>
 
-    <section class="jbsui-reference-card" aria-labelledby="apiTitle">
-      <h2 class="jbsui-reference-title" id="apiTitle">他ツールでの参照</h2>
-      <p class="jbsui-reference-paragraph">大会情報の正本は <code>data/brand.json</code>、共通ライブラリは <code>brand.js</code> です。既存の参照APIは変更していません。</p>
-      <pre class="jbsui-reference-pre"><code>&lt;script src="https://jbsbackgammon.github.io/common/brand.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-  JBSBrand.load().then(() =&gt; {
-    const tournament = JBSBrand.getTournament('王位戦');
-    const edition = JBSBrand.getEdition('王位戦');
-    const textColor = JBSBrand.getTextColor(tournament.color);
-    console.log(tournament.nameEn, tournament.color, edition, textColor);
-  });
-&lt;/script&gt;</code></pre>
-    </section>
-
     <section class="jbsui-reference-card" aria-labelledby="cssTitle">
       <h2 class="jbsui-reference-title" id="cssTitle">ツール共通CSS</h2>
       <p class="jbsui-reference-paragraph">参照ファイル：<code>common/ui.css</code> <span id="cssVersion" class="jbsui-reference-muted"></span></p>
