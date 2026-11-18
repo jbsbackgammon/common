@@ -6,32 +6,31 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#ffffff">
   <title>ブランド管理</title>
-  <link rel="stylesheet" href="./ui.css?v=31">
-  <link rel="stylesheet" href="./styles.css?v=8">
+  <link rel="stylesheet" href="./ui.css?v=33">
 </head>
-<body class="jbsui">
-  <main class="container">
-    <div id="notice" class="notice" role="alert" hidden></div>
+<body class="jbsui jbsui-reference-page">
+  <main class="jbsui-reference-container">
+    <div id="notice" class="jbsui-reference-notice" role="alert" hidden></div>
 
-    <section class="panel" aria-labelledby="masterTitle">
-      <h2 id="masterTitle">大会マスタ</h2>
-      <div class="table-scroll">
-        <table class="master-table">
+    <section class="jbsui-reference-card" aria-labelledby="masterTitle">
+      <h2 class="jbsui-reference-title" id="masterTitle">大会マスタ</h2>
+      <div class="jbsui-reference-scroll">
+        <table class="jbsui-reference-table jbsui-reference-table--wide">
           <thead><tr><th scope="col">順番</th><th scope="col">大会名</th><th scope="col">英語表記</th><th scope="col">回次等</th><th scope="col">分類</th><th scope="col">メインカラー</th><th scope="col">サブカラー</th><th scope="col">表示イメージ</th></tr></thead>
           <tbody id="tournamentRows"></tbody>
         </table>
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="contrastTitle">
-      <h2 id="contrastTitle">文字色の自動判定</h2>
-      <div class="contrast-grid" id="contrastInfo" aria-live="polite"></div>
+    <section class="jbsui-reference-card" aria-labelledby="contrastTitle">
+      <h2 class="jbsui-reference-title" id="contrastTitle">文字色の自動判定</h2>
+      <div class="jbsui-reference-grid" id="contrastInfo" aria-live="polite"></div>
     </section>
 
-    <section class="panel guide-panel" aria-labelledby="apiTitle">
-      <h2 id="apiTitle">他ツールでの参照</h2>
-      <p>大会情報の正本は <code>data/brand.json</code>、共通ライブラリは <code>brand.js</code> です。既存の参照APIは変更していません。</p>
-      <pre><code>&lt;script src="https://jbsbackgammon.github.io/common/brand.js"&gt;&lt;/script&gt;
+    <section class="jbsui-reference-card" aria-labelledby="apiTitle">
+      <h2 class="jbsui-reference-title" id="apiTitle">他ツールでの参照</h2>
+      <p class="jbsui-reference-paragraph">大会情報の正本は <code>data/brand.json</code>、共通ライブラリは <code>brand.js</code> です。既存の参照APIは変更していません。</p>
+      <pre class="jbsui-reference-pre"><code>&lt;script src="https://jbsbackgammon.github.io/common/brand.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   JBSBrand.load().then(() =&gt; {
     const tournament = JBSBrand.getTournament('王位戦');
@@ -42,22 +41,22 @@
 &lt;/script&gt;</code></pre>
     </section>
 
-    <section class="panel css-panel" aria-labelledby="cssTitle">
-      <h2 id="cssTitle">共通CSS</h2>
-      <p class="css-description">参照ファイル：<code>common/ui.css</code> <span id="cssVersion" class="css-version"></span></p>
-      <pre><code>&lt;link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css"&gt;
+    <section class="jbsui-reference-card" aria-labelledby="cssTitle">
+      <h2 class="jbsui-reference-title" id="cssTitle">共通CSS</h2>
+      <p class="jbsui-reference-paragraph">参照ファイル：<code>common/ui.css</code> <span id="cssVersion" class="jbsui-reference-muted"></span></p>
+      <pre class="jbsui-reference-pre"><code>&lt;link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css"&gt;
 &lt;div class="jbsui"&gt;…&lt;/div&gt;</code></pre>
-      <h3>共通変数</h3>
-      <div class="table-scroll">
-        <table class="token-table">
+      <h3 class="jbsui-reference-subtitle">共通変数</h3>
+      <div class="jbsui-reference-scroll">
+        <table class="jbsui-reference-table jbsui-reference-table--tokens">
           <thead><tr><th scope="col">概要</th><th scope="col">変数名</th><th scope="col">定義値</th></tr></thead>
           <tbody id="cssTokens"></tbody>
         </table>
       </div>
-      <h3>共通スタイル</h3>
-      <div class="table-scroll">
-        <table class="token-table">
-          <thead><tr><th scope="col">用途</th><th scope="col">クラス名</th></tr></thead>
+      <h3 class="jbsui-reference-subtitle">共通スタイル</h3>
+      <div class="jbsui-reference-scroll">
+        <table class="jbsui-reference-table jbsui-reference-table--tokens">
+          <thead><tr><th scope="col">用途</th><th scope="col">クラス名</th><th scope="col">定義値</th></tr></thead>
           <tbody id="cssClasses"></tbody>
         </table>
       </div>
@@ -65,6 +64,6 @@
   </main>
 
   <script src="./brand.js?v=6"></script>
-  <script src="./app.js?v=8"></script>
+  <script src="./app.js?v=9"></script>
 </body>
 </html>
