@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v44.
+ * JBS operations UI design system v45.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -21,6 +21,7 @@
   --font-size-24: 24px;
   --font-weight-normal: 400;
   --font-weight-action: 800;
+  --letter-spacing-hex: .035em;
 
   /* Height */
   --height-input: 36px;
@@ -173,6 +174,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   max-width: none;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
+  letter-spacing: var(--letter-spacing-hex);
 }
 
 /* Shared HTML dialog shell; content and maximum dimensions are tool-specific. */
@@ -182,6 +184,9 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border-radius: var(--radius);
   background: var(--color-100);
   color: var(--color-25);
+  font-family: var(--font-family);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-normal);
   box-shadow: var(--shadow);
 }
 .jbsui-dialog::backdrop {
@@ -206,6 +211,8 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border-radius: 50%;
   background: var(--color-95);
   color: var(--color-25);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-normal);
   font-size: var(--font-size-24);
   line-height: 1;
   cursor: pointer;
@@ -432,6 +439,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border-radius: calc(var(--radius) - var(--width-border)) 0 0 calc(var(--radius) - var(--width-border));
   background: var(--color-95);
   color: var(--color-25);
+  font-family: var(--font-family);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
   cursor: pointer;
@@ -473,6 +481,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border-radius: var(--radius);
   background: var(--color-100);
   color: var(--color-25);
+  font-family: var(--font-family);
   text-align: left;
   overflow-wrap: anywhere;
   font-size: var(--font-size-14);
@@ -511,6 +520,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border-right: var(--width-border) solid var(--color-85);
   background: var(--color-95);
   color: var(--color-25);
+  font-family: var(--font-family);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
   white-space: nowrap;
@@ -576,6 +586,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border: var(--width-border) solid var(--color-85);
   border-radius: var(--radius);
   background: var(--color-95);
+  font-family: var(--font-family);
   cursor: pointer;
 }
 .jbsui .jbsui-player-photo-picker:hover { border-color: var(--color-60); }
@@ -641,6 +652,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border-radius: 0;
   background: transparent;
   color: var(--color-25);
+  font-family: var(--font-family);
   text-align: left;
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
