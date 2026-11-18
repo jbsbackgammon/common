@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v50.
+ * JBS operations UI design system v51.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -328,11 +328,11 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   position: absolute;
   top: 50%;
   right: var(--space-12);
-  width: var(--space-8);
-  height: var(--space-8);
-  border-right: var(--width-border) solid var(--color-25);
-  border-bottom: var(--width-border) solid var(--color-25);
-  transform: translateY(-70%) rotate(45deg);
+  width: calc(var(--space-8) + var(--space-4));
+  height: calc(var(--space-8) + var(--space-4));
+  border-right: calc(var(--width-border) * 2) solid var(--color-25);
+  border-bottom: calc(var(--width-border) * 2) solid var(--color-25);
+  transform: translateY(-72%) rotate(45deg);
   pointer-events: none;
 }
 .jbsui .jbsui-preset-input select:focus,
