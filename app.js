@@ -187,12 +187,9 @@
       classFragment.appendChild(row);
     }
     byId('cssClasses').replaceChildren(classFragment);
-    const version = css.match(/design system v(\d+)/);
-    byId('cssVersion').textContent =
-      '(v' + (version?.[1] || '?') + '・変数 ' + tokens.length + '件・スタイル ' + all.length + '件)';
   }
   async function init() {
-    const cssPromise = fetch('./ui.css?v=38', { cache: 'no-store' })
+    const cssPromise = fetch('./ui.css?v=46', { cache: 'no-store' })
       .then(response => {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         return response.text();
