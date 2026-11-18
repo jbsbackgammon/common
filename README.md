@@ -9,7 +9,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 ## 公開と運用
 
-ブランド管理ページは**閲覧専用**です。大会名・英語表記・回次等・分類・メイン/サブカラー・文字色判定ルールを表示します。ヘッダーの操作ボタン、編集欄、ドラッグ並び替え、削除、JSON取込・出力、PATによる保存機能は設置していません。
+ブランド管理ページは**閲覧専用**です。大会名・英語表記・回次等・分類・テーマカラー・サブカラー・文字色判定ルールを表示します。ヘッダーの操作ボタン、編集欄、ドラッグ並び替え、削除、JSON取込・出力、PATによる保存機能は設置していません。
 
 - 大会情報の正本: `data/brand.json`。現在の大会情報とルールを固定し、ページから編集できない構成です。
 - 回次表示: 盤聖戦と賽王戦は毎年7月1日（日本時間）、その他の大会は毎年1月1日（日本時間）に自動で1加算します。
@@ -62,9 +62,9 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | `JBSBrand.editionForYear(entry, year?)` | 指定年の更新日後の回次（省略時は現在日時）。未入力なら空文字 |
 | `JBSBrand.editionForDate(entry, date?)` | 指定日時（Dateオブジェクト）の実際の回次を日本時間で計算 |
 | `JBSBrand.editionCycleYear(entry, date?)` | 指定日時が属する回次更新年度を取得（7月更新にも対応） |
-| `JBSBrand.getColor(nameOrId, fallback)` | メインカラー。未登録の場合は `fallback`（省略時 `null`） |
+| `JBSBrand.getColor(nameOrId, fallback)` | テーマカラー。未登録の場合は `fallback`（省略時 `null`） |
 | `JBSBrand.getSubColor(nameOrId, fallback)` | サブカラー。未登録の場合は `fallback`（省略時 `null`） |
-| `JBSBrand.makeSubColor(mainColor)` | メインカラーに白を32%混ぜたサブカラー初期値 |
+| `JBSBrand.makeSubColor(mainColor)` | テーマカラーに白を32%混ぜたサブカラー初期値 |
 | `JBSBrand.getTextColor(hex, fallback)` | 現在の共通ルールで前景色を判定。HEX不正時は `fallback` |
 | `JBSBrand.applyContrast(element, backgroundColor)` | 共通CSS `.jbsui-auto-contrast` を付与し、背景色・文字色のCSS変数を設定する。成功時 `true` |
 | `JBSBrand.getContrast()` | 文字色判定ルールのコピー |
@@ -111,7 +111,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 }
 ```
 
-`category` は `title`（五大タイトル） / `exchange`（交流タイトル） / `open` / `other`。`id` は固有で英小文字・数字・ハイフンのみ。大会名も重複不可。`color` / `subColor` は `#RRGGBB`（`#RGB`も入力可）、`order` は1からの連番です。旧JSON（`subColor` や `editionBase` がない形式）も取込可能で、取り込み時にメインカラーから補完します。JSONが唯一の正本で、JS内に別の大会カラー表をコピーしていません。
+`category` は `title`（五大タイトル） / `exchange`（交流タイトル） / `open` / `other`。`id` は固有で英小文字・数字・ハイフンのみ。大会名も重複不可。`color` / `subColor` は `#RRGGBB`（`#RGB`も入力可）、`order` は1からの連番です。旧JSON（`subColor` や `editionBase` がない形式）も取込可能で、取り込み時にテーマカラーから補完します。JSONが唯一の正本で、JS内に別の大会カラー表をコピーしていません。
 
 ## データ出典（2026-10-19時点）
 
@@ -129,7 +129,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 ### v05 UI調整と回次の更新日
 
 - 大会一覧の列名を「回次等」に固定（回次の入力内容はアクセス年に応じ自動計算したものを表示）。
-- メインカラー・サブカラー・明るい背景の文字色・暗い背景の文字色、4種類のカラーピッカーを外枠の内側いっぱいまで塗りつぶし、内側の余白・スウォッチの枠線を削除。
+- テーマカラー・サブカラー・明るい背景の文字色・暗い背景の文字色、4種類のカラーピッカーを外枠の内側いっぱいまで塗りつぶし、内側の余白・スウォッチの枠線を削除。
 
 - **盤聖戦・賽王戦** は7月1日（日本時間）に更新。2026年1月1日〜6月30日はそれぞれ「JBS 第32期」「JBS 第7期」、**2026年7月1日から**「JBS 第33期」「JBS 第8期」です。2027年7月1日からは「JBS 第34期」「JBS 第9期」になります。
 - ほかの大会は毎年1月1日（日本時間）に更新。`editionUpdateMonth` / `editionUpdateDay` を共通JSONに保存します（通常 `1/1`、盤聖戦・賽王戦のみ `7/1`）。
