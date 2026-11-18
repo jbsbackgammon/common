@@ -7,42 +7,20 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 - ブラウザ共通ライブラリ（大会情報）: https://jbsbackgammon.github.io/common/brand.js
 - ブラウザ共通ライブラリ（保存・出力命名）: https://jbsbackgammon.github.io/common/naming.js
 
-## 初回設置
+## 公開と運用
 
-1. `commonv05.zip` は **差分** です。既存の `common` のルートに内容を追加・上書きしてください（`data/brand.json` を含む）。初回設置は全ファイル一式から行います。
-2. GitHubリポジトリの **Settings → Pages → Build and deployment → Source: GitHub Actions** を選択してください。**Deploy from a branch は選択しません。**
-3. `main` ブランチへのPushで `.github/workflows/deploy.yml` が自動実行され、公開後 https://jbsbackgammon.github.io/common/ で閲覧できます。**Actions → Deploy GitHub Pages → Run workflow** から手動実行も可能です。
+ブランド管理ページは**閲覧専用**です。大会名・英語表記・回次等・分類・メイン/サブカラー・文字色判定ルールを表示します。ヘッダーの操作ボタン、編集欄、ドラッグ並び替え、削除、JSON取込・出力、PATによる保存機能は設置していません。
 
-### GitHub Actions（v02以降）
+- 大会情報の正本: `data/brand.json`。現在の大会情報とルールを固定し、ページから編集できない構成です。
+- 回次表示: 盤聖戦と賽王戦は毎年7月1日（日本時間）、その他の大会は毎年1月1日（日本時間）に自動で1加算します。
+- 共通CSS: `ui.css`。ページ最下部の「共通CSS」欄では実ファイルから変数定義を読み取り、概要・変数名・定義値および共通クラス名を表示します。
+- 将来必要になった場合のメンテナンスはGitHubのファイル修正・コードレビューを通じて実施します。
 
-- `main` へのPush、および手動実行（`workflow_dispatch`）に対応。ブランド管理画面から `data/brand.json` を保存した場合も、自動で再デプロイされます。
-- OSを `ubuntu-24.04` に固定し、`ubuntu-latest` → Ubuntu 26.04 移行アノテーションの対象にならないようにしています。
-- `actions/checkout@v6`、`actions/configure-pages@v6`、`actions/upload-pages-artifact@v5`、`actions/deploy-pages@v5` を使用（Node.js 24対応世代）。
-- 公開前に `data/brand.json` のJSON構文チェックを行い、公開物を `_site/` に組み立てます。npmやビルドは不要です。
-- GitHub Actionsが動くために別途PATは不要です。管理画面からGitHubへ直接**保存**する際だけ、既存どおりFine-grained PATが必要です。
-- ZIPをGitHubのWeb画面からアップロードする際は**必ず展開してから** `.github/workflows/deploy.yml` を配置してください。ワークフローファイルはGitHubの管理権限等によりアップロードが制限される場合があります。
+### GitHub Pages
 
-## 管理画面の機能
-
-- 大会マスタ: ID（変更不可）、大会名、英語表記、年ごとの回次、分類、メインカラー、サブカラーを変更
-- 大会の追加と削除、ドラッグによる並び替え（キーボードの上下矢印キーも対応）。保存順は1,2,3…に連番化
-- 表示イメージのセル全体をメインカラーで塗りつぶすプレビュー。メインカラー変更でサブカラーを自動生成（白を32%混合）、その後に個別変更可能
-- 分類は五大タイトル (`title`)、交流タイトル (`exchange`)、オープン (`open`)、その他 (`other`)
-- 回次は年次で自動加算。盤聖戦・賽王戦のみ毎年7月1日（日本時間）、その他は毎年1月1日（日本時間）に更新（ページに戻った際も更新）
-- 文字色判定の相対輝度しきい値と白/黒の文字色を管理
-- JSON取込・JSON出力
-- GitHub APIによる **`data/brand.json` 直接保存**
-
-### 「GitHubに保存」
-
-1. GitHubの Settings → Developer settings → Personal access tokens → Fine-grained tokens でトークンを作成します。
-2. **Repository access** は **Only select repositories** → `jbsbackgammon/common` のみ選択してください。
-3. **Repository permissions** の **Contents: Read and write** を付与します。組織のトークン利用制限がある場合は承認が必要です。
-4. 管理画面で編集後「GitHubに保存」→ PATを入力 →「保存する」。
-
-トークンは保存操作のときだけ `api.github.com` に送信し、ブラウザの保存領域には残しません。GitHub側で他者による変更があれば上書きを拒否します。ブラウザ側の一時編集は、ページを再読み込みすると失われます。
-
-**PATを使わない方法:** 「JSON出力」で生成したJSONファイルを `brand.json` にリネームして GitHub の `data/brand.json` に手動上書きしてください。この場合、管理画面の「同期済み」表示は再読み込み後に更新されます。
+1. GitHubリポジトリの **Settings → Pages → Build and deployment → Source: GitHub Actions** を選択します。
+2. `main` ブランチにPushすると `.github/workflows/deploy.yml` が実行され、https://jbsbackgammon.github.io/common/ に公開されます。手動実行も可能です。
+3. OSは `ubuntu-24.04` 固定、ActionsはNode.js 24対応世代を使用しています。公開前にJSON構文と共通命名APIを検証します。
 
 ## 外部ツールからの参照
 
@@ -102,7 +80,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 | tournament | `TOURNAMENT_MASTERS` の名前・メイン/サブカラー、判定できる文字色 | `TITLE_COLORS`（5大タイトルの装飾）、PDF・PNG描画、トーナメントロジック |
 | overlay | `titleThemePresets`、`titleEnglishPresets`、メイン/サブカラー、共通文字色判定 | ボードプリセット、パネルカラー、選手配色、描画・配置 |
 
-各ツールの修正は**本ZIPには含みません**。このリポジトリを先に公開し、各ツールの参照先を切り替える形になります。
+各ツールでの利用にあたっては、公開済みの共通APIを参照してください。ブランド管理ページ自体は閲覧専用です。
 
 ## JSONスキーマ v1
 
