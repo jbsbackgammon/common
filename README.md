@@ -186,9 +186,9 @@ JBSNaming.formatSavedLabel({
 - 今後の運営ツールも、このAPIを使って同じ規則で一覧表示・JSON/画像出力を行う
 - GitHub Actionsでは `node scripts/check-naming.cjs` により命名ルールの互換性を検証する
 
-## 共通UIデザインシステム（v49）
+## 共通UIデザインシステム（v50）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=49`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=50`
 - 編集UIでは `class="jbsui"` を持つ要素の内側に共通クラスを配置。配信盤面・大会テーマ・各ツール固有のレイアウトは共通化しない
 - 変数の定義順は color → font → height → width → size（角丸含む）→ space → opacity → shadow
 - 名前は分類を先頭にする。例：`--height-input`、`--width-preset-select`、`--font-size-14`、`--shadow`
@@ -224,7 +224,7 @@ JBSNaming.formatSavedLabel({
 - プルダウンの展開一覧（`option`）は白背景・基本文字色・14pxに統一（「選択▼」と同じ）。閉じたプルダウンの文字サイズ・背景・hover状態は変更しない
 - `jbsui-field`、`jbsui-select`、`jbsui-preset-input`：入力・プルダウンの共通外観と操作状態
 - `jbsui-color-control`、`jbsui-color-swatch`、`jbsui-hex-input`：カラー入力とプレビュー
-- `jbsui-button`、`jbsui-button--primary`、`jbsui-check`、`jbsui-divider`：操作要素。通常ボタン・主要ボタンともに文字サイズ14pxで統一
+- `jbsui-button`、`jbsui-button--primary`、`jbsui-button--complete`、`jbsui-check`、`jbsui-divider`：操作要素。通常ボタンは14px、完了状態は濃色背景・白字で表示
 - `jbsui-button--primary-action`：主要操作ボタンの最小横幅170px・左右24pxを共通化
 - `jbsui-panel`、`jbsui-actions`、`jbsui-grid--2/3/4/5`：編集画面の共通レイアウト。操作エリア側の余白・列間隔・レスポンシブ切替をツールごとに再定義しない
 - 編集パネルの基準間隔は overlay に統一：上下16px・左右24px、行間8px、同一行の項目間16px、操作ボタンの横間隔12px
@@ -232,12 +232,37 @@ JBSNaming.formatSavedLabel({
 - `jbsui-combo-input`、`jbsui-combo-menu`、`jbsui-file-picker`、`jbsui-popover-menu`：候補入力・ファイル選択・設定メニューの共通部品
 - `jbsui-preset-input--detail`：選択＋主入力＋補助入力を1行に配置。補助入力に独立見出しを置かない場合に使用
 - `jbsui-preset-picker`、`jbsui-preset-picker--detail`、`jbsui-preset-button`：表示文字を常に「選択」に固定する候補選択ボタン。選択値は隣接入力欄だけに反映
-- `jbsui-settings-dialog`、`jbsui-saved-settings`、`jbsui-saved-setting`、`jbsui-save-complete-dialog`：設定呼出一覧と2秒の保存完了表示を共通化
+- `jbsui-settings-dialog`、`jbsui-saved-settings`、`jbsui-saved-setting`：設定呼出一覧。保存完了はモーダルではなく `jbsui-button--complete` と `ui.js` を使用
 - `jbsui-player-fields`、`jbsui-player-field`、`jbsui-player-entry-row`、`jbsui-player-photo-picker`：英語表示時の選手入力を共通化。写真＋選択＋日本語名と英語名を1行に配置
 - `jbsui-dialog`、`jbsui-dialog-head`、`jbsui-dialog-close`：ダイアログ
 - `--shadow` はダイアログとoverlayの編集プレビューで使用。主要ボタンに影は付けない
 
 共通CSSではフォーカス外枠（3px）は `html[data-jbsui-keyboard-focus]` と `:focus-visible` の組み合わせで表示する。配信盤面作成ツール側のJavaScriptは、Tab操作時のみこの属性を付け、ポインター操作時に解除する。
+
+### ボタン内の保存完了表示（共通）
+
+保存が成功した場合のみ、押したボタンを**2秒間**「保存完了」（濃色背景・白字）に変更します。全画面を暗転せず、ほかの操作部品に影響を与えません。表示中のボタンは一時的に操作不可にし、2秒後に元の文言と状態に復帰します。
+
+```html
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=50">
+<script src="https://jbsbackgammon.github.io/common/ui.js?v=1"></script>
+<div class="jbsui"><button type="button" class="jbsui-button" id="save">設定保存</button></div>
+<script>
+  document.getElementById("save").addEventListener("click", (event) => {
+    try {
+      // 各ツールで保存成功後にだけ呼び出す
+      JBSUI.showButtonFeedback(event.currentTarget);
+    } catch (error) {
+      // 保存失敗はツール側で通知し、完了表示は出さない
+    }
+  });
+</script>
+```
+
+- 共通API：`JBSUI.showButtonFeedback(button, { label: "保存完了", duration: 2000 })`
+- `label`・`duration` は省略可能。既定値は「保存完了」・2000ms
+- 再呼び出しではタイマーを更新し、元の文言・ボタン状態を維持
+- 各ツールで完了表示のCSSやタイマーを重複実装しない
 
 ### 文字色の自動判定（ツール共通CSS）
 
@@ -259,7 +284,7 @@ JBSNaming.formatSavedLabel({
 ### 使用例
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=49">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=50">
 <aside class="jbsui">
   <div class="jbsui-field">
     <label for="name">名前</label><input id="name">
