@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v32.
+ * JBS operations UI design system v33.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -455,4 +455,158 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   .jbsui .jbsui-grid--2,
   .jbsui .jbsui-grid--4,
   .jbsui .jbsui-grid--5 { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* Read-only reference views, usable by any JBS tool. No brand-page selectors. */
+.jbsui.jbsui-reference-page {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-95);
+  font-size: var(--font-size-14);
+}
+.jbsui .jbsui-reference-container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1370px;
+  margin: 0 auto;
+  padding: var(--space-24) var(--space-16);
+}
+.jbsui .jbsui-reference-card {
+  box-sizing: border-box;
+  margin-bottom: var(--space-16);
+  padding: var(--space-16);
+  border: var(--width-border) solid var(--color-85);
+  border-radius: var(--radius);
+  background: var(--color-100);
+}
+.jbsui .jbsui-reference-title {
+  margin: 0 0 var(--space-16);
+  font-size: var(--font-size-20);
+  font-weight: var(--font-weight-action);
+}
+.jbsui .jbsui-reference-subtitle {
+  margin: var(--space-24) 0 var(--space-12);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-action);
+}
+.jbsui .jbsui-reference-paragraph {
+  margin: 0 0 var(--space-12);
+  line-height: 1.7;
+}
+.jbsui .jbsui-reference-muted {
+  color: var(--color-45);
+  font-size: var(--font-size-12);
+}
+.jbsui .jbsui-reference-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+.jbsui .jbsui-reference-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.jbsui .jbsui-reference-table--wide { min-width: 1080px; }
+.jbsui .jbsui-reference-table--tokens { min-width: 600px; }
+.jbsui .jbsui-reference-table th,
+.jbsui .jbsui-reference-table td {
+  padding: var(--space-8) var(--space-12);
+  border: var(--width-border) solid var(--color-85);
+  vertical-align: middle;
+}
+.jbsui .jbsui-reference-table th {
+  background: var(--color-95);
+  text-align: left;
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-action);
+  white-space: nowrap;
+}
+.jbsui .jbsui-reference-table td { font-size: var(--font-size-14); }
+.jbsui .jbsui-reference-group td {
+  background: var(--color-95);
+  font-weight: var(--font-weight-action);
+}
+.jbsui .jbsui-reference-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-16);
+}
+.jbsui .jbsui-reference-stat {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--space-12) var(--space-16);
+  border: var(--width-border) solid var(--color-85);
+  border-radius: var(--radius);
+}
+.jbsui .jbsui-reference-stat-label {
+  margin: 0 0 var(--space-8);
+  color: var(--color-45);
+  font-weight: var(--font-weight-action);
+}
+.jbsui .jbsui-reference-stat-value { font-size: var(--font-size-16); }
+.jbsui .jbsui-reference-color {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  white-space: nowrap;
+}
+.jbsui .jbsui-reference-swatch {
+  box-sizing: border-box;
+  display: inline-block;
+  flex: 0 0 var(--size-swatch);
+  width: var(--size-swatch);
+  height: var(--size-swatch);
+  border: var(--width-border) solid var(--color-85);
+  border-radius: var(--radius);
+  background: var(--jbsui-swatch, var(--color-100));
+}
+.jbsui .jbsui-reference-swatch--small {
+  flex-basis: 24px;
+  width: 24px;
+  height: 24px;
+}
+.jbsui .jbsui-reference-sample {
+  min-width: 145px;
+  text-align: center;
+  font-weight: var(--font-weight-action);
+}
+.jbsui .jbsui-reference-pre {
+  overflow-x: auto;
+  max-width: 100%;
+  margin: var(--space-12) 0;
+  padding: var(--space-12) var(--space-16);
+  border: var(--width-border) solid var(--color-85);
+  border-radius: var(--radius);
+  background: var(--color-95);
+  font-size: var(--font-size-12);
+  line-height: 1.65;
+  white-space: pre;
+}
+.jbsui .jbsui-reference-code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: var(--font-size-12);
+}
+.jbsui .jbsui-reference-definition {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.jbsui .jbsui-reference-nowrap { white-space: nowrap; }
+.jbsui .jbsui-reference-center { text-align: center; }
+.jbsui .jbsui-reference-strong { font-weight: var(--font-weight-action); }
+.jbsui .jbsui-reference-notice {
+  padding: var(--space-12);
+  margin-bottom: var(--space-16);
+  border: var(--width-border) solid var(--color-85);
+  border-radius: var(--radius);
+  background: var(--color-100);
+}
+@media (max-width: 700px) {
+  .jbsui .jbsui-reference-container { padding: var(--space-12); }
+  .jbsui .jbsui-reference-card { padding: var(--space-12); }
+  .jbsui .jbsui-reference-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
 }
