@@ -32,10 +32,15 @@ jobs:
           node --check naming.js
           node scripts/check-naming.cjs
 
+      - name: Validate shared UI feedback API
+        run: |
+          node --check ui.js
+          node scripts/check-ui.cjs
+
       - name: Prepare static website
         run: |
           mkdir -p _site/data
-          cp index.html ui.css app.js brand.js naming.js .nojekyll _site/
+          cp index.html ui.css ui.js app.js brand.js naming.js .nojekyll _site/
           cp data/brand.json _site/data/
 
       - name: Configure Pages
