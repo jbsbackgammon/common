@@ -207,7 +207,7 @@
       '(v' + (version?.[1] || '?') + '・変数 ' + tokens.length + '件・スタイル ' + all.length + '件)';
   }
   async function init() {
-    const cssPromise = fetch('./ui.css?v=35', { cache: 'no-store' })
+    const cssPromise = fetch('./ui.css?v=36', { cache: 'no-store' })
       .then(response => {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         return response.text();
