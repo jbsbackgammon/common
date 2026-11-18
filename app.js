@@ -24,7 +24,7 @@
   };
   const classDescriptions = {
     'jbsui':'共通UIの適用範囲','jbsui-field':'ラベルと入力欄','jbsui-select':'単独プルダウン',
-    'jbsui-inactive':'非活性の表示','jbsui-color-control':'色選択＋HEX入力',
+    'jbsui-auto-contrast':'背景色に応じた文字色の自動設定','jbsui-inactive':'非活性の表示','jbsui-color-control':'色選択＋HEX入力',
     'jbsui-color-swatch':'カラーピッカー外枠','jbsui-hex-input':'HEXコード入力',
     'jbsui-dialog':'ダイアログ本体','jbsui-dialog-head':'ダイアログ見出し',
     'jbsui-dialog-close':'ダイアログ閉じるボタン','jbsui-button':'共通ボタン',
@@ -88,8 +88,7 @@
       td(row).appendChild(colorVisual(entry.color));
       td(row).appendChild(colorVisual(entry.subColor));
       const sample = td(row, entry.name, 'jbsui-reference-sample');
-      sample.style.backgroundColor = entry.color;
-      sample.style.color = JBSBrand.getTextColor(entry.color);
+      JBSBrand.applyContrast(sample, entry.color);
       fragment.appendChild(row);
     }
     byId('tournamentRows').replaceChildren(fragment);
@@ -208,7 +207,7 @@
       '(v' + (version?.[1] || '?') + '・変数 ' + tokens.length + '件・スタイル ' + all.length + '件)';
   }
   async function init() {
-    const cssPromise = fetch('./ui.css?v=33', { cache: 'no-store' })
+    const cssPromise = fetch('./ui.css?v=35', { cache: 'no-store' })
       .then(response => {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         return response.text();
