@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v48.
+ * JBS operations UI design system v49.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -289,23 +289,50 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   grid-template-columns: var(--width-preset-select) minmax(0, 1fr);
   min-width: 0;
 }
-.jbsui .jbsui-preset-input select {
+.jbsui .jbsui-preset-input select,
+.jbsui .jbsui-preset-picker > .jbsui-preset-button {
   min-width: 0;
-  font-size: var(--font-size-14);
-  border-radius: var(--radius) 0 0 var(--radius);
+  height: var(--height-input);
+  box-sizing: border-box;
+  border: var(--width-border) solid var(--color-85);
   border-right: 0;
+  border-radius: var(--radius) 0 0 var(--radius);
   background: var(--color-95);
   color: var(--color-25);
+  font-family: var(--font-family);
+  font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
   padding-left: var(--space-8);
+  cursor: pointer;
+}
+.jbsui .jbsui-preset-input select {
   padding-right: var(--space-4);
 }
-.jbsui .jbsui-preset-input select:focus {
+.jbsui .jbsui-preset-picker > .jbsui-preset-button {
+  position: relative;
+  padding-right: var(--space-24);
+  text-align: left;
+}
+.jbsui .jbsui-preset-picker > .jbsui-preset-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: var(--space-12);
+  width: var(--space-8);
+  height: var(--space-8);
+  border-right: var(--width-border) solid var(--color-25);
+  border-bottom: var(--width-border) solid var(--color-25);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+.jbsui .jbsui-preset-input select:focus,
+.jbsui .jbsui-preset-picker > .jbsui-preset-button:focus {
   /* Keep the shared edge single-width while coloring its fourth side
      on focus; an inset stroke avoids changing either control's size. */
   box-shadow: inset calc(-1 * var(--width-border)) 0 0 var(--color-60);
 }
-.jbsui .jbsui-preset-input select:not(:disabled):hover {
+.jbsui .jbsui-preset-input select:not(:disabled):hover,
+.jbsui .jbsui-preset-picker > .jbsui-preset-button:not(:disabled):hover {
   background: var(--color-85);
 }
 .jbsui .jbsui-preset-input input {
@@ -336,22 +363,6 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
 }
 .jbsui .jbsui-preset-picker--detail {
   grid-template-columns: var(--width-preset-select) minmax(0, 2fr) minmax(0, 1fr);
-}
-.jbsui .jbsui-preset-picker > .jbsui-preset-button {
-  height: var(--height-input);
-  padding: 0 var(--space-8);
-  border: var(--width-border) solid var(--color-85);
-  border-right: 0;
-  border-radius: var(--radius) 0 0 var(--radius);
-  background: var(--color-95);
-  color: var(--color-25);
-  font-family: var(--font-family);
-  font-size: var(--font-size-14);
-  font-weight: var(--font-weight-action);
-  cursor: pointer;
-}
-.jbsui .jbsui-preset-picker > .jbsui-preset-button:hover {
-  background: var(--color-85);
 }
 .jbsui .jbsui-preset-picker > input {
   min-width: 0;
