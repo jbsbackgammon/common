@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v45.
+ * JBS operations UI design system v46.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -72,6 +72,7 @@
   color: var(--color-45);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-action);
+  line-height: var(--height-label);
 }
 /* Standalone selects use .jbsui-select; field selects inherit the same
    appearance and interactive behavior without extra markup. */
