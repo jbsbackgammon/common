@@ -1,4 +1,4 @@
-/* JBS common brand data client — v6, classic script; no dependencies.
+/* JBS common brand data client — v7, classic script; no dependencies.
  * <script src="https://jbsbackgammon.github.io/common/brand.js"></script>
  * await JBSBrand.load();
  */
@@ -197,10 +197,24 @@
     return lum > c.threshold ? c.darkText : c.lightText;
   }
   function getContrast() { return current ? { ...current.contrast } : null; }
+  // Use after load(): CSS handles presentation, while this helper uses the
+  // centralized contrast rule in data/brand.json to set two CSS properties.
+  function applyContrast(element, background) {
+    const hex = normalizeColor(background);
+    if (!element?.style?.setProperty || !element?.classList?.add || !hex) return false;
+    const text = getTextColor(hex);
+    if (!text) return false;
+    element.style.setProperty('--jbsui-contrast-background', hex);
+    element.style.setProperty('--jbsui-contrast-text', text);
+    element.classList.add('jbsui-auto-contrast');
+    return true;
+  }
+
+
 
   // A read-only public API. Editors use validate() without changing the loaded data.
   global.JBSBrand = Object.freeze({
-    version: 6, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
-    getColor, getSubColor, makeSubColor, getTextColor, getContrast, luminance, normalizeColor, validate
+    version: 7, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
+    getColor, getSubColor, makeSubColor, getTextColor, getContrast, applyContrast, luminance, normalizeColor, validate
   });
 })(window);
