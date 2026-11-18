@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v52.
+ * JBS operations UI design system v53.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -710,7 +710,8 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
 
 /* Shared saved-settings dialogs. The behavior and labels are supplied by the
    tool; visual treatment is identical across JBS editors. */
-.jbsui .jbsui-settings-dialog {
+.jbsui .jbsui-settings-dialog,
+.jbsui.jbsui-settings-dialog {
   width: min(920px, calc(100vw - var(--space-24) - var(--space-24)));
   max-height: min(680px, calc(100vh - var(--space-24) - var(--space-24)));
 }
