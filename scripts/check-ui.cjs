@@ -13,6 +13,11 @@ const context = {
 };
 vm.runInNewContext(fs.readFileSync(path.join(__dirname, "..", "ui.js"), "utf8"), context);
 const ui = context.window.JBSUI;
+function flushTimer() {
+  const [id, { fn }] = timers.entries().next().value;
+  timers.delete(id);
+  fn();
+}
 assert.equal(ui.version, 1);
 const classes = new Set(["jbsui-button"]);
 const attrs = new Map();
@@ -32,7 +37,7 @@ assert.deepEqual([...timers.values()].map(({ delay }) => delay), [2000]);
 ui.showButtonFeedback(button);
 assert.equal(timers.size, 1, "Repeated calls must replace the pending timer");
 assert.equal(button.textContent, "保存完了");
-[...timers.values()][0].fn();
+flushTimer();
 assert.equal(button.textContent, "設定保存");
 assert.equal(button.disabled, false);
 assert.ok(!classes.has("jbsui-button--complete"));
@@ -44,7 +49,7 @@ button.setAttribute("aria-live", "off");
 ui.showButtonFeedback(button, { label: "登録完了", duration: 1500 });
 assert.equal(button.textContent, "登録完了");
 assert.equal([...timers.values()][0].delay, 1500);
-[...timers.values()][0].fn();
+flushTimer();
 assert.equal(button.textContent, "JSON保存");
 assert.equal(button.disabled, true);
 assert.equal(button.getAttribute("aria-live"), "off");
