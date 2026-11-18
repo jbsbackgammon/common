@@ -185,9 +185,9 @@ JBSNaming.formatSavedLabel({
 - 今後の運営ツールも、このAPIを使って同じ規則で一覧表示・JSON/画像出力を行う
 - GitHub Actionsでは `node scripts/check-naming.cjs` により命名ルールの互換性を検証する
 
-## 共通UIデザインシステム（v31）
+## 共通UIデザインシステム（v32）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=31`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=32`
 - 編集UIでは `class="jbsui"` を持つ要素の内側に共通クラスを配置。配信盤面・大会テーマ・各ツール固有のレイアウトは共通化しない
 - 変数の定義順は color → font → height → width → size（角丸含む）→ space → opacity → shadow
 - 名前は分類を先頭にする。例：`--height-input`、`--width-preset-select`、`--font-size-14`、`--shadow`
@@ -224,6 +224,8 @@ JBSNaming.formatSavedLabel({
 - `jbsui-field`、`jbsui-select`、`jbsui-preset-input`：入力・プルダウンの共通外観と操作状態
 - `jbsui-color-control`、`jbsui-color-swatch`、`jbsui-hex-input`：カラー入力とプレビュー
 - `jbsui-button`、`jbsui-button--primary`、`jbsui-check`、`jbsui-divider`：操作要素。通常ボタン・主要ボタンともに文字サイズ14pxで統一
+- `jbsui-panel`、`jbsui-actions`、`jbsui-grid--2/4/5`：編集画面の共通レイアウト。操作エリア側の余白・列間隔・レスポンシブ切替をツールごとに再定義しない
+- `jbsui-combo-input`、`jbsui-combo-menu`、`jbsui-file-picker`、`jbsui-popover-menu`：候補入力・ファイル選択・設定メニューの共通部品
 - `jbsui-dialog`、`jbsui-dialog-head`、`jbsui-dialog-close`：ダイアログ
 - `--shadow` はダイアログとoverlayの編集プレビューで使用。主要ボタンに影は付けない
 
@@ -232,7 +234,7 @@ JBSNaming.formatSavedLabel({
 ### 使用例
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=31">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=32">
 <aside class="jbsui">
   <div class="jbsui-field">
     <label for="name">名前</label><input id="name">
