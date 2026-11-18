@@ -92,22 +92,7 @@
       fragment.appendChild(row);
     }
     byId('tournamentRows').replaceChildren(fragment);
-    const contrast = JBSBrand.getContrast();
-    const info = document.createDocumentFragment();
-    for (const [label, value, isColor] of [
-      ['輝度のしきい値', String(contrast.threshold), false],
-      ['明るい背景の文字色', contrast.darkText, true],
-      ['暗い背景の文字色', contrast.lightText, true]
-    ]) {
-      const card = el('div', 'jbsui-reference-stat');
-      card.appendChild(el('p', 'jbsui-reference-stat-label', label));
-      const valueArea = el('div', 'jbsui-reference-stat-value');
-      if (isColor) valueArea.appendChild(colorVisual(value));
-      else valueArea.textContent = value;
-      card.appendChild(valueArea);
-      info.appendChild(card);
-    }
-    byId('contrastInfo').replaceChildren(info);
+
   }
   function groupOf(name) {
     if (name.startsWith('--color-')) return 'color';
