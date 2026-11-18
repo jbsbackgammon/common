@@ -27,11 +27,6 @@
       <p class="jbsui-reference-paragraph">参照ファイル：<code>common/ui.css</code> <span id="cssVersion" class="jbsui-reference-muted"></span></p>
       <pre class="jbsui-reference-pre"><code>&lt;link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css"&gt;
 &lt;div class="jbsui"&gt;…&lt;/div&gt;</code></pre>
-      <h3 class="jbsui-reference-subtitle" id="contrastTitle">文字色の自動判定</h3>
-      <p class="jbsui-reference-paragraph">共通CSSの <code>.jbsui-auto-contrast</code> と、<code>brand.js</code> の <code>JBSBrand.applyContrast()</code> を組み合わせ、背景色に合わせて白文字・黒文字を自動設定します。判定基準は <code>data/brand.json</code> を参照します。</p>
-      <div class="jbsui-reference-grid" id="contrastInfo" aria-live="polite"></div>
-      <pre class="jbsui-reference-pre"><code>await JBSBrand.load();
-JBSBrand.applyContrast(document.querySelector('.my-banner'), '#009F40');</code></pre>
       <h3 class="jbsui-reference-subtitle">共通変数</h3>
       <div class="jbsui-reference-scroll">
         <table class="jbsui-reference-table jbsui-reference-table--tokens">
@@ -50,6 +45,6 @@ JBSBrand.applyContrast(document.querySelector('.my-banner'), '#009F40');</code><
   </main>
 
   <script src="./brand.js?v=7"></script>
-  <script src="./app.js?v=11"></script>
+  <script src="./app.js?v=12"></script>
 </body>
 </html>
