@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v37.
+ * JBS operations UI design system v38.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -363,6 +363,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   min-width: 0;
 }
 .jbsui .jbsui-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.jbsui .jbsui-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .jbsui .jbsui-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .jbsui .jbsui-grid--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 
@@ -568,6 +569,7 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
 
 @media (max-width: 700px) {
   .jbsui .jbsui-grid--2,
+  .jbsui .jbsui-grid--3,
   .jbsui .jbsui-grid--4,
   .jbsui .jbsui-grid--5,
   .jbsui .jbsui-player-fields { grid-template-columns: minmax(0, 1fr); }
