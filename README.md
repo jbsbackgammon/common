@@ -13,7 +13,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 - 大会情報の正本: `data/brand.json`。現在の大会情報とルールを固定し、ページから編集できない構成です。
 - 回次表示: 盤聖戦と賽王戦は毎年7月1日（日本時間）、その他の大会は毎年1月1日（日本時間）に自動で1加算します。
-- ツール共通CSS: `ui.css`（v46）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
+- ツール共通CSS: `ui.css`（v48）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
 - 将来必要になった場合のメンテナンスはGitHubのファイル修正・コードレビューを通じて実施します。
 
 ### GitHub Pages
@@ -186,9 +186,9 @@ JBSNaming.formatSavedLabel({
 - 今後の運営ツールも、このAPIを使って同じ規則で一覧表示・JSON/画像出力を行う
 - GitHub Actionsでは `node scripts/check-naming.cjs` により命名ルールの互換性を検証する
 
-## 共通UIデザインシステム（v46）
+## 共通UIデザインシステム（v48）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=46`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=48`
 - 編集UIでは `class="jbsui"` を持つ要素の内側に共通クラスを配置。配信盤面・大会テーマ・各ツール固有のレイアウトは共通化しない
 - 変数の定義順は color → font → height → width → size（角丸含む）→ space → opacity → shadow
 - 名前は分類を先頭にする。例：`--height-input`、`--width-preset-select`、`--font-size-14`、`--shadow`
@@ -231,6 +231,7 @@ JBSNaming.formatSavedLabel({
 - `jbsui-tool-page`、`jbsui-preview`、`jbsui-preview-shell`、`jbsui-canvas-preview`：ページ背景・全幅操作エリア・中央寄せプレビュー・Canvas表示を共通化し、ページ固有CSSを不要にする
 - `jbsui-combo-input`、`jbsui-combo-menu`、`jbsui-file-picker`、`jbsui-popover-menu`：候補入力・ファイル選択・設定メニューの共通部品
 - `jbsui-preset-input--detail`：選択＋主入力＋補助入力を1行に配置。補助入力に独立見出しを置かない場合に使用
+- `jbsui-preset-picker`、`jbsui-preset-picker--detail`、`jbsui-preset-button`：表示文字を常に「選択」に固定する候補選択ボタン。選択値は隣接入力欄だけに反映
 - `jbsui-settings-dialog`、`jbsui-saved-settings`、`jbsui-saved-setting`、`jbsui-save-complete-dialog`：設定呼出一覧と2秒の保存完了表示を共通化
 - `jbsui-player-fields`、`jbsui-player-field`、`jbsui-player-entry-row`、`jbsui-player-photo-picker`：英語表示時の選手入力を共通化。写真＋選択＋日本語名と英語名を1行に配置
 - `jbsui-dialog`、`jbsui-dialog-head`、`jbsui-dialog-close`：ダイアログ
@@ -258,7 +259,7 @@ JBSNaming.formatSavedLabel({
 ### 使用例
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=46">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=48">
 <aside class="jbsui">
   <div class="jbsui-field">
     <label for="name">名前</label><input id="name">
