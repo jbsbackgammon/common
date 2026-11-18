@@ -6,18 +6,19 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#ffffff">
   <title>ブランド管理</title>
-  <link rel="stylesheet" href="./styles.css?v=5">
+  <link rel="stylesheet" href="./ui.css?v=31">
+  <link rel="stylesheet" href="./styles.css?v=7">
 </head>
-<body>
+<body class="jbsui">
   <header class="site-header">
     <div class="header-inner">
       <h1>ブランド管理</h1>
       <div class="header-actions">
         <span id="editStatus" class="edit-status" role="status" aria-live="polite">読み込み中</span>
-        <button type="button" id="importButton" class="button-outline">JSON取込</button>
+        <button type="button" id="importButton" class="button-outline jbsui-button">JSON取込</button>
         <input type="file" id="importFile" accept=".json,application/json" hidden>
-        <button type="button" id="exportButton" class="button-outline">JSON出力</button>
-        <button type="button" id="saveButton" class="button-primary">GitHubに保存</button>
+        <button type="button" id="exportButton" class="button-outline jbsui-button">JSON出力</button>
+        <button type="button" id="saveButton" class="button-primary jbsui-button jbsui-button--primary">GitHubに保存</button>
       </div>
     </div>
   </header>
@@ -28,7 +29,7 @@
     <section class="panel">
       <div class="section-head">
         <h2>大会マスタ</h2>
-        <button type="button" id="addButton" class="button-outline">大会追加</button>
+        <button type="button" id="addButton" class="button-outline jbsui-button">大会追加</button>
       </div>
       <div class="table-scroll">
         <table class="master-table">
@@ -41,9 +42,9 @@
     <section class="panel contrast-panel">
       <div class="section-head"><h2>文字色の自動判定</h2></div>
       <div class="contrast-grid">
-        <div class="control"><label for="threshold">輝度のしきい値</label><input id="threshold" type="number" min="0" max="1" step="0.001" inputmode="decimal"></div>
-        <div class="control"><label for="darkTextCode">明るい背景の文字色</label><div class="color-group"><input id="darkTextPicker" type="color" aria-label="明るい背景の文字色を選択"><input id="darkTextCode" type="text" maxlength="7" spellcheck="false"></div></div>
-        <div class="control"><label for="lightTextCode">暗い背景の文字色</label><div class="color-group"><input id="lightTextPicker" type="color" aria-label="暗い背景の文字色を選択"><input id="lightTextCode" type="text" maxlength="7" spellcheck="false"></div></div>
+        <div class="control jbsui-field"><label for="threshold">輝度のしきい値</label><input id="threshold" type="number" min="0" max="1" step="0.001" inputmode="decimal"></div>
+        <div class="control jbsui-field"><label for="darkTextCode">明るい背景の文字色</label><div class="color-group jbsui-color-control"><span class="jbsui-color-swatch"><input id="darkTextPicker" type="color" aria-label="明るい背景の文字色を選択"></span><input id="darkTextCode" class="jbsui-hex-input" type="text" maxlength="7" spellcheck="false"></div></div>
+        <div class="control jbsui-field"><label for="lightTextCode">暗い背景の文字色</label><div class="color-group jbsui-color-control"><span class="jbsui-color-swatch"><input id="lightTextPicker" type="color" aria-label="暗い背景の文字色を選択"></span><input id="lightTextCode" class="jbsui-hex-input" type="text" maxlength="7" spellcheck="false"></div></div>
       </div>
     </section>
 
@@ -62,7 +63,7 @@
     </section>
   </main>
 
-  <dialog id="saveDialog" aria-labelledby="saveDialogTitle">
+  <dialog class="jbsui-dialog" id="saveDialog" aria-labelledby="saveDialogTitle">
     <form method="dialog" id="saveForm">
       <h2 id="saveDialogTitle">GitHubへ保存</h2>
       <p>保存先：<strong>jbsbackgammon/common</strong> の <code>data/brand.json</code></p>
@@ -70,14 +71,14 @@
       <input id="pat" name="pat" type="password" autocomplete="off" spellcheck="false" required placeholder="github_pat_...">
       <p class="help">トークンはこの保存時だけ使用し、ブラウザには保存しません。権限は common リポジトリだけに限定してください。</p>
       <div class="dialog-actions">
-        <button type="button" id="cancelSave" class="button-outline">キャンセル</button>
-        <button type="submit" id="confirmSave" class="button-primary">保存する</button>
+        <button type="button" id="cancelSave" class="button-outline jbsui-button">キャンセル</button>
+        <button type="submit" id="confirmSave" class="button-primary jbsui-button jbsui-button--primary">保存する</button>
       </div>
       <p id="dialogNotice" class="dialog-message" role="alert"></p>
     </form>
   </dialog>
 
   <script src="./brand.js?v=6"></script>
-  <script src="./app.js?v=5"></script>
+  <script src="./app.js?v=6"></script>
 </body>
 </html>
