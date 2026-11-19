@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v55.
+ * JBS operations UI design system v56.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -32,6 +32,7 @@
   --width-preset-select: 80px;
   --width-primary-action-min: 170px;
   --width-content-max: 1200px;
+  --width-action-select: 112px;
   --width-canvas-preview-max: 640px;
   --width-border: 1px;
   --width-focus-ring: 3px;
@@ -98,6 +99,11 @@
    changing the closed select's font size or hover appearance. */
 .jbsui .jbsui-field select,
 .jbsui .jbsui-select { color-scheme: light; }
+.jbsui .jbsui-action-select {
+  width: auto;
+  min-width: var(--width-action-select);
+  padding: 0 var(--space-24) 0 var(--space-16);
+}
 .jbsui .jbsui-field select option,
 .jbsui .jbsui-select option {
   background-color: var(--color-100);
