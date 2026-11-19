@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v56.
+ * JBS operations UI design system v57.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -334,24 +334,14 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   position: absolute;
   top: 50%;
   right: var(--space-12);
-  width: 16px;
-  height: 9px;
-  background:
-    linear-gradient(45deg,
-      transparent calc(50% - 1px),
-      var(--color-25) calc(50% - 1px),
-      var(--color-25) calc(50% + 1px),
-      transparent calc(50% + 1px))
-      left / 50% 100% no-repeat,
-    linear-gradient(-45deg,
-      transparent calc(50% - 1px),
-      var(--color-25) calc(50% - 1px),
-      var(--color-25) calc(50% + 1px),
-      transparent calc(50% + 1px))
-      right / 50% 100% no-repeat;
-  transform: translateY(-50%);
+  width: var(--space-8);
+  height: var(--space-8);
+  border-right: var(--width-border) solid var(--color-25);
+  border-bottom: var(--width-border) solid var(--color-25);
+  transform: translateY(-70%) rotate(45deg);
   pointer-events: none;
 }
+
 .jbsui .jbsui-preset-input select:focus,
 .jbsui .jbsui-preset-picker > .jbsui-preset-button:focus {
   /* Keep the shared edge single-width while coloring its fourth side
@@ -404,6 +394,9 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
 }
 .jbsui .jbsui-preset-picker > .jbsui-combo-menu {
   grid-column: 1 / -1;
+  box-sizing: border-box;
+  width: min(220px, calc(100vw - var(--space-24) - var(--space-24)));
+  min-width: var(--width-preset-select);
 }
 
 
