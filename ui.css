@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v54.
+ * JBS operations UI design system v55.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -653,6 +653,12 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
 .jbsui .jbsui-player-english-input {
   height: var(--height-input);
   min-width: 0;
+}
+.jbsui .jbsui-player-english-input::placeholder,
+.jbsui .jbsui-preset-input--detail input:nth-of-type(2)::placeholder,
+.jbsui .jbsui-preset-picker--detail input:nth-of-type(2)::placeholder {
+  color: var(--color-85);
+  opacity: 1;
 }
 .jbsui .jbsui-player-photo-picker {
   appearance: none;
