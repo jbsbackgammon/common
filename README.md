@@ -13,7 +13,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 - 大会情報の正本: `data/brand.json`。現在の大会情報とルールを固定し、ページから編集できない構成です。
 - 回次表示: 盤聖戦と賽王戦は毎年7月1日（日本時間）、その他の大会は毎年1月1日（日本時間）に自動で1加算します。
-- ツール共通CSS: `ui.css`（v54）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
+- ツール共通CSS: `ui.css`（v55）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
 - 将来必要になった場合のメンテナンスはGitHubのファイル修正・コードレビューを通じて実施します。
 
 ### GitHub Pages
@@ -186,9 +186,9 @@ JBSNaming.formatSavedLabel({
 - 今後の運営ツールも、このAPIを使って同じ規則で一覧表示・JSON/画像出力を行う
 - GitHub Actionsでは `node scripts/check-naming.cjs` により命名ルールの互換性を検証する
 
-## 共通UIデザインシステム（v54）
+## 共通UIデザインシステム（v55）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=54`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=55`
 - 編集UIでは `class="jbsui"` を持つ要素の内側に共通クラスを配置。配信盤面・大会テーマ・各ツール固有のレイアウトは共通化しない
 - 変数の定義順は color → font → height → width → size（角丸含む）→ space → opacity → shadow
 - 名前は分類を先頭にする。例：`--height-input`、`--width-preset-select`、`--font-size-14`、`--shadow`
@@ -244,7 +244,7 @@ JBSNaming.formatSavedLabel({
 保存が成功した場合のみ、押したボタンを**2秒間**「保存完了」（濃色背景・白字）に変更します。全画面を暗転せず、ほかの操作部品に影響を与えません。表示中のボタンは一時的に操作不可にし、2秒後に元の文言と状態に復帰します。
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=54">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=55">
 <script src="https://jbsbackgammon.github.io/common/ui.js?v=1"></script>
 <div class="jbsui"><button type="button" class="jbsui-button" id="save">設定保存</button></div>
 <script>
@@ -284,7 +284,7 @@ JBSNaming.formatSavedLabel({
 ### 使用例
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=54">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=55">
 <aside class="jbsui">
   <div class="jbsui-field">
     <label for="name">名前</label><input id="name">
