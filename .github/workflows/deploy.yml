@@ -23,7 +23,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Validate brand data
         run: python3 -m json.tool data/brand.json > /dev/null
@@ -49,6 +49,26 @@ jobs:
           node --check members.js
           node scripts/check-members.cjs
 
+      - name: Check out thumbnail consumer
+        uses: actions/checkout@v7
+        with:
+          repository: jbsbackgammon/thumbnail
+          path: _consumers/thumbnail
+          persist-credentials: false
+
+      - name: Check out overlay consumer
+        uses: actions/checkout@v7
+        with:
+          repository: jbsbackgammon/overlay
+          path: _consumers/overlay
+          persist-credentials: false
+
+      - name: Validate cross-repository API contracts
+        run: |
+          node scripts/check-consumers.cjs _consumers/thumbnail _consumers/overlay
+          (cd _consumers/thumbnail && node scripts/check-match-rounds.cjs && node scripts/check-startup.cjs)
+          (cd _consumers/overlay && node scripts/check-overlay.cjs)
+
       - name: Prepare static website
         run: |
           mkdir -p _site/data
@@ -69,19 +89,27 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           ARTIFACT_NAME: github-pages-${{ github.run_attempt }}
         run: |
-          for attempt in {1..15}; do
-            if count=$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" -f name="$ARTIFACT_NAME" --jq '[.artifacts[] | select(.expired == false)] | length'); then
+          stable=0
+          for attempt in {1..20}; do
+            if count=$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" -f per_page=100 | jq --arg name "$ARTIFACT_NAME" '[.artifacts[] | select(.name == $name and .expired == false)] | length'); then
               if [ "$count" = "1" ]; then
-                echo "Pages artifact $ARTIFACT_NAME is available."
-                exit 0
-              fi
-              if [ "$count" -gt 1 ]; then
+                stable=$((stable + 1))
+                echo "Pages artifact $ARTIFACT_NAME visible ($stable/4)."
+                if [ "$stable" = "4" ]; then
+                  echo "Pages artifact $ARTIFACT_NAME is consistently available."
+                  exit 0
+                fi
+              elif [ "$count" -gt 1 ]; then
                 echo "::error::Multiple artifacts named $ARTIFACT_NAME"
                 exit 1
+              else
+                stable=0
               fi
+            else
+              stable=0
             fi
-            echo "Waiting for artifact metadata (attempt $attempt/15)"
-            sleep 4
+            echo "Waiting for artifact metadata to stabilize (attempt $attempt/20)"
+            sleep 5
           done
           echo "::error::Pages artifact $ARTIFACT_NAME did not become available."
           exit 1

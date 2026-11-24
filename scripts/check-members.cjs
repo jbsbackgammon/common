@@ -12,7 +12,7 @@ const data = { members: [
   { id: 'invalid', name: '' }
 ] };
 let request;
-const context = { window: {}, URL, fetch: async (url, options) => {
+const context = { window: {}, URL, AbortController, setTimeout, clearTimeout, fetch: async (url, options) => {
   request = { url, options };
   return { ok: true, json: async () => data };
 } };
@@ -32,5 +32,8 @@ vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../members.js'), 'utf8'
   assert.equal(api.photoUrl(members[3]), '');
   assert.ok(api.photoUrl(members[3], { fallback: true }).includes('images/'));
   assert.throws(() => api.normalizeMembers({}), /会員一覧/);
+  assert.equal(api.photoUrl({ photo: 'javascript:alert(1)' }), '');
+  assert.equal(api.photoUrl({ photo: 'https://example.com/a.png' }), '');
+  assert.equal(api.photoUrl({ photo: '../../private.png' }), '');
   console.log('Shared member loading, photo URLs and name ordering passed.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

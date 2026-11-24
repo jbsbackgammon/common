@@ -1,4 +1,4 @@
-/* JBS common brand data client — v9, classic script; no dependencies.
+/* JBS common brand data client — v10, classic script; no dependencies.
  * <script src="https://jbsbackgammon.github.io/common/brand.js"></script>
  * await JBSBrand.load();
  */
@@ -183,11 +183,17 @@
     // Query parameter also bypasses stale CDN copies right after a Pages update.
     const freshUrl = new URL(dataUrl);
     freshUrl.searchParams.set('_', String(Date.now()));
-    const promise = fetch(freshUrl.href, { cache: 'no-store' }).then(async response => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    const promise = fetch(freshUrl.href, { cache: 'no-store', signal: controller.signal }).then(async response => {
       if (!response.ok) throw new Error(`ブランド設定の取得に失敗しました（HTTP ${response.status}）。`);
-      current = validate(await response.json());
-      return current;
-    });
+      const result = validate(await response.json());
+      if (controller.signal.aborted) throw new Error('ブランド設定の取得がタイムアウトしました。');
+      return result;
+    }).then(result => {
+      if (loading === promise) current = result;
+      return result;
+    }).finally(() => clearTimeout(timer));
     loading = promise;
     try { return clone(await promise); }
     finally { if (loading === promise) loading = null; }
@@ -271,7 +277,7 @@
 
   // A read-only public API. Editors use validate() without changing the loaded data.
   global.JBSBrand = Object.freeze({
-    version: 9, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
+    version: 10, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
     getMatchFormats, getMatchRounds, getMatchRoundEnglish, splitMatchRound, getColor, getSubColor, makeSubColor, getTextColor, getContrast, applyContrast, luminance, normalizeColor, validate
   });
 })(window);

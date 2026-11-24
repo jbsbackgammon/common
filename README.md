@@ -13,7 +13,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 - 大会情報の正本: `data/brand.json`。現在の大会情報とルールを固定し、ページから編集できない構成です。
 - 回次表示: 盤聖戦と賽王戦は毎年7月1日（日本時間）、その他の大会は毎年1月1日（日本時間）に自動で1加算します。
-- ツール共通CSS: `ui.css`（v62）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
+- ツール共通CSS: `ui.css`（v63）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
 - 将来必要になった場合のメンテナンスはGitHubのファイル修正・コードレビューを通じて実施します。
 
 ### GitHub Pages
@@ -186,7 +186,7 @@ JBSNaming.formatSavedLabel({
 - 今後の運営ツールも、このAPIを使って同じ規則で一覧表示・JSON/画像出力を行う
 - GitHub Actionsでは `node scripts/check-naming.cjs` により命名ルールの互換性を検証する
 
-## 共通UIデザインシステム（v56）
+## 共通UIデザインシステム（現行）
 
 - 共通CSS：`https://jbsbackgammon.github.io/common/ui.css`
 - 編集UIでは `class="jbsui"` を持つ要素の内側に共通クラスを配置。配信盤面・大会テーマ・各ツール固有のレイアウトは共通化しない
@@ -225,7 +225,7 @@ JBSNaming.formatSavedLabel({
 - `jbsui-field`、`jbsui-select`、`jbsui-preset-input`：入力・プルダウンの共通外観と操作状態
 - `jbsui-color-control`、`jbsui-color-swatch`、`jbsui-hex-input`：カラー入力とプレビュー
 - `jbsui-button`、`jbsui-button--primary`、`jbsui-button--complete`、`jbsui-check`、`jbsui-divider`：操作要素。通常ボタンは14px、完了状態は濃色背景・白字で表示
-- `jbsui-button--primary-action`：主要操作ボタンの最小横幅170px・左右24pxを共通化
+- `jbsui-button--primary-action`：主要操作ボタンの最小横幅180px・左右24pxを共通化
 - `jbsui-panel`、`jbsui-actions`、`jbsui-grid--2/3/4/5`：編集画面の共通レイアウト。操作エリア側の余白・列間隔・レスポンシブ切替をツールごとに再定義しない
 - 編集パネルの基準間隔は overlay に統一：上下16px・左右24px、行間8px、同一行の項目間16px、操作ボタンの横間隔12px
 - `jbsui-tool-page`、`jbsui-preview`、`jbsui-preview-shell`、`jbsui-canvas-preview`：ページ背景・全幅操作エリア・中央寄せプレビュー・Canvas表示を共通化し、ページ固有CSSを不要にする
@@ -313,3 +313,10 @@ JBSNaming.formatSavedLabel({
 ### 選手情報の共通処理
 
 `members.js` の `JBSMembers.load()` で会員マスタの取得・正規化・五十音順/ABC順のソートを行います。`photoUrl()` は写真URLを解決し、各ツールで写真必須・補完等の表示条件を選べます。`isLatinName()` は表示言語の判定にも使用できます。
+
+### 運用・品質保証
+
+- `brand.js` v10 / `members.js` v2：外部JSON取得は10秒で中断し、従来のエラー時処理に戻ります。写真URLは会員サイト内のHTTPSパスのみ許可します。
+- commonのActionsはマスタ・共通APIに加え、thumbnailとoverlayの契約および静的テストを検証します。共通CSSの現行定義はブランド管理ページを正とします。
+- 全運営ツールのアイコンはルートの `favicon.ico`、`favicon-32x32.png`、`apple-touch-icon.png` を直接参照します。
+- 配信・出力の最終確認は実際のOBS環境とブラウザで行います。

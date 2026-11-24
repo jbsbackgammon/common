@@ -113,7 +113,11 @@
     const photo = String(member?.photo || '').trim();
     if (!photo && !(fallback && member?.nameJa && member?.nameEn)) return '';
     const path = photo || 'images/' + encodeURIComponent(member.nameJa + '_' + member.nameEn + '.png');
-    const url = new URL(path.replace(/^\.\.\//, '').replace(/^\//, ''), baseUrl);
+    let url;
+    try { url = new URL(path.replace(/^\.\.\//, '').replace(/^\//, ''), baseUrl); }
+    catch { return ''; }
+    // The member master may only point to the same HTTPS member site.
+    if (url.origin !== new URL(baseUrl).origin || !url.pathname.startsWith('/member/')) return '';
     if (cacheKey !== null) url.searchParams.set('v', String(cacheKey));
     return url.href;
   }
@@ -121,11 +125,17 @@
   async function load({ cacheKey = Date.now() } = {}) {
     const url = new URL('data/members.json', baseUrl);
     url.searchParams.set('v', String(cacheKey));
-    const response = await fetch(url.href, { cache: 'no-store' });
-    if (!response.ok) throw new Error('会員一覧の取得に失敗しました (HTTP ' + response.status + ')');
-    return normalizeMembers(await response.json());
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    try {
+      const response = await fetch(url.href, { cache: 'no-store', signal: controller.signal });
+      if (!response.ok) throw new Error('会員一覧の取得に失敗しました (HTTP ' + response.status + ')');
+      const result = normalizeMembers(await response.json());
+      if (controller.signal.aborted) throw new Error('会員一覧の取得がタイムアウトしました。');
+      return result;
+    } finally { clearTimeout(timer); }
   }
 
-  root.JBSMembers = Object.freeze({ version: 1, baseUrl, load, normalizeMembers, compareMembers,
+  root.JBSMembers = Object.freeze({ version: 2, baseUrl, load, normalizeMembers, compareMembers,
     photoUrl, isLatinName, romajiToHiragana, japaneseSurnameSortKey });
 })(window);

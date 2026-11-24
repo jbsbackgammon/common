@@ -5,7 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const data = JSON.parse(fs.readFileSync(path.join(root, 'data/brand.json'), 'utf8'));
-const context = { window: {}, URL, document: { currentScript: { src: 'https://example.com/common/brand.js' } },
+const context = { window: {}, URL, AbortController, setTimeout, clearTimeout, document: { currentScript: { src: 'https://example.com/common/brand.js' } },
   fetch: async () => ({ ok: true, json: async () => JSON.parse(JSON.stringify(data)) }) };
 vm.runInNewContext(fs.readFileSync(path.join(root, 'brand.js'), 'utf8'), context);
 (async () => {
