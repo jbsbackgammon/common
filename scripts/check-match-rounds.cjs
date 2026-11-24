@@ -30,6 +30,12 @@ vm.runInNewContext(fs.readFileSync(path.join(root, 'brand.js'), 'utf8'), context
   assert.equal(api.getMatchRoundEnglish('盤聖戦', '３回戦'), 'ROUND OF 16');
   assert.equal(api.getMatchRoundEnglish('賽王戦', '２回戦'), 'ROUND OF 16');
   assert.equal(api.getMatchRoundEnglish('日本選手権', 'リーグ８回戦'), 'ROUND 8');
+  assert.equal(api.getMatchRoundEnglish('日本選手権', 'リーグステージ８回戦'), 'ROUND 8');
+  assert.equal(api.getMatchRoundEnglish('日本選手権', 'リーグステージ1回戦'), 'ROUND 1');
+  assert.equal(api.getMatchRounds('日本選手権')[4].name, 'リーグステージ８回戦');
+  assert.equal(api.splitMatchRound('リーグ１回戦').prefix, 'リーグステージ');
+  assert.equal(api.splitMatchRound('リーグステージ1回戦').name, '１回戦');
+  assert.equal(api.splitMatchRound('決勝').fullName, '決勝');
   assert.equal(api.getMatchRoundEnglish('日本選手権', 'リーグ１回戦'), 'ROUND 1');
   assert.equal(api.getMatchRoundEnglish('盤聖戦', 'リーグ１回戦'), null);
   assert.equal(api.getMatchRoundEnglish('SAIO', '１回戦'), 'ROUND OF 32');

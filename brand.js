@@ -1,4 +1,4 @@
-/* JBS common brand data client — v8, classic script; no dependencies.
+/* JBS common brand data client — v9, classic script; no dependencies.
  * <script src="https://jbsbackgammon.github.io/common/brand.js"></script>
  * await JBSBrand.load();
  */
@@ -225,9 +225,17 @@
     // incorrect round-of number; only universally valid options are returned.
     return clone(entry ? genericRounds.slice(0, 3) : genericRounds);
   }
+  // Read older saved settings without requiring users to re-enter the round.
+  function splitMatchRound(round) {
+    const text = String(round || '').trim();
+    const match = text.match(/^リーグ(?:ステージ)?\s*([1-8１-８]回戦)$/);
+    if (!match) return { prefix: '', name: text, fullName: text };
+    const name = match[1].replace(/[1-8]/g, digit => String.fromCharCode(0xff10 + Number(digit)));
+    return { prefix: 'リーグステージ', name, fullName: 'リーグステージ' + name };
+  }
   function getMatchRoundEnglish(query, round) {
-    const key = String(round || '').trim().normalize('NFKC');
-    return getMatchRounds(query).find(item => item.name.normalize('NFKC') === key)?.nameEn || null;
+    const key = splitMatchRound(round).fullName.normalize('NFKC');
+    return getMatchRounds(query).find(item => splitMatchRound(item.name).fullName.normalize('NFKC') === key)?.nameEn || null;
   }
   function getColor(query, fallback = null) { return getTournament(query)?.color || fallback; }
   function getSubColor(query, fallback = null) { return getTournament(query)?.subColor || fallback; }
@@ -263,7 +271,7 @@
 
   // A read-only public API. Editors use validate() without changing the loaded data.
   global.JBSBrand = Object.freeze({
-    version: 8, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
-    getMatchFormats, getMatchRounds, getMatchRoundEnglish, getColor, getSubColor, makeSubColor, getTextColor, getContrast, applyContrast, luminance, normalizeColor, validate
+    version: 9, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
+    getMatchFormats, getMatchRounds, getMatchRoundEnglish, splitMatchRound, getColor, getSubColor, makeSubColor, getTextColor, getContrast, applyContrast, luminance, normalizeColor, validate
   });
 })(window);
