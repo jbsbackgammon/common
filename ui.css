@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v60.
+ * JBS operations UI design system v61.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -638,16 +638,28 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   align-items: end;
   min-width: 0;
 }
+.jbsui .jbsui-bilingual-field,
 .jbsui .jbsui-player-field {
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   grid-template-rows: var(--height-label) var(--height-input);
   column-gap: var(--space-8);
   align-content: start;
   min-width: 0;
 }
+.jbsui .jbsui-bilingual-field:has(> .jbsui-player-english-input:not([hidden])) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.jbsui .jbsui-player-field:has(> .jbsui-player-english-input:not([hidden])) {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+.jbsui .jbsui-bilingual-field > label,
 .jbsui .jbsui-player-field > label {
   grid-column: 1 / -1;
   line-height: var(--height-label);
+}
+.jbsui .jbsui-player-english-input[hidden] { display: none; }
+.jbsui .jbsui-bilingual-field > :is(.jbsui-preset-input, .jbsui-preset-picker, input),
+.jbsui .jbsui-player-field > :is(.jbsui-preset-input, .jbsui-preset-picker, input) {
+  min-width: 0;
 }
 .jbsui .jbsui-player-entry-row {
   display: grid;

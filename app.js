@@ -16,14 +16,14 @@
     '--font-size-16':'基本文字','--font-size-20':'見出し文字','--font-size-24':'大きな見出し文字',
     '--font-weight-normal':'通常の文字太さ','--font-weight-action':'ボタン・見出しの太さ',
     '--height-input':'入力欄の高さ','--height-button':'ボタンの高さ','--height-label':'ラベルの高さ',
-    '--width-preset-select':'プリセット選択欄の幅','--width-border':'罫線の太さ','--width-focus-ring':'フォーカス枠の太さ',
+    '--letter-spacing-hex':'HEXコードの文字間隔','--select-chevron':'プルダウンの矢印','--width-primary-action-min':'主要操作ボタンの最小幅','--width-content-max':'プレビューの最大幅','--width-action-select':'作業選択欄の最小幅','--width-canvas-preview-max':'Canvasプレビューの最大幅','--width-preset-select':'プリセット選択欄の幅','--width-border':'罫線の太さ','--width-focus-ring':'フォーカス枠の太さ',
     '--size-checkbox':'チェックボックスの大きさ','--size-swatch':'色見本の大きさ','--radius':'角丸',
     '--space-4':'最小余白','--space-8':'小余白','--space-12':'中小余白',
     '--space-16':'中余白','--space-24':'大余白','--opacity':'非活性時の不透明度',
     '--alpha-dialog-backdrop':'ダイアログ背面の濃さ','--shadow':'共通の影'
   };
   const classDescriptions = {
-    'jbsui':'共通UIの適用範囲','jbsui-field':'ラベルと入力欄','jbsui-select':'単独プルダウン',
+    'jbsui':'共通UIの適用範囲','jbsui-field':'ラベルと入力欄','jbsui-bilingual-field':'日英併記の入力欄','jbsui-player-field':'選手名の日英併記欄','jbsui-select':'単独プルダウン',
     'jbsui-auto-contrast':'背景色に応じた文字色の自動設定','jbsui-inactive':'非活性の表示','jbsui-color-control':'色選択＋HEX入力',
     'jbsui-color-swatch':'カラーピッカー外枠','jbsui-hex-input':'HEXコード入力',
     'jbsui-dialog':'ダイアログ本体','jbsui-dialog-head':'ダイアログ見出し',
@@ -96,19 +96,17 @@
   }
   function groupOf(name) {
     if (name.startsWith('--color-')) return 'color';
-    if (name.startsWith('--font-')) return 'font';
+    if (name.startsWith('--font-') || name === '--letter-spacing-hex') return 'font';
     if (name.startsWith('--height-')) return 'height';
     if (name.startsWith('--width-')) return 'width';
-    if (name.startsWith('--size-') || name === '--radius') return 'size';
+    if (name.startsWith('--size-') || name === '--radius' || name === '--select-chevron') return 'size';
     if (name.startsWith('--space-')) return 'space';
     if (name.startsWith('--opacity') || name.startsWith('--alpha-')) return 'opacity';
     if (name.startsWith('--shadow')) return 'shadow';
     return 'other';
   }
-  function sharedStyles(css) {
-    // Browser CSS parser: preserves selectors, declaration values, states and @media conditions.
-    const sheet = new CSSStyleSheet();
-    sheet.replaceSync(css);
+  function sharedStyles(sheet) {
+    // Read the CSSOM of the actual applied stylesheet.
     const map = new Map();
     function visit(rules, query = '') {
       for (const rule of rules) {
@@ -137,14 +135,12 @@
     visit(sheet.cssRules);
     return map;
   }
-  function showCss(css) {
-    const match = css.match(/:root\s*\{([\s\S]*?)\}/);
-    if (!match) throw new Error('共通CSSの変数を確認できません。');
-    const declarations = match[1].replace(/\/\*[\s\S]*?\*\//g, '');
-    const re = /(--[a-z0-9-]+)\s*:\s*([^;]+);/g;
-    const tokens = [...declarations.matchAll(re)].map(m => ({
-      name: m[1], value: m[2].trim(), group: groupOf(m[1])
-    }));
+  function showCss(sheet) {
+    const root = Array.from(sheet.cssRules).find(rule => rule.selectorText === ':root');
+    if (!root) throw new Error('共通CSSの変数を確認できません。');
+    const tokens = Array.from(root.style)
+      .filter(name => name.startsWith('--'))
+      .map(name => ({ name, value: root.style.getPropertyValue(name).trim(), group: groupOf(name) }));
     if (!tokens.length) throw new Error('共通CSSの変数が空です。');
     const tokenFragment = document.createDocumentFragment();
     for (const [group, label] of groupLabels.concat([['other', 'Other（その他）']])) {
@@ -163,14 +159,14 @@
           : el('code', 'jbsui-reference-code', item.value));
         // The last column must always display the literal declared value.
         if (item.name.startsWith('--color-')) {
-          row.lastElementChild.lastElementChild.textContent = item.value;
+          row.lastElementChild.lastElementChild.lastElementChild.textContent = item.value;
         }
         tokenFragment.appendChild(row);
       }
     }
     byId('cssTokens').replaceChildren(tokenFragment);
 
-    const styles = sharedStyles(css);
+    const styles = sharedStyles(sheet);
     const all = [...styles.keys()].sort((a, b) => {
       const priorities = Object.keys(classDescriptions);
       const ia = priorities.indexOf(a), ib = priorities.indexOf(b);
@@ -189,13 +185,13 @@
     byId('cssClasses').replaceChildren(classFragment);
   }
   async function init() {
-    const cssPromise = fetch('./ui.css?v=46', { cache: 'no-store' })
-      .then(response => {
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        return response.text();
-      })
-      .then(showCss)
-      .catch(error => warn('共通CSSを読み込めませんでした：' + error.message));
+    try {
+      const sheet = byId('sharedUiStylesheet').sheet;
+      if (!sheet) throw new Error('スタイルシートが読み込まれていません。');
+      showCss(sheet);
+    } catch (error) {
+      warn('共通CSSを読み込めませんでした：' + error.message);
+    }
     try {
       await JBSBrand.load();
       loadedBrand = true;
@@ -203,7 +199,6 @@
     } catch (error) {
       warn('大会情報を読み込めませんでした：' + error.message);
     }
-    await cssPromise;
   }
   init();
   const refresh = () => { if (loadedBrand) renderBrand(); };
