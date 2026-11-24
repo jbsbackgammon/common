@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v58.
+ * JBS operations UI design system v59.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -330,7 +330,8 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   border: var(--width-border) solid var(--color-85);
   border-right: 0;
   border-radius: var(--radius) 0 0 var(--radius);
-  background: var(--color-95);
+  /* Preserve the shared select chevron background image. */
+  background-color: var(--color-95);
   color: var(--color-25);
   font-family: var(--font-family);
   font-size: var(--font-size-14);
