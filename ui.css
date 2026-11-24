@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v59.
+ * JBS operations UI design system v60.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -39,7 +39,7 @@
 
   /* Size and radius */
   --size-checkbox: 20px;
-  /* One chevron for all native selects; SVG color matches --color-25. */
+  /* One chevron for all select controls; SVG color matches --color-25. */
   --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23303e50' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   --size-swatch: 36px;
   --radius: 6px;
@@ -100,7 +100,9 @@
 /* Keep native dropdown menus consistent in color and typography without
    changing the closed select's font size or hover appearance. */
 .jbsui .jbsui-field select,
-.jbsui .jbsui-select {
+.jbsui .jbsui-select,
+.jbsui .jbsui-preset-input select,
+.jbsui .jbsui-preset-picker > .jbsui-preset-button {
   color-scheme: light;
   appearance: none;
   background-image: var(--select-chevron);
@@ -111,9 +113,19 @@
 }
 @media (forced-colors: active) {
   .jbsui .jbsui-field select,
-  .jbsui .jbsui-select {
+  .jbsui .jbsui-select,
+  .jbsui .jbsui-preset-input select {
     appearance: auto;
     background-image: none;
+  }
+  .jbsui .jbsui-preset-picker > .jbsui-preset-button::after {
+    content: "⌄";
+    position: absolute;
+    right: var(--space-8);
+    top: 50%;
+    transform: translateY(-50%);
+    color: ButtonText;
+    pointer-events: none;
   }
 }
 .jbsui .jbsui-action-select {
@@ -344,18 +356,6 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   position: relative;
   padding-right: var(--space-24);
   text-align: left;
-}
-.jbsui .jbsui-preset-picker > .jbsui-preset-button::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: var(--space-12);
-  width: var(--space-8);
-  height: var(--space-8);
-  border-right: var(--width-border) solid var(--color-25);
-  border-bottom: var(--width-border) solid var(--color-25);
-  transform: translateY(-70%) rotate(45deg);
-  pointer-events: none;
 }
 
 .jbsui .jbsui-preset-input select:focus,
