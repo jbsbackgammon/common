@@ -188,7 +188,7 @@ JBSNaming.formatSavedLabel({
 
 ## 共通UIデザインシステム（v56）
 
-- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css?v=61`
+- 共通CSS：`https://jbsbackgammon.github.io/common/ui.css`
 - 編集UIでは `class="jbsui"` を持つ要素の内側に共通クラスを配置。配信盤面・大会テーマ・各ツール固有のレイアウトは共通化しない
 - 変数の定義順は color → font → height → width → size（角丸含む）→ space → opacity → shadow
 - 名前は分類を先頭にする。例：`--height-input`、`--width-preset-select`、`--font-size-14`、`--shadow`
@@ -244,7 +244,7 @@ JBSNaming.formatSavedLabel({
 保存が成功した場合のみ、押したボタンを**2秒間**「保存完了」（濃色背景・白字）に変更します。全画面を暗転せず、ほかの操作部品に影響を与えません。表示中のボタンは一時的に操作不可にし、2秒後に元の文言と状態に復帰します。
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=61">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css">
 <script src="https://jbsbackgammon.github.io/common/ui.js?v=1"></script>
 <div class="jbsui"><button type="button" class="jbsui-button" id="save">設定保存</button></div>
 <script>
@@ -284,7 +284,7 @@ JBSNaming.formatSavedLabel({
 ### 使用例
 
 ```html
-<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css?v=61">
+<link rel="stylesheet" href="https://jbsbackgammon.github.io/common/ui.css">
 <aside class="jbsui">
   <div class="jbsui-field">
     <label for="name">名前</label><input id="name">
@@ -303,3 +303,5 @@ JBSNaming.formatSavedLabel({
 大会テーマカラーと回次は `brand.js` / `data/brand.json` で別管理する。編集画面固有の列幅や最大サイズはツール側CSSに残し、共通の値を再定義しない。
 
 共通参照ページの変数・スタイル一覧は、適用済み `ui.css` の CSSOM を直接参照します。日英併記の入力欄は `jbsui-bilingual-field`、選手名の2:1列は `jbsui-player-field` に統一し、英語欄が非表示なら1列に戻ります。
+
+共通CSSは `common/ui.css` の固定URLを直接参照します。`?v=番号` の手動管理は不要で、CSS内部のバージョン表記とページ参照番号を比較する検証は行いません。反映は通常のブラウザ・CDNキャッシュ更新に従います。
