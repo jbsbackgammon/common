@@ -94,6 +94,25 @@
     byId('tournamentRows').replaceChildren(fragment);
 
   }
+  function renderMatchFormats() {
+    const tournaments = JBSBrand.getTournaments();
+    const fragment = document.createDocumentFragment();
+    for (const format of JBSBrand.getMatchFormats()) {
+      const names = tournaments.filter(entry => entry.matchFormat === format.id).map(entry => entry.name);
+      format.rounds.forEach((round, index) => {
+        const row = el('tr');
+        if (index === 0) {
+          const events = td(row, names.join('・'), 'jbsui-reference-strong');
+          const type = td(row, format.label, 'jbsui-reference-nowrap');
+          events.rowSpan = type.rowSpan = format.rounds.length;
+        }
+        td(row, round.name, 'jbsui-reference-nowrap');
+        td(row, round.nameEn);
+        fragment.appendChild(row);
+      });
+    }
+    byId('matchRows').replaceChildren(fragment);
+  }
   function groupOf(name) {
     if (name.startsWith('--color-')) return 'color';
     if (name.startsWith('--font-') || name === '--letter-spacing-hex') return 'font';
@@ -196,6 +215,7 @@
       await JBSBrand.load();
       loadedBrand = true;
       renderBrand();
+      renderMatchFormats();
     } catch (error) {
       warn('大会情報を読み込めませんでした：' + error.message);
     }

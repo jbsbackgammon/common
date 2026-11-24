@@ -1,4 +1,4 @@
-/* JBS common brand data client — v7, classic script; no dependencies.
+/* JBS common brand data client — v8, classic script; no dependencies.
  * <script src="https://jbsbackgammon.github.io/common/brand.js"></script>
  * await JBSBrand.load();
  */
@@ -85,6 +85,32 @@
     if (input.tournaments.length === 0 || input.tournaments.length > 200) {
       throw new Error('大会は1件以上200件以内にしてください。');
     }
+    // Optional for legacy schemaVersion 1 files; the official master defines all formats.
+    const formats = input.matchFormats ?? [];
+    if (!Array.isArray(formats)) throw new Error('試合形式の定義が不正です。');
+    const formatIds = new Set();
+    const matchFormats = formats.map(format => {
+      const { id, label, knockoutSize, leagueRounds, rounds } = format || {};
+      if (typeof id !== 'string' || !ID.test(id) || formatIds.has(id)
+          || typeof label !== 'string' || !label.trim()
+          || ![8, 16, 32, 64].includes(knockoutSize)
+          || !Number.isInteger(leagueRounds) || leagueRounds < 0 || leagueRounds > 64
+          || !Array.isArray(rounds) || rounds.length !== Math.log2(knockoutSize) + leagueRounds) {
+        throw new Error('試合形式の定義が不正です。');
+      }
+      formatIds.add(id);
+      const names = new Set(), englishNames = new Set();
+      const normalized = rounds.map(round => {
+        const name = typeof round?.name === 'string' ? round.name.trim() : '';
+        const nameEn = typeof round?.nameEn === 'string' ? round.nameEn.trim() : '';
+        if (!name || !nameEn || names.has(name.normalize('NFKC')) || englishNames.has(nameEn)) {
+          throw new Error('試合名が不正または重複しています。');
+        }
+        names.add(name.normalize('NFKC')); englishNames.add(nameEn);
+        return { name, nameEn };
+      });
+      return { id, label: label.trim(), knockoutSize, leagueRounds, rounds: normalized };
+    });
     const seenIds = new Set(), seenNames = new Set(), seenOrders = new Set();
     const tournaments = input.tournaments.map((entry, i) => {
       const id = typeof entry?.id === 'string' ? entry.id.trim() : '';
@@ -133,7 +159,9 @@
       if (seenNames.has(name)) throw new Error(`大会名「${name}」が重複しています。`);
       if (seenOrders.has(order)) throw new Error(`表示順「${order}」が重複しています。`);
       seenIds.add(id); seenNames.add(name); seenOrders.add(order);
-      return { id, name, nameEn, editionBaseYear, editionBase, editionUpdateMonth, editionUpdateDay, category, color, subColor, order };
+      const matchFormat = entry?.matchFormat ?? null;
+      if (matchFormat !== null && !formatIds.has(matchFormat)) throw new Error(name + 'の試合形式が不正です。');
+      return { id, name, nameEn, editionBaseYear, editionBase, editionUpdateMonth, editionUpdateDay, category, color, subColor, order, ...(matchFormat ? { matchFormat } : {}) };
     }).sort((a, b) => a.order - b.order);
 
     const contrast = input.contrast;
@@ -144,7 +172,7 @@
     const darkText = normalizeColor(contrast.darkText);
     const lightText = normalizeColor(contrast.lightText);
     if (!darkText || !lightText) throw new Error('文字色には有効なカラーコードを指定してください。');
-    return { schemaVersion: 1, tournaments, contrast: { threshold: contrast.threshold, darkText, lightText } };
+    return { schemaVersion: 1, tournaments, contrast: { threshold: contrast.threshold, darkText, lightText }, matchFormats };
   }
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
@@ -180,6 +208,27 @@
     const entry = current.tournaments.find(e => [e.id, e.name, e.nameEn].some(s => s.toLocaleLowerCase() === key));
     return entry ? editionForYear(entry, year) : null;
   }
+  // No tournament-specific fallback is guessed: identical Japanese labels
+  // can have different meanings depending on the knockout bracket size.
+  const genericRounds = [
+    ['決勝', 'FINAL'], ['準決勝', 'SEMIFINAL'], ['準々決勝', 'QUARTERFINAL'],
+    ['３回戦', 'ROUND 3'], ['２回戦', 'ROUND 2'], ['１回戦', 'ROUND 1'],
+    ['プレーオフ', 'PLAY OFF'], ['本戦３回戦', 'MAIN DRAW ROUND 3'],
+    ['本戦２回戦', 'MAIN DRAW ROUND 2'], ['本戦１回戦', 'MAIN DRAW ROUND 1']
+  ].map(([name, nameEn]) => ({ name, nameEn }));
+  function getMatchFormats() { return clone(current?.matchFormats || []); }
+  function getMatchRounds(query) {
+    const entry = getTournament(query);
+    const format = current?.matchFormats.find(item => item.id === entry?.matchFormat);
+    if (format) return clone(format.rounds);
+    // A known event with missing/offline format data must not be assigned an
+    // incorrect round-of number; only universally valid options are returned.
+    return clone(entry ? genericRounds.slice(0, 3) : genericRounds);
+  }
+  function getMatchRoundEnglish(query, round) {
+    const key = String(round || '').trim().normalize('NFKC');
+    return getMatchRounds(query).find(item => item.name.normalize('NFKC') === key)?.nameEn || null;
+  }
   function getColor(query, fallback = null) { return getTournament(query)?.color || fallback; }
   function getSubColor(query, fallback = null) { return getTournament(query)?.subColor || fallback; }
 
@@ -214,7 +263,7 @@
 
   // A read-only public API. Editors use validate() without changing the loaded data.
   global.JBSBrand = Object.freeze({
-    version: 7, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
-    getColor, getSubColor, makeSubColor, getTextColor, getContrast, applyContrast, luminance, normalizeColor, validate
+    version: 8, dataUrl, load, getConfig, getTournaments, getTournament, getEdition, editionForYear, editionForDate, editionCycleYear,
+    getMatchFormats, getMatchRounds, getMatchRoundEnglish, getColor, getSubColor, makeSubColor, getTextColor, getContrast, applyContrast, luminance, normalizeColor, validate
   });
 })(window);

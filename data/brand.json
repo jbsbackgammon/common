@@ -12,7 +12,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第54回",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "japan"
     },
     {
       "id": "bansei",
@@ -25,7 +26,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第33期",
       "editionUpdateMonth": 7,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko64"
     },
     {
       "id": "meijin",
@@ -38,7 +40,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第32期",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko64"
     },
     {
       "id": "oui",
@@ -51,7 +54,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第33期",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko64"
     },
     {
       "id": "saiou",
@@ -64,7 +68,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第8期",
       "editionUpdateMonth": 7,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko32"
     },
     {
       "id": "kisei",
@@ -77,7 +82,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第5回",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko16"
     },
     {
       "id": "queen",
@@ -90,7 +96,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第3回",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko8"
     },
     {
       "id": "shin-ei",
@@ -103,7 +110,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第15回",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko16"
     },
     {
       "id": "tokyo-open",
@@ -116,7 +124,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第2回",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko16"
     },
     {
       "id": "osaka-open",
@@ -129,7 +138,8 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第27回",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko64"
     },
     {
       "id": "nagoya-open",
@@ -142,12 +152,175 @@
       "editionBaseYear": 2026,
       "editionBase": "JBS 第5回",
       "editionUpdateMonth": 1,
-      "editionUpdateDay": 1
+      "editionUpdateDay": 1,
+      "matchFormat": "ko64"
     }
   ],
   "contrast": {
     "threshold": 0.26,
     "darkText": "#000000",
     "lightText": "#FFFFFF"
-  }
+  },
+  "matchFormats": [
+    {
+      "id": "ko64",
+      "label": "64枠",
+      "knockoutSize": 64,
+      "leagueRounds": 0,
+      "rounds": [
+        {
+          "name": "決勝",
+          "nameEn": "FINAL"
+        },
+        {
+          "name": "準決勝",
+          "nameEn": "SEMIFINAL"
+        },
+        {
+          "name": "準々決勝",
+          "nameEn": "QUARTERFINAL"
+        },
+        {
+          "name": "３回戦",
+          "nameEn": "ROUND OF 16"
+        },
+        {
+          "name": "２回戦",
+          "nameEn": "ROUND OF 32"
+        },
+        {
+          "name": "１回戦",
+          "nameEn": "ROUND OF 64"
+        }
+      ]
+    },
+    {
+      "id": "ko32",
+      "label": "32枠",
+      "knockoutSize": 32,
+      "leagueRounds": 0,
+      "rounds": [
+        {
+          "name": "決勝",
+          "nameEn": "FINAL"
+        },
+        {
+          "name": "準決勝",
+          "nameEn": "SEMIFINAL"
+        },
+        {
+          "name": "準々決勝",
+          "nameEn": "QUARTERFINAL"
+        },
+        {
+          "name": "２回戦",
+          "nameEn": "ROUND OF 16"
+        },
+        {
+          "name": "１回戦",
+          "nameEn": "ROUND OF 32"
+        }
+      ]
+    },
+    {
+      "id": "ko16",
+      "label": "16枠",
+      "knockoutSize": 16,
+      "leagueRounds": 0,
+      "rounds": [
+        {
+          "name": "決勝",
+          "nameEn": "FINAL"
+        },
+        {
+          "name": "準決勝",
+          "nameEn": "SEMIFINAL"
+        },
+        {
+          "name": "準々決勝",
+          "nameEn": "QUARTERFINAL"
+        },
+        {
+          "name": "１回戦",
+          "nameEn": "ROUND OF 16"
+        }
+      ]
+    },
+    {
+      "id": "ko8",
+      "label": "8枠",
+      "knockoutSize": 8,
+      "leagueRounds": 0,
+      "rounds": [
+        {
+          "name": "決勝",
+          "nameEn": "FINAL"
+        },
+        {
+          "name": "準決勝",
+          "nameEn": "SEMIFINAL"
+        },
+        {
+          "name": "準々決勝",
+          "nameEn": "QUARTERFINAL"
+        }
+      ]
+    },
+    {
+      "id": "japan",
+      "label": "16枠＋リーグステージ",
+      "knockoutSize": 16,
+      "leagueRounds": 8,
+      "rounds": [
+        {
+          "name": "決勝",
+          "nameEn": "FINAL"
+        },
+        {
+          "name": "準決勝",
+          "nameEn": "SEMIFINAL"
+        },
+        {
+          "name": "準々決勝",
+          "nameEn": "QUARTERFINAL"
+        },
+        {
+          "name": "１回戦",
+          "nameEn": "ROUND OF 16"
+        },
+        {
+          "name": "リーグ８回戦",
+          "nameEn": "ROUND 8"
+        },
+        {
+          "name": "リーグ７回戦",
+          "nameEn": "ROUND 7"
+        },
+        {
+          "name": "リーグ６回戦",
+          "nameEn": "ROUND 6"
+        },
+        {
+          "name": "リーグ５回戦",
+          "nameEn": "ROUND 5"
+        },
+        {
+          "name": "リーグ４回戦",
+          "nameEn": "ROUND 4"
+        },
+        {
+          "name": "リーグ３回戦",
+          "nameEn": "ROUND 3"
+        },
+        {
+          "name": "リーグ２回戦",
+          "nameEn": "ROUND 2"
+        },
+        {
+          "name": "リーグ１回戦",
+          "nameEn": "ROUND 1"
+        }
+      ]
+    }
+  ]
 }

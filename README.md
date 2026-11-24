@@ -305,3 +305,7 @@ JBSNaming.formatSavedLabel({
 共通参照ページの変数・スタイル一覧は、適用済み `ui.css` の CSSOM を直接参照します。日英併記の入力欄は `jbsui-bilingual-field`、選手名の2:1列は `jbsui-player-field` に統一し、英語欄が非表示なら1列に戻ります。
 
 共通CSSは `common/ui.css` の固定URLを直接参照します。`?v=番号` の手動管理は不要で、CSS内部のバージョン表記とページ参照番号を比較する検証は行いません。反映は通常のブラウザ・CDNキャッシュ更新に従います。
+
+### 大会別の試合名マスタ
+
+`data/brand.json` の `matchFormats` に日本語・英語の試合名を定義し、各大会の `matchFormat` から参照します。`JBSBrand.getMatchFormats()`、`getMatchRounds(大会名またはID)`、`getMatchRoundEnglish(大会名またはID, 試合名)` を追加しました。未登録大会は一般的な選択肢を利用し、試合名の手入力も可能です。

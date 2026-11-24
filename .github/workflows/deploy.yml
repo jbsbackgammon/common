@@ -39,6 +39,11 @@ jobs:
           node --check app.js
           node scripts/check-ui.cjs
 
+      - name: Validate tournament match-round master
+        run: |
+          node --check brand.js
+          node scripts/check-match-rounds.cjs
+
       - name: Prepare static website
         run: |
           mkdir -p _site/data
