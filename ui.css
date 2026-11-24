@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v61.
+ * JBS operations UI design system v62.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -21,7 +21,6 @@
   --font-size-24: 24px;
   --font-weight-normal: 400;
   --font-weight-action: 800;
-  --letter-spacing-hex: .035em;
 
   /* Height */
   --height-input: 36px;
@@ -210,7 +209,6 @@ html[data-jbsui-keyboard-focus] .jbsui-dialog :is(button, input, select):focus-v
   max-width: none;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--letter-spacing-hex);
 }
 
 /* Shared HTML dialog shell; content and maximum dimensions are tool-specific. */

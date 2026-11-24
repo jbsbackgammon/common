@@ -16,7 +16,7 @@
     '--font-size-16':'基本文字','--font-size-20':'見出し文字','--font-size-24':'大きな見出し文字',
     '--font-weight-normal':'通常の文字太さ','--font-weight-action':'ボタン・見出しの太さ',
     '--height-input':'入力欄の高さ','--height-button':'ボタンの高さ','--height-label':'ラベルの高さ',
-    '--letter-spacing-hex':'HEXコードの文字間隔','--select-chevron':'プルダウンの矢印','--width-primary-action-min':'主要操作ボタンの最小幅','--width-content-max':'プレビューの最大幅','--width-action-select':'作業選択欄の最小幅','--width-canvas-preview-max':'Canvasプレビューの最大幅','--width-preset-select':'プリセット選択欄の幅','--width-border':'罫線の太さ','--width-focus-ring':'フォーカス枠の太さ',
+    '--select-chevron':'プルダウンの矢印','--width-primary-action-min':'主要操作ボタンの最小幅','--width-content-max':'プレビューの最大幅','--width-action-select':'作業選択欄の最小幅','--width-canvas-preview-max':'Canvasプレビューの最大幅','--width-preset-select':'プリセット選択欄の幅','--width-border':'罫線の太さ','--width-focus-ring':'フォーカス枠の太さ',
     '--size-checkbox':'チェックボックスの大きさ','--size-swatch':'色見本の大きさ','--radius':'角丸',
     '--space-4':'最小余白','--space-8':'小余白','--space-12':'中小余白',
     '--space-16':'中余白','--space-24':'大余白','--opacity':'非活性時の不透明度',
@@ -133,7 +133,7 @@
   }
   function groupOf(name) {
     if (name.startsWith('--color-')) return 'color';
-    if (name.startsWith('--font-') || name === '--letter-spacing-hex') return 'font';
+    if (name.startsWith('--font-')) return 'font';
     if (name.startsWith('--height-')) return 'height';
     if (name.startsWith('--width-')) return 'width';
     if (name.startsWith('--size-') || name === '--radius' || name === '--select-chevron') return 'size';
