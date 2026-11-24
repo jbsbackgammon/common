@@ -309,3 +309,7 @@ JBSNaming.formatSavedLabel({
 ### 大会別の試合名マスタ
 
 `data/brand.json` の `matchFormats` に日本語・英語の試合名を定義し、各大会の `matchFormat` から参照します。`JBSBrand.getMatchFormats()`、`getMatchRounds(大会名またはID)`、`getMatchRoundEnglish(大会名またはID, 試合名)` を追加しました。未登録大会は一般的な選択肢を利用し、試合名の手入力も可能です。
+
+### 選手情報の共通処理
+
+`members.js` の `JBSMembers.load()` で会員マスタの取得・正規化・五十音順/ABC順のソートを行います。`photoUrl()` は写真URLを解決し、各ツールで写真必須・補完等の表示条件を選べます。`isLatinName()` は表示言語の判定にも使用できます。

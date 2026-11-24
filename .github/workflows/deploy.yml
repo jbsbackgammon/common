@@ -44,10 +44,15 @@ jobs:
           node --check brand.js
           node scripts/check-match-rounds.cjs
 
+      - name: Validate shared member processing
+        run: |
+          node --check members.js
+          node scripts/check-members.cjs
+
       - name: Prepare static website
         run: |
           mkdir -p _site/data
-          cp index.html ui.css ui.js app.js brand.js naming.js .nojekyll _site/
+          cp index.html ui.css ui.js app.js brand.js naming.js members.js .nojekyll _site/
           cp data/brand.json _site/data/
 
       - name: Configure Pages
