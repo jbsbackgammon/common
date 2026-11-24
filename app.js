@@ -96,20 +96,38 @@
   }
   function renderMatchFormats() {
     const tournaments = JBSBrand.getTournaments();
-    const fragment = document.createDocumentFragment();
-    for (const format of JBSBrand.getMatchFormats()) {
+    const formats = JBSBrand.getMatchFormats();
+    const header = el('tr');
+    const english = el('th', 'jbsui-reference-nowrap', '英語表記');
+    english.scope = 'col';
+    header.appendChild(english);
+    for (const format of formats) {
+      const th = el('th', 'jbsui-reference-center');
+      th.scope = 'col';
+      th.appendChild(el('div', 'jbsui-reference-strong', format.label));
       const names = tournaments.filter(entry => entry.matchFormat === format.id).map(entry => entry.name);
-      format.rounds.forEach((round, index) => {
-        const row = el('tr');
-        if (index === 0) {
-          const events = td(row, names.join('・'), 'jbsui-reference-strong');
-          const type = td(row, format.label, 'jbsui-reference-nowrap');
-          events.rowSpan = type.rowSpan = format.rounds.length;
-        }
-        td(row, round.name, 'jbsui-reference-nowrap');
-        td(row, round.nameEn);
-        fragment.appendChild(row);
-      });
+      const list = el('div', 'jbsui-reference-muted');
+      for (const name of names) list.appendChild(el('div', '', name));
+      th.appendChild(list);
+      header.appendChild(th);
+    }
+    byId('matchHead').replaceChildren(header);
+
+    // Preserve the master order while displaying each English round only once.
+    const englishNames = [...new Set(formats.flatMap(format => format.rounds.map(round => round.nameEn)))];
+    const lookups = formats.map(format => new Map(format.rounds.map(round => [round.nameEn, round.name])));
+    const fragment = document.createDocumentFragment();
+    for (const nameEn of englishNames) {
+      const row = el('tr');
+      const label = el('th', 'jbsui-reference-nowrap', nameEn);
+      label.scope = 'row';
+      row.appendChild(label);
+      for (const lookup of lookups) {
+        const name = lookup.get(nameEn);
+        const cell = td(row, name || '—', 'jbsui-reference-center jbsui-reference-nowrap');
+        if (!name) cell.classList.add('jbsui-reference-muted');
+      }
+      fragment.appendChild(row);
     }
     byId('matchRows').replaceChildren(fragment);
   }
