@@ -1,4 +1,4 @@
-/* Shared JBS UI interaction helpers. Pair with common/ui.css v50. */
+/* Shared JBS UI interaction helpers for common/ui.css. */
 (function (root) {
   "use strict";
   const feedbackByButton = new WeakMap();
@@ -32,5 +32,17 @@
     feedbackByButton.set(button, { original, timer });
   }
 
-  root.JBSUI = Object.freeze({ version: 1, showButtonFeedback });
+  // Action-style native selects always return to their empty "選択" option
+  // before any tool-specific work (including asynchronous image loading).
+  function bindPresetSelect(select, onSelect) {
+    select.addEventListener("change", () => {
+      const value = select.value;
+      if (!value) return;
+      const option = select.selectedOptions[0];
+      select.value = "";
+      return onSelect(value, option);
+    });
+  }
+
+  root.JBSUI = Object.freeze({ version: 2, showButtonFeedback, bindPresetSelect });
 })(window);
