@@ -18,7 +18,7 @@ function flushTimer() {
   timers.delete(id);
   fn();
 }
-assert.equal(ui.version, 1);
+assert.equal(ui.version, 2);
 const classes = new Set(["jbsui-button"]);
 const attrs = new Map();
 const button = {
@@ -56,3 +56,31 @@ assert.equal(button.getAttribute("aria-live"), "off");
 assert.ok(!classes.has("jbsui-button--complete"));
 assert.throws(() => ui.showButtonFeedback(null), /requires a button/);
 console.log("JBS shared UI button feedback tests passed.");
+
+let changeHandler;
+let finishPhoto;
+let calls = 0;
+const selected = { dataset: { nameEn: "Test Player" } };
+const select = {
+  value: "player1",
+  selectedOptions: [selected],
+  addEventListener(type, handler) {
+    assert.equal(type, "change");
+    changeHandler = handler;
+  }
+};
+ui.bindPresetSelect(select, async (value, option) => {
+  assert.equal(select.value, "", "Reset must precede async photo loading");
+  assert.equal(value, "player1");
+  assert.equal(option, selected);
+  calls++;
+  await new Promise(resolve => { finishPhoto = resolve; });
+});
+const photoPending = changeHandler();
+assert.equal(select.value, "");
+assert.equal(calls, 1);
+changeHandler();
+assert.equal(calls, 1, "Empty selection must not trigger a callback");
+finishPhoto();
+photoPending.then(() => console.log("JBS shared preset reset tests passed."))
+  .catch(error => { console.error(error); process.exitCode = 1; });
