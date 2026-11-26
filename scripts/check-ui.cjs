@@ -84,3 +84,9 @@ assert.equal(calls, 1, "Empty selection must not trigger a callback");
 finishPhoto();
 photoPending.then(() => console.log("JBS shared preset reset tests passed."))
   .catch(error => { console.error(error); process.exitCode = 1; });
+
+const css = fs.readFileSync(path.join(__dirname, "..", "ui.css"), "utf8");
+assert.match(css, /body\.jbsui,\s*\.jbsui\.jbsui-tool-page,\s*\.jbsui\.jbsui-reference-page\s*\{\s*background:\s*var\(--color-100\)/);
+assert.match(css, /\.jbsui \.jbsui-preview\s*\{[^}]*background:\s*var\(--color-95\)/);
+assert.doesNotMatch(css, /\.jbsui\.jbsui-(?:tool|reference)-page\s*\{[^}]*background:\s*var\(--color-95\)/);
+console.log("Shared white page / gray preview background checks passed.");
