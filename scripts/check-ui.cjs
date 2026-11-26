@@ -90,3 +90,5 @@ assert.match(css, /body\.jbsui,\s*\.jbsui\.jbsui-tool-page,\s*\.jbsui\.jbsui-ref
 assert.match(css, /\.jbsui \.jbsui-preview\s*\{[^}]*background:\s*var\(--color-95\)/);
 assert.doesNotMatch(css, /\.jbsui\.jbsui-(?:tool|reference)-page\s*\{[^}]*background:\s*var\(--color-95\)/);
 console.log("Shared white page / gray preview background checks passed.");
+
+assert.match(fs.readFileSync(path.join(__dirname, "..", "ui.css"), "utf8"), /\.jbsui \.jbsui-reference-table thead th\s*\{\s*text-align:\s*center;/);
