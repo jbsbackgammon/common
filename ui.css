@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v63.
+ * JBS operations UI design system v64.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -11,6 +11,7 @@
   --color-85: hsl(215 25% 85%);
   --color-95: hsl(215 25% 95%);
   --color-100: hsl(215 25% 100%);
+  --color-pink: #d71161;
 
   /* Font */
   --font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;

@@ -12,6 +12,7 @@
   const tokenDescriptions = {
     '--color-25':'基本文字・主操作色','--color-45':'補助文字・ラベル色','--color-60':'フォーカス表示色',
     '--color-85':'罫線・操作枠色','--color-95':'ページ背景・補助背景色','--color-100':'白背景・白文字',
+    '--color-pink':'アクセントカラー（ピンク）',
     '--font-family':'共通フォントファミリー','--font-size-12':'極小文字','--font-size-14':'小文字・ボタン文字',
     '--font-size-16':'基本文字','--font-size-20':'見出し文字','--font-size-24':'大きな見出し文字',
     '--font-weight-normal':'通常の文字太さ','--font-weight-action':'ボタン・見出しの太さ',
