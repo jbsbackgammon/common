@@ -40,6 +40,8 @@ vm.runInNewContext(fs.readFileSync(path.join(root, 'brand.js'), 'utf8'), context
   assert.equal(api.getMatchRoundEnglish('盤聖戦', 'リーグ１回戦'), null);
   assert.equal(api.getMatchRoundEnglish('SAIO', '１回戦'), 'ROUND OF 32');
   assert.equal(api.getMatchFormats().length, 5);
+  assert.equal(Array.from(api.getMatchFormats(), f => f.id).join(','), 'ko64,ko32,ko16,japan,ko8');
+  assert.equal(api.getMatchFormats().find(f => f.id === 'japan').label, '16枠＋リーグ');
   const copy = api.getMatchRounds('日本選手権');
   copy[0].name = 'changed';
   assert.equal(api.getMatchRounds('日本選手権')[0].name, '決勝');

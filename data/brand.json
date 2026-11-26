@@ -247,28 +247,8 @@
       ]
     },
     {
-      "id": "ko8",
-      "label": "8枠",
-      "knockoutSize": 8,
-      "leagueRounds": 0,
-      "rounds": [
-        {
-          "name": "決勝",
-          "nameEn": "FINAL"
-        },
-        {
-          "name": "準決勝",
-          "nameEn": "SEMIFINAL"
-        },
-        {
-          "name": "準々決勝",
-          "nameEn": "QUARTERFINAL"
-        }
-      ]
-    },
-    {
       "id": "japan",
-      "label": "16枠＋リーグステージ",
+      "label": "16枠＋リーグ",
       "knockoutSize": 16,
       "leagueRounds": 8,
       "rounds": [
@@ -319,6 +299,26 @@
         {
           "name": "リーグステージ１回戦",
           "nameEn": "ROUND 1"
+        }
+      ]
+    },
+    {
+      "id": "ko8",
+      "label": "8枠",
+      "knockoutSize": 8,
+      "leagueRounds": 0,
+      "rounds": [
+        {
+          "name": "決勝",
+          "nameEn": "FINAL"
+        },
+        {
+          "name": "準決勝",
+          "nameEn": "SEMIFINAL"
+        },
+        {
+          "name": "準々決勝",
+          "nameEn": "QUARTERFINAL"
         }
       ]
     }
