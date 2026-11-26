@@ -13,7 +13,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 - 大会情報の正本: `data/brand.json`。現在の大会情報とルールを固定し、ページから編集できない構成です。
 - 回次表示: 盤聖戦と賽王戦は毎年7月1日（日本時間）、その他の大会は毎年1月1日（日本時間）に自動で1加算します。
-- ツール共通CSS: `ui.css`（v71）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
+- ツール共通CSS: `ui.css`（v72）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
 - 将来必要になった場合のメンテナンスはGitHubのファイル修正・コードレビューを通じて実施します。
 
 ### GitHub Pages
@@ -225,7 +225,7 @@ JBSNaming.formatSavedLabel({
 - プルダウンの展開一覧（`option`）は白背景・基本文字色・14pxに統一（「選択▼」と同じ）。閉じたプルダウンの文字サイズ・背景・hover状態は変更しない
 - `jbsui-field`、`jbsui-select`、`jbsui-preset-input`：入力・プルダウンの共通外観と操作状態
 - `jbsui-color-control`、`jbsui-color-swatch`、`jbsui-hex-input`：カラー入力とプレビュー
-- `jbsui-button`、`jbsui-button--primary`、`jbsui-button--complete`、`jbsui-check`、`jbsui-divider`：操作要素。通常ボタンは14px、完了状態は濃色背景・白字で表示
+- `jbsui-button`、`jbsui-button--primary`、`jbsui-button--complete`、`jbsui-check`、`jbsui-divider`：操作要素。通常ボタンは14px、完了状態は濃色背景・白字で表示。主要操作ボタンの最小幅は160px（`--width-primary-action-min`）とする。
 - `jbsui-button--primary-action`：主要操作ボタンの最小横幅180px・左右24pxを共通化
 - `jbsui-panel`、`jbsui-actions`、`jbsui-grid--2/3/4/5`：編集画面の共通レイアウト。操作エリア側の余白・列間隔・レスポンシブ切替をツールごとに再定義しない
 - `jbsui-reference-table`：共通の表。セル内余白は上下2px、左右8px（`--space-8`）とする。色見本と色コードはセル内で上下中央に配置する。

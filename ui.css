@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v71.
+ * JBS operations UI design system v72.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -30,7 +30,7 @@
 
   /* Width */
   --width-preset-select: 80px;
-  --width-primary-action-min: 180px;
+  --width-primary-action-min: 160px;
   --width-content-max: 1200px;
   --width-action-select: 100px;
   --width-canvas-preview-max: 640px;
