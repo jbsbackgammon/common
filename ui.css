@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v66.
+ * JBS operations UI design system v67.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -835,7 +835,7 @@ body.jbsui,
 .jbsui .jbsui-reference-table--tokens { min-width: 600px; }
 .jbsui .jbsui-reference-table th,
 .jbsui .jbsui-reference-table td {
-  padding: var(--space-8) var(--space-12);
+  padding: var(--space-4);
   border: var(--width-border) solid var(--color-85);
   vertical-align: middle;
 }
