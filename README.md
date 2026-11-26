@@ -13,7 +13,7 @@ GitHubリポジトリ `jbsbackgammon/common` / ページ名「ブランド管理
 
 - 大会情報の正本: `data/brand.json`。現在の大会情報とルールを固定し、ページから編集できない構成です。
 - 回次表示: 盤聖戦と賽王戦は毎年7月1日（日本時間）、その他の大会は毎年1月1日（日本時間）に自動で1加算します。
-- ツール共通CSS: `ui.css`（v67）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
+- ツール共通CSS: `ui.css`（v68）。ブランド管理ページは固有CSSを使用せず、共通CSSのみで表示します。ページ下部に共通変数・共通スタイルの定義値と、文字色の自動判定ルールをまとめています。
 - 将来必要になった場合のメンテナンスはGitHubのファイル修正・コードレビューを通じて実施します。
 
 ### GitHub Pages
@@ -228,7 +228,7 @@ JBSNaming.formatSavedLabel({
 - `jbsui-button`、`jbsui-button--primary`、`jbsui-button--complete`、`jbsui-check`、`jbsui-divider`：操作要素。通常ボタンは14px、完了状態は濃色背景・白字で表示
 - `jbsui-button--primary-action`：主要操作ボタンの最小横幅180px・左右24pxを共通化
 - `jbsui-panel`、`jbsui-actions`、`jbsui-grid--2/3/4/5`：編集画面の共通レイアウト。操作エリア側の余白・列間隔・レスポンシブ切替をツールごとに再定義しない
-- `jbsui-reference-table`：共通の表。セル内余白は上下左右ともに4px（`--space-4`）とする。
+- `jbsui-reference-table`：共通の表。セル内余白は上下4px（`--space-4`）、左右8px（`--space-8`）とする。色見本と色コードはセル内で上下中央に配置する。
 - 編集パネルの基準間隔は overlay に統一：上下16px・左右24px、行間8px、同一行の項目間16px、操作ボタンの横間隔12px
 - `jbsui-tool-page`、`jbsui-preview`、`jbsui-preview-shell`、`jbsui-canvas-preview`：ページ背景・全幅操作エリア・中央寄せプレビュー・Canvas表示を共通化し、ページ固有CSSを不要にする
 - ページの背景は原則 `--color-100`（白）。サムネイル・配信盤面などのプレビュー領域に限り従来の `--color-95` を使用する。操作部品・表見出し・ホバー等の配色および出力画像・OBSの透明背景は従来どおり。
