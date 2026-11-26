@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v72.
+ * JBS operations UI design system v73.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -56,7 +56,7 @@
   --alpha-dialog-backdrop: 50%;
 
   /* Shadow */
-  --shadow: 0 6px 12px color-mix(in srgb, var(--color-25) 20%, transparent);
+  --shadow: 0 3px 6px color-mix(in srgb, var(--color-25) 15%, transparent);
 }
 
 /* Reusable opt-in elements. No global element resets or site-wide rules. */
