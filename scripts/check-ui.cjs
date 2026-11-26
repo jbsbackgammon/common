@@ -92,3 +92,7 @@ assert.doesNotMatch(css, /\.jbsui\.jbsui-(?:tool|reference)-page\s*\{[^}]*backgr
 console.log("Shared white page / gray preview background checks passed.");
 
 assert.match(fs.readFileSync(path.join(__dirname, "..", "ui.css"), "utf8"), /\.jbsui \.jbsui-reference-table thead th\s*\{\s*text-align:\s*center;/);
+
+const referenceSectionRule = fs.readFileSync(path.join(__dirname, "..", "ui.css"), "utf8").match(/\.jbsui \.jbsui-reference-card\s*\{([^}]+)\}/);
+assert.ok(referenceSectionRule);
+assert.doesNotMatch(referenceSectionRule[1], /\bborder(?:-radius)?:/);
