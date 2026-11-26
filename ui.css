@@ -1,5 +1,5 @@
 /*
- * JBS operations UI design system v65.
+ * JBS operations UI design system v66.
  * Layout and tournament theme colors remain each tool's responsibility.
  * Opt in by loading this file and adding class="jbsui" to the editor root.
  */
@@ -21,7 +21,7 @@
   --font-size-20: 20px;
   --font-size-24: 24px;
   --font-weight-normal: 400;
-  --font-weight-action: 800;
+  --font-weight-action: 700;
 
   /* Height */
   --height-input: 36px;
